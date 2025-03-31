@@ -15,9 +15,9 @@ use App\Http\Controllers\PostController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('login');
+});
 
 // returns the home page with all posts
 Route::get('/', PostController::class .'@index')->name('posts.index');
