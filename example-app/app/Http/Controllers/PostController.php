@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use Illuminate\Support\Facades\Route; 
-
 
 
 class PostController extends Controller
@@ -33,8 +31,7 @@ class PostController extends Controller
       'body' => 'required',
     ]);
     Post::create($request->all());
-    return redirect()->route('posts.index')
-      ->with('success', 'Post created successfully.');
+    return redirect()->route('posts.index')->with('success', 'Post created successfully.');
   }
   /**
    * Update the specified resource in storage.
