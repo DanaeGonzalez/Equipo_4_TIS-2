@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('tipo_usuario')->default('Tutor'); 
-            $table->boolean('es_activo')->default(true);        
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id('role_id'); 
+            $table->string('user_type')->unique(); // 'SuperAdmin', 'Administrador', 'Tutor' de manera predeterminada
+            $table->boolean('is_active');
+            $table->timestamps();
         });
     }
 
@@ -23,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['tipo_usuario', 'es_activo']);
-        });
+        Schema::dropIfExists('roles');
     }
 };

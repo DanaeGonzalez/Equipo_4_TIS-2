@@ -34,7 +34,7 @@ class RenameColumnsInUsersTable extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('tipo_usuario')->default('Paciente')->after('id');
+            $table->string('tipo_usuario')->default('Tutor')->after('id');
             $table->boolean('es_activo')->default(true)->after('tipo_usuario');
         });
 
