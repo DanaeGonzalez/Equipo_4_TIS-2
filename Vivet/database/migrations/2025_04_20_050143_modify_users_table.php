@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
          // Verifica si la columna 'role_id' ya existe, si no, la agregamos
             if (!Schema::hasColumn('users', 'role_id')) {
-                $table->bigInteger('role_id')->unsigned()->nullable()->after('id');
+                $table->bigInteger('role_id')->unsigned()->nullable()->after('user_id');
             }
 
         // Agrega otras columnas o modificaciones necesarias
