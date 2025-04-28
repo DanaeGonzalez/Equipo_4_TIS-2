@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->id('role_id'); 
+            $table->bigIncrements('role_id');
             $table->string('user_type')->unique(); // 'SuperAdmin', 'Administrador', 'Tutor' de manera predeterminada
             $table->boolean('is_active');
             $table->timestamps();

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             // Verifica si la columna 'role_id' no existe, y si no, la agrega
             if (!Schema::hasColumn('users', 'role_id')) {
-                $table->unsignedBigInteger('role_id')->nullable()->after('id');
+                $table->unsignedBigInteger('role_id')->nullable()->after('user_id');
 
                 // Define la relación de clave foránea
                 $table->foreign('role_id')

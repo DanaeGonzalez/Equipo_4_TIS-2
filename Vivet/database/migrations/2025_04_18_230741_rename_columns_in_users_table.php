@@ -15,7 +15,7 @@ class RenameColumnsInUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             
-            $table->string('user_type')->default('Paciente')->after('id');
+            $table->string('user_type')->default('Paciente')->after('user_id');
             $table->boolean('is_active')->default(true)->after('user_type');
         });
 
