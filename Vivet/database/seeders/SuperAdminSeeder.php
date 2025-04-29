@@ -3,26 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\Superadmin;
+use Illuminate\Support\Facades\Hash;
 
-class SuperAdminSeeder extends Seeder
+class SuperadminSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        if (!User::where('email', 'admin@admin.com')->exists()) {
-            User::create([
-                'name' => 'Danae',
-                'lastname'=> 'Gonzalez',
-                'email' => 'admin@admin.com',
-                'password' => bcrypt('password'),
-                'user_type' => 'SuperAdmin',
-                'is_active' => true,
-                'role_id' => 1,
+        if (!Superadmin::where('email', 'superadmin@example.com')->exists()) {
+            Superadmin::create([
+                'name' => 'Javier',
+                'email' => 'jpinoh@ing.ucsc.cl',
+                'password' => Hash::make('password'), 
             ]);
-        }
-        else{
-            $this->command->info('La tabla "users" ya contiene a Danae');
+        } else {
+            $this->command->info('Ya existe un superadmin registrado.');
         }
     }
 }
-
