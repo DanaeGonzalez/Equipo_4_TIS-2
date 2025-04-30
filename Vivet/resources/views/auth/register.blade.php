@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registro de Usuarios</title>
+    <title>@yield('title', 'Clínica Veterinaria')</title>
+    <!-- Incluye tu archivo de Tailwind compilado o los links a CDN -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @vite('resources/css/app.css')
 </head>
 
 <body>
-
-    <h1>Registrarse</h1>
 
     <form method="POST" action="{{ route('register.user') }}">
         @csrf
@@ -28,37 +27,38 @@
                 <!-- form - start -->
                 <form class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">
                     <div>
-                        <label for="name" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Nombre*</label>
+                        <label for="name" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Nombre</label>
                         <input type="text" name="name" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
                     </div>
 
                     <div>
-                        <label for="last-name" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Apellido*</label>
+                        <label for="last-name" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Apellido</label>
                         <input type="text" name="last-name" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
                     </div>
 
                     <div class="sm:col-span-2">
-                        <label for="email" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Correo*</label>
+                        <label for="email" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Correo</label>
                         <input type="email" name="email" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
                     </div>
 
                     <div class="sm:col-span-2">
-                        <label for="password" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Contraseña*</label>
+                        <label for="password" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Contraseña</label>
                         <input type="password" name="password" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
                     </div>
                     
                     <div class="sm:col-span-2">
-                        <label for="confirm-password" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Contraseña*</label>
+                        <label for="confirm-password" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Confirmar Contraseña</label>
                         <input type="password" name="confirm-password" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
                     </div>
                     
-                    <div class="flex items-center justify-between sm:col-span-2">
+                    <div class="flex items-center justify-between sm:col-span-2 mt-5">
                         <button type="submit" class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base" disabled>Crear cuenta</button>
-
-                        <span class="text-sm text-gray-500">*Required</span>
+                        <!-- <button type="submit" class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base" disabled>Crear cuenta</button> -->
+                        
+                        <!-- <span class="text-sm text-gray-500">*Required</span> -->
                     </div>
 
-                    <p class="text-xs text-gray-400">By signing up to our newsletter you agree to our <a href="#" class="underline transition duration-100 hover:text-indigo-500 active:text-indigo-600">Privacy Policy</a>.</p>
+                    <p class="text text-gray-400 text-center">Si ya tienes tu cuenta, inicia sesión <a href="#" class="underline transition duration-100 hover:text-indigo-500 active:text-indigo-600">aquí</a>.</p>
                 </form>
                 <!-- form - end -->
             </div>

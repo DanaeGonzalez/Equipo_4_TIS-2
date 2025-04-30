@@ -22,7 +22,3 @@ Route::get('/', function () {
 
 Route::post('/register', [AuthController::class, 'registerUser'])->name('register.user');
 Route::get('/formulario-registro', [AuthController::class, 'showRegisterForm'])->name('register');
-
-Route::get('/', [AuthController::class, 'index'])->name('home');
-Route::post('/custom-login', [AuthController::class, 'login'])->name('custom-login');
-Route::get('/logados', [AuthController::class, 'logados'])->name('logados');
