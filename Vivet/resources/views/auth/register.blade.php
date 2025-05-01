@@ -37,7 +37,12 @@
                         <label for="email" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Correo</label>
                         <input type="email" name="email" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
                     </div>
-
+                    
+                    <div class="sm:col-span-2">
+                        <label for="run" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">RUN</label>
+                        <input type="text" name="run" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
+                    </div>
+                    
                     <div class="sm:col-span-2">
                         <label for="password" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Contraseña</label>
                         <input type="password" name="password" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
