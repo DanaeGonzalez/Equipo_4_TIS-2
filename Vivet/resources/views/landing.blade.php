@@ -11,9 +11,21 @@
     <!-- Carousel wrapper -->
     <div class="relative h-[500px] overflow-hidden rounded-lg md:h-[600px]">
         <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-1.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        <div class="hidden duration-700 ease-in-out relative h-full" data-carousel-item>
+            <!-- Imagen de fondo -->
+            <img src="{{ asset('images/clients/client1/carousel-1.jpeg') }}"
+                class="w-full h-full object-cover" alt="...">
+
+            <!-- Capa de superposición con texto y botón -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-6">
+                <h2 class="text-white text-4xl font-bold mb-4">Bienvenido a la Clínica</h2>
+                <p class="text-white text-lg mb-6">Cuidamos a tu mascota como parte de nuestra familia.</p>
+                <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+                    Reserva una cita
+                </a>
+            </div>
         </div>
+
         <!-- Item 2 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="{{ asset('images/clients/client1/carousel-2.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
