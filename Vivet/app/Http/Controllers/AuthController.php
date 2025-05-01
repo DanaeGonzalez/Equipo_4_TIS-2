@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -15,14 +14,15 @@ class AuthController extends Controller
     public function registerUser(Request $request){
     
         $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'last-name' => ['required', 'string', 'max:255'],
+            'nombre' => ['required', 'string', 'max:255'],
+            'apellido' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email', 'max:250'],
             'password' => ['required', "min:8", 'confirmed']
         ]);
     
         User::create([
             'name' => $request->nombre,
+            'lastname' => $request->apellido,
             'email' => $request->email,
             'password' => Hash::make($request->password)
             ]);
@@ -32,9 +32,6 @@ class AuthController extends Controller
             $request->session()->regenerate();
             
             // Redirigir al formulario de login
-            return redirect()->route('/');
+            return redirect('/');
     }
-
 }
-
-
