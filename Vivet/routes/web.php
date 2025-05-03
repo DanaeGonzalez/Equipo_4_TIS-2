@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegisterController;
 
 
 
@@ -19,5 +19,5 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('/formulario-registro', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [AuthController::class, 'registerUser'])->name('register.submit');
+Route::get('/formulario-registro', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
