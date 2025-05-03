@@ -9,7 +9,7 @@
 
 <div id="default-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="7000">
     <!-- Carousel wrapper -->
-    <div class="relative h-[500px] overflow-hidden rounded-lg md:h-[600px]">
+    <div class="relative h-64 md:h-96 lg:h-[600px] overflow-hidden rounded-lg">
         <!-- Item 1 -->
         <div class="hidden duration-700 ease-in-out relative h-full" data-carousel-item>
             <!-- Imagen de fondo -->
