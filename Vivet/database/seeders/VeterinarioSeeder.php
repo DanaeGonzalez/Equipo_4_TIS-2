@@ -25,7 +25,7 @@ class VeterinarioSeeder extends Seeder
                 'name' => 'Viviana',
                 'lastname' => 'Vivet',
                 'run' => 16589123,
-                'email' => 'nmarileo@ing.ucsc.cl',
+                'email' => 'vivet@gmail.cl',
                 'password' => '12345678',
                 'sex' => 'Mujer',
             ],
