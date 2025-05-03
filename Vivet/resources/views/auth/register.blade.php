@@ -60,7 +60,7 @@
                         <!-- <span class="text-sm text-gray-500">*Required</span> -->
                     </div>
 
-                    <p class="text text-gray-400 text-center">Si ya tienes tu cuenta, inicia sesión <a href="#" class="underline transition duration-100 hover:text-indigo-500 active:text-indigo-600">aquí</a>.</p>
+                    <p class="text text-gray-400 text-center">Si ya tienes tu cuenta, inicia sesión <a href="{{ route('login') }}" class="underline transition duration-100 hover:text-indigo-500 active:text-indigo-600">aquí</a>.</p>
                 </form>
                 <!-- form - end -->
             </div>
