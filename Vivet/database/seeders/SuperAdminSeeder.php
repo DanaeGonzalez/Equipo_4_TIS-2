@@ -11,20 +11,19 @@ class SuperAdminSeeder extends Seeder
     public function run()
     {
         $role = Role::find(1); 
-        if (!User::where('email', 'admin@admin.com')->exists()) {
-            User::create([
+
+        User::updateOrCreate(
+            ['email' => 'admin@admin.com'], 
+            [ 
                 'name' => 'Danae',
-                'lastname'=> 'Gonzalez',
+                'lastname'=> 'González',
+                'run' => 21065316,
                 'email' => 'admin@admin.com',
                 'password' => bcrypt('password'),
-                'user_type' =>  $role->user_type,
+                'user_type' => $role->user_type,
                 'is_active' => true,
-                'role_id' => 1,
-            ]);
-        }
-        else{
-            $this->command->info('La tabla "users" ya contiene a Danae');
-        }
+                'role_id' => $role->role_id,
+            ]
+        );
     }
 }
-

@@ -10,8 +10,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $appends = ['user_id'];
-
     protected $hidden = [
         'id',
         'role_id',
@@ -19,32 +17,22 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function getUserIdAttribute()
-    {
-        return $this->attributes['id'];
-    }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'lastname',
-        'run',
         'email',
         'password',
-        'user_type',
-        'is_active',
+        'run',
+        'sex',
+        'role_id',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 }
