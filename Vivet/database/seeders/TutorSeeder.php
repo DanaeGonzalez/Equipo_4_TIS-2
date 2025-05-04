@@ -11,7 +11,7 @@ class TutorSeeder extends Seeder
 {
     public function run(): void
     {
-        $role = Role::where('user_type', 'Tutor')->first();
+        $role = Role::where('name', 'Tutor')->first();
 
         if (!$role) {
             throw new \Exception("El rol 'Tutor' no fue encontrado. Asegúrate de haberlo creado en el RoleSeeder.");
@@ -54,7 +54,7 @@ class TutorSeeder extends Seeder
                     'sex' => $userData['sex'],
                     'email' => $userData['email'],
                     'password' => Hash::make($userData['password']),
-                    'user_type' => $role->user_type,  
+                    'user_type' => $role->name,  
                     'is_active' => true,
                     'role_id' => $role->role_id,
                 ]

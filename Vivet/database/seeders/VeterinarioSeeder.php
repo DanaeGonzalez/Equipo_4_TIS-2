@@ -14,7 +14,7 @@ class VeterinarioSeeder extends Seeder
      */
     public function run(): void
     {
-        $role = Role::where('user_type', 'Veterinario')->first();
+        $role = Role::where('name', 'Veterinario')->first();
 
         if (!$role) {
             throw new \Exception("El rol 'Veterinario' no fue encontrado. Asegúrate de haberlo creado en el RoleSeeder.");
@@ -25,7 +25,7 @@ class VeterinarioSeeder extends Seeder
                 'name' => 'Viviana',
                 'lastname' => 'Vivet',
                 'run' => 16589123,
-                'email' => 'nmarileo@ing.ucsc.cl',
+                'email' => 'vivet@gmail.cl',
                 'password' => '12345678',
                 'sex' => 'Mujer',
             ],
@@ -40,7 +40,7 @@ class VeterinarioSeeder extends Seeder
                     'sex' => $userData['sex'],
                     'email' => $userData['email'],
                     'password' => Hash::make($userData['password']),
-                    'user_type' => $role->user_type,  
+                    'user_type' => $role->name,  
                     'is_active' => true,
                     'role_id' => $role->role_id,
                 ]

@@ -20,7 +20,7 @@ class SuperAdminSeeder extends Seeder
                 'run' => 21065316,
                 'email' => 'admin@admin.com',
                 'password' => bcrypt('password'),
-                'user_type' => $role->user_type,
+                'user_type' => $role->name,
                 'is_active' => true,
                 'role_id' => $role->role_id,
             ]
