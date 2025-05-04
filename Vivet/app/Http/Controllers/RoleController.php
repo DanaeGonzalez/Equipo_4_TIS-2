@@ -41,6 +41,7 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $role->update([
@@ -53,6 +54,10 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
+        if ($role->name === 'Administrador') {
+            return redirect()->route('roles.index')->with('error', 'No se puede eliminar este rol.');
+        }
+
         $role->delete();
         return redirect()->route('roles.index')->with('success', 'Rol eliminado.');
     }

@@ -16,10 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role_id ==2) {
+        if (auth()->check() && auth()->user()->role && auth()->user()->role->name == 'Administrador') {
             return $next($request);
-        }
-
+        }    
+        
         return redirect()->route('home')->with('error', 'Acceso no autorizado');
     }
 }

@@ -19,5 +19,9 @@ Route::get('/', function () {
     return view('landing');
 });
 
+//Route::middleware(['admin'])->group(function() {
+    // Rutas que solo puede ver un administrador
+    Route::resource('roles', RoleController::class);
+    // Otras rutas protegidas
+//});
 
-Route::resource('roles', RoleController::class);
