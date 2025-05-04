@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             SuperAdminSeeder::class,
             TutorSeeder::class,
             VeterinarioSeeder::class,
+            AdminSeeder::class,
         ]);
         
     }
