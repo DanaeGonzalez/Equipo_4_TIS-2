@@ -5,7 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RolesTableSeeder extends Seeder
+class RolesTableSeeder extends Seeder 
+
 {
     public function run(): void
     {
@@ -16,6 +17,7 @@ class RolesTableSeeder extends Seeder
                 ['user_type' => 'SuperAdmin', 'is_active' => true],
                 ['user_type' => 'Administrador', 'is_active' => true],
                 ['user_type' => 'Tutor', 'is_active' => true],
+                ['user_type' => 'Veterinario', 'is_active' => true],
             ]);
         }
         else {

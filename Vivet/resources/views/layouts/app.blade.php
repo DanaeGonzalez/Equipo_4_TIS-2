@@ -9,6 +9,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @vite('resources/css/app.css')
 </head>
+
 <body class="flex flex-col min-h-screen">
     {{-- Header --}}
     @include('partials.header')
