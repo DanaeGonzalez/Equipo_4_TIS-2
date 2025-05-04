@@ -5,6 +5,8 @@
 
 @section('content')
 
+@include('partials.colors')
+
 <!-- CAROUSEL -->
 
 <div id="default-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="7000">
@@ -20,27 +22,79 @@
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-6">
                 <h2 class="text-white text-4xl font-bold mb-4">Bienvenido a la Clínica</h2>
                 <p class="text-white text-lg mb-6">Cuidamos a tu mascota como parte de nuestra familia.</p>
-                <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+                <a href="#contact"
+                    style="background-color: var(--color-button-primary);"
+                    class="hover:opacity-90 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
                     Reserva una cita
                 </a>
+
+
             </div>
         </div>
 
         <!-- Item 2 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="{{ asset('images/clients/client1/carousel-2.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <!-- Capa de superposición con texto y botón -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-6">
+                <h2 class="text-white text-4xl font-bold mb-4">Bienvenido a la Clínica</h2>
+                <p class="text-white text-lg mb-6">Cuidamos a tu mascota como parte de nuestra familia.</p>
+                <a href="#contact"
+                    style="background-color: var(--color-button-primary);"
+                    class="hover:opacity-90 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+                    Reserva una cita
+                </a>
+
+
+            </div>
         </div>
         <!-- Item 3 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="{{ asset('images/clients/client1/carousel-3.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <!-- Capa de superposición con texto y botón -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-6">
+                <h2 class="text-white text-4xl font-bold mb-4">Bienvenido a la Clínica</h2>
+                <p class="text-white text-lg mb-6">Cuidamos a tu mascota como parte de nuestra familia.</p>
+                <a href="#contact"
+                    style="background-color: var(--color-button-primary);"
+                    class="hover:opacity-90 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+                    Reserva una cita
+                </a>
+
+
+            </div>
         </div>
         <!-- Item 4 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="{{ asset('images/clients/client1/carousel-4.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <!-- Capa de superposición con texto y botón -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-6">
+                <h2 class="text-white text-4xl font-bold mb-4">Bienvenido a la Clínica</h2>
+                <p class="text-white text-lg mb-6">Cuidamos a tu mascota como parte de nuestra familia.</p>
+                <a href="#contact"
+                    style="background-color: var(--color-button-primary);"
+                    class="hover:opacity-90 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+                    Reserva una cita
+                </a>
+
+
+            </div>
         </div>
         <!-- Item 5 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
             <img src="{{ asset('images/clients/client1/carousel-5.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <!-- Capa de superposición con texto y botón -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-6">
+                <h2 class="text-white text-4xl font-bold mb-4">Bienvenido a la Clínica</h2>
+                <p class="text-white text-lg mb-6">Cuidamos a tu mascota como parte de nuestra familia.</p>
+                <a href="#contact"
+                    style="background-color: var(--color-button-primary);"
+                    class="hover:opacity-90 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
+                    Reserva una cita
+                </a>
+
+
+            </div>
         </div>
     </div>
     <!-- Slider indicators -->
@@ -84,11 +138,12 @@
 
             <div class="md:col-span-1">
                 <div class="max-w-lg md:max-w-none">
-                    <h2 class="text-2xl font-semibold text-gray-900 sm:text-3xl">
+                    <h2 class="text-2xl font-semibold sm:text-3xl" style="color: var(--color-title);">
                         Profesionales que cuidan con el corazón
                     </h2>
 
-                    <p class="mt-4 text-gray-700">
+
+                    <p class="mt-4" style="color: var(--color-text);">
                         Nuestro equipo combina experiencia médica con vocación y cercanía. Cada atención está pensada para que tú y tu mascota se sientan acompañados y seguros durante todo el proceso.
                     </p>
                 </div>
@@ -99,62 +154,53 @@
 
 <!-- SECCION DE SERVICIOS -->
 
-<section class="text-gray-600 body-font">
+<section class="body-font" style="color: var(--color-text); background-color: var(--color-bg-main);">
     <div class="container px-5 py-24 mx-auto">
         <div class="text-center mb-20">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">Nuestros Servicios</h1>
-            <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500">Atención médica integral y especializada para el bienestar de tu mascota.</p>
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4"
+                style="color: var(--color-title);">
+                Nuestros Servicios
+            </h1>
+            <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto"
+               style="color: var(--color-text);">
+                Atención médica integral y especializada para el bienestar de tu mascota.
+            </p>
             <div class="flex mt-6 justify-center">
-                <div class="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
+                <div class="w-16 h-1 rounded-full inline-flex" style="background-color: var(--color-accent-2);"></div>
             </div>
         </div>
+
         <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4 md:space-y-0 space-y-6">
-            <!-- Consulta General -->
-            <div class="p-4 md:w-1/3 flex flex-col text-center items-center">
-                <div class="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        class="w-10 h-10" viewBox="0 0 24 24">
-                        <path d="M9 12h6M12 15v-6" />
-                        <circle cx="12" cy="12" r="10" />
-                    </svg>
-                </div>
-                <div class="flex-grow">
-                    <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Consulta General</h2>
-                    <p class="leading-relaxed text-base">Evaluación médica veterinaria preventiva y diagnóstica. Incluye revisión completa y recomendaciones personalizadas.</p>
-                </div>
-            </div>
 
-            <!-- Esterilización -->
-            <div class="p-4 md:w-1/3 flex flex-col text-center items-center">
-                <div class="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        class="w-10 h-10" viewBox="0 0 24 24">
-                        <path d="M5 13l4 4L19 7" />
-                    </svg>
-                </div>
-                <div class="flex-grow">
-                    <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Esterilización</h2>
-                    <p class="leading-relaxed text-base">Procedimiento quirúrgico seguro y eficaz para controlar la reproducción y mejorar la calidad de vida de tu mascota.</p>
-                </div>
-            </div>
+            <!-- Item Genérico -->
+            @php
+                $iconBg = 'var(--color-accent-2)';
+                $iconColor = 'white';
+            @endphp
 
-            <!-- Peluquería -->
-            <div class="p-4 md:w-1/3 flex flex-col text-center items-center">
-                <div class="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        class="w-10 h-10" viewBox="0 0 24 24">
-                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
+            @foreach ([
+                ['title' => 'Consulta General', 'text' => 'Evaluación médica veterinaria preventiva y diagnóstica. Incluye revisión completa y recomendaciones personalizadas.', 'icon' => '<path d="M9 12h6M12 15v-6" /><circle cx="12" cy="12" r="10" />'],
+                ['title' => 'Esterilización', 'text' => 'Procedimiento quirúrgico seguro y eficaz para controlar la reproducción y mejorar la calidad de vida de tu mascota.', 'icon' => '<path d="M5 13l4 4L19 7" />'],
+                ['title' => 'Peluquería', 'text' => 'Baños, cortes, limpieza y cuidados dermatológicos. Ideal para mantener a tu mascota cómoda, saludable y hermosa.', 'icon' => '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />'],
+            ] as $item)
+                <div class="p-4 md:w-1/3 flex flex-col text-center items-center">
+                    <div class="w-20 h-20 inline-flex items-center justify-center rounded-full mb-5 flex-shrink-0"
+                         style="background-color: {{ $iconBg }}; color: {{ $iconColor }};">
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                             class="w-10 h-10" viewBox="0 0 24 24">
+                            {!! $item['icon'] !!}
+                        </svg>
+                    </div>
+                    <div class="flex-grow">
+                        <h2 class="text-lg title-font font-medium mb-3" style="color: var(--color-title);">{{ $item['title'] }}</h2>
+                        <p class="leading-relaxed text-base" style="color: var(--color-text);">{{ $item['text'] }}</p>
+                    </div>
                 </div>
-                <div class="flex-grow">
-                    <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Peluquería</h2>
-                    <p class="leading-relaxed text-base">Baños, cortes, limpieza y cuidados dermatológicos. Ideal para mantener a tu mascota cómoda, saludable y hermosa.</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
+
 
 <!-- FORMULARIO DE CONTACTO -->
 
@@ -190,7 +236,11 @@
                 <label for="message" class="leading-7 text-sm text-gray-600">Mensaje</label>
                 <textarea id="message" name="message" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
             </div>
-            <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Enviar</button>
+            <button
+                style="background-color: var(--color-button-primary);"
+                class="text-white border-0 py-2 px-6 focus:outline-none hover:opacity-90 rounded text-lg">
+                Enviar
+            </button>
             <p class="text-xs text-gray-500 mt-3">Aca tampoco se que poner</p>
         </div>
     </div>
