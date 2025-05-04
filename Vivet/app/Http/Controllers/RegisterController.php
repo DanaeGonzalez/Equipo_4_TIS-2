@@ -16,12 +16,13 @@ class RegisterController extends Controller
         $validatedData = $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
             'apellido' => ['required', 'string', 'max:255'],
-            'run' => ['required', 'string', 'max:8'],
+            'run' => ['required', 'string', 'min:7','max:8'],
             'email' => ['required', 'email', 'unique:users,email', 'max:250'],
             'password' => ['required', "min:8", 'confirmed']
         ]);
 
         User::create([
+            'role_id' => '1',
             'name' => $request->nombre,
             'lastname' => $request->apellido,
             'run' => $request->run,
@@ -34,6 +35,6 @@ class RegisterController extends Controller
             $request->session()->regenerate();
             
             // Redirigir al formulario de login
-            return redirect('/');
+            return redirect()->route('login')->with('success','Registro exitoso! Por favor inicie sesión.');
     }
 }

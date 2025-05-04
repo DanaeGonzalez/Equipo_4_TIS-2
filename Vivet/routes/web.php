@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 
@@ -21,8 +22,9 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('/formulario-registro', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::get('/registro', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
 
-Route::get('/formulario-inicio-sesion',[LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/inicio-sesion',[LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login',[LoginController::class, 'loginUser'])->name('login.submit');
+Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');

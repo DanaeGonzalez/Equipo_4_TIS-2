@@ -21,19 +21,25 @@
                     <div>
                         <label for="email" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Correo</label>
                         <input type="email" name="email" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
+                        @if ($errors->has('email'))
+                            <span class="text-sm text-red-500 mt-1">{{ $errors->first('email') }}</span>
+                        @endif
                     </div>
 
                     <div>
                         <label for="password" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Contraseña</label>
                         <input type="password" name="password" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
+                        @if ($errors->has('password'))
+                             <span class="text-sm text-red-500 mt-1">{{ $errors->first('password') }}</span>
+                        @endif
                     </div>
 
                     <button class="block rounded-lg bg-gray-800 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-gray-700 focus-visible:ring active:bg-gray-600 md:text-base">Iniciar Sesión</button>
 
-                    <div class="relative flex items-center justify-center">
+                    <!-- <div class="relative flex items-center justify-center">
                         <span class="absolute inset-x-0 h-px bg-gray-300"></span>
                         <span class="relative bg-white px-4 text-sm text-gray-400">Inicia sesión con tu cuenta de Google</span>
-                    </div>
+                    </div> -->
 
                     <!-- <button class="flex items-center justify-center gap-2 rounded-lg bg-blue-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-blue-300 transition duration-100 hover:bg-blue-600 focus-visible:ring active:bg-blue-700 md:text-base">
                         <svg class="h-5 w-5 shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,7 +49,7 @@
                         Continue with Facebook
                     </button> -->
 
-                    <button class="flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-8 py-3 text-center text-sm font-semibold text-gray-800 outline-none ring-gray-300 transition duration-100 hover:bg-gray-100 focus-visible:ring active:bg-gray-200 md:text-base">
+                    <!-- <button class="flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-8 py-3 text-center text-sm font-semibold text-gray-800 outline-none ring-gray-300 transition duration-100 hover:bg-gray-100 focus-visible:ring active:bg-gray-200 md:text-base">
                         <svg class="h-5 w-5 shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M23.7449 12.27C23.7449 11.48 23.6749 10.73 23.5549 10H12.2549V14.51H18.7249C18.4349 15.99 17.5849 17.24 16.3249 18.09V21.09H20.1849C22.4449 19 23.7449 15.92 23.7449 12.27Z" fill="#4285F4" />
                             <path d="M12.2549 24C15.4949 24 18.2049 22.92 20.1849 21.09L16.3249 18.09C15.2449 18.81 13.8749 19.25 12.2549 19.25C9.12492 19.25 6.47492 17.14 5.52492 14.29H1.54492V17.38C3.51492 21.3 7.56492 24 12.2549 24Z" fill="#34A853" />
@@ -53,7 +59,7 @@
 
                         Continúa con Google
                     </button>
-                </div>
+                </div> -->
 
                 <div class="flex items-center justify-center bg-gray-100 p-4">
                     <p class="text-center text-sm text-gray-500">No tienes una cuenta? <a href="{{ route('register') }}" class="text-indigo-500 transition duration-100 hover:text-indigo-600 active:text-indigo-700">Regístrate aquí</a></p>

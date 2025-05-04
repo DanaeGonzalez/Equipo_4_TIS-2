@@ -16,7 +16,7 @@ class LoginController extends Controller
 	{
 	    // Comprobamos que el email y la contraseña han sido introducidos
 	    $request->validate([
-	        'email' or 'run' => 'required',
+	        'email' => 'required',
 	        'password' => 'required',
 	    ]);
 	
@@ -30,6 +30,6 @@ class LoginController extends Controller
 	    }
 	
 	    // Si el usuario no existe devolvemos al usuario al formulario de login con un mensaje de error
-	    return redirect()->route('login')->withSuccess('Los datos introducidos no son correctos');
+	    return redirect()->route('login')->with('error','Los datos introducidos no son correctos');
 	}
 }
