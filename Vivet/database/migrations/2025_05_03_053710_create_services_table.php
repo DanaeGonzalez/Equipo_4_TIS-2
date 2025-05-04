@@ -17,6 +17,7 @@ class CreateServicesTable extends Migration
             $table->text('description');
             $table->integer('estimated_duration');
             $table->unsignedBigInteger('price');
+            $table->string('icon')->nullable();
             $table->timestamps();
         });
 
