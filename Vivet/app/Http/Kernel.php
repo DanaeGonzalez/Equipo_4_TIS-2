@@ -49,6 +49,7 @@ class Kernel extends HttpKernel
         ],
         'admin' => [\App\Http\Middleware\AdminMiddleware::class],
         'tutor' => [\App\Http\Middleware\TutorMiddleware::class],
+        //'vet' =>
     ];
 
     /**

@@ -22,7 +22,7 @@ class SuperAdminSeeder extends Seeder
                 'password' => bcrypt('password'),
                 'user_type' => $role->name,
                 'is_active' => true,
-                'role_id' => $role->role_id,
+                'role_id' => $role->id,
             ]
         );
     }

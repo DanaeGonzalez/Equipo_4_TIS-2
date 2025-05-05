@@ -37,7 +37,6 @@ Route::middleware(['admin'])->group(function() {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     // Otras rutas protegidas
-    // Rutas para asignar permisos a roles (solo administradores)
     Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
     Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
 

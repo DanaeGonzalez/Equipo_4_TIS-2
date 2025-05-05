@@ -60,7 +60,10 @@ class PermissionController extends Controller
 
         ]);
 
-        $permission->update($request->only('name'));
+        $permission->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
 
         return redirect()->route('permissions.index')->with('success', 'Permiso actualizado.');
     }
