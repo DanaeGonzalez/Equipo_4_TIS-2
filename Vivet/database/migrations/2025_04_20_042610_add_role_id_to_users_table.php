@@ -18,7 +18,7 @@ return new class extends Migration
 
                 // Define la relación de clave foránea
                 $table->foreign('role_id')
-                    ->references('role_id')
+                    ->references('id')
                     ->on('roles')
                     ->onDelete('set null'); // si se borra el rol, se establece en NULL
             }

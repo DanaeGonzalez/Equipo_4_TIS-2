@@ -33,7 +33,14 @@
       </nav>
       <!-- nav - end -->
 
-      <!-- buttons - start -->
+      <!-- buttons - start (en caso de estar autenticado) -->
+      @auth
+      <form method="post" action="{{ route('logout') }}" class="-ml-8 hidden flex-col gap-2.5 sm:flex-row sm:justify-center lg:flex lg:justify-start">
+        @csrf
+        <button type="submit" class="inline-block rounded-lg px-4 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:text-indigo-500 focus-visible:ring active:text-indigo-600 md:text-base">Cerrar Sesión</>
+      </form>
+      <!-- (en caso de no estar autenticado) -->
+      @else
       <div class="-ml-8 hidden flex-col gap-2.5 sm:flex-row sm:justify-center lg:flex lg:justify-start">
         <a href="#" class="inline-block rounded-lg px-4 py-3 text-center text-sm font-semibold text-white transition duration-100 hover:opacity-80 md:text-base"
            style="background-color: var(--color-button-secondary)">
