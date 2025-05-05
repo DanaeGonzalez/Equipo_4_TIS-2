@@ -21,6 +21,7 @@ class SuperAdminMiddleware
         }
 
         // Si no es superadmin, redireccionar a dashboard normal
-        return redirect()->route('dashboard')->with('error', 'Acceso no autorizado.');
+        return redirect('/')->with('error', 'Acceso no autorizado.');
+
     }
 }

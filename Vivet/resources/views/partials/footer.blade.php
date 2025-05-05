@@ -1,4 +1,3 @@
-<!-- resources/views/partials/footer.blade.php -->
 <div class="bg-white pt-4 sm:pt-10 lg:pt-12">
   <footer class="mx-auto max-w-screen-2xl px-4 md:px-8">
     <div class="mb-16 grid grid-cols-2 gap-12 border-t pt-10 md:grid-cols-4 lg:grid-cols-6 lg:gap-8 lg:pt-12">
@@ -6,16 +5,14 @@
         <!-- logo - start -->
         <div class="mb-4 lg:-mt-2">
           <a href="/" class="inline-flex items-center gap-2 text-xl font-bold text-black md:text-2xl" aria-label="logo">
-            <svg width="95" height="94" viewBox="0 0 95 94" class="h-auto w-5 text-indigo-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M96 0V47L48 94H0V47L48 0H96Z" />
-            </svg>
-
-            Flowrift
+            <img src="{{ asset('images/clients/client1/logo.png') }}" alt="Logo Vivet" class="h-20 w-auto">
           </a>
         </div>
         <!-- logo - end -->
 
-        <p class="mb-6 text-gray-500 sm:pr-8">Filler text is dummy text which has no meaning however looks very similar to real text.</p>
+        <p class="mb-6 text-gray-500 sm:pr-8">
+          Clínica Veterinaria Vivet: atención integral para tus mascotas, con cariño, compromiso y profesionales de confianza.
+        </p>
 
         <!-- social - start -->
         <div class="flex gap-4">
@@ -46,103 +43,49 @@
         <!-- social - end -->
       </div>
 
-      <!-- nav - start -->
+      <!-- nav - Servicios -->
       <div>
-        <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Products</div>
-
+        <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Servicios</div>
         <nav class="flex flex-col gap-4">
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Overview</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Solutions</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Pricing</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Customers</a>
-          </div>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Consulta general</a>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Vacunación</a>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Cirugías</a>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Urgencias</a>
         </nav>
       </div>
-      <!-- nav - end -->
 
-      <!-- nav - start -->
+      <!-- nav - Nosotros -->
       <div>
-        <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Company</div>
-
+        <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Nosotros</div>
         <nav class="flex flex-col gap-4">
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">About</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Investor Relations</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Jobs</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Press</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Blog</a>
-          </div>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Quiénes somos</a>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Nuestro equipo</a>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Blog</a>
         </nav>
       </div>
-      <!-- nav - end -->
 
-      <!-- nav - start -->
+      <!-- nav - Ayuda -->
       <div>
-        <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Support</div>
-
+        <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Ayuda</div>
         <nav class="flex flex-col gap-4">
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Contact</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Documentation</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Chat</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">FAQ</a>
-          </div>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Contacto</a>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Preguntas frecuentes</a>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Agendar cita</a>
         </nav>
       </div>
-      <!-- nav - end -->
 
-      <!-- nav - start -->
+      <!-- nav - Legal -->
       <div>
         <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Legal</div>
-
         <nav class="flex flex-col gap-4">
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Terms of Service</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Privacy Policy</a>
-          </div>
-
-          <div>
-            <a href="#" class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Cookie settings</a>
-          </div>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Términos de servicio</a>
+          <a href="#" class="text-gray-500 hover:text-indigo-500">Política de privacidad</a>
         </nav>
       </div>
-      <!-- nav - end -->
     </div>
 
-    <div class="border-t py-8 text-center text-sm text-gray-400">© 2021 - Present Flowrift. All rights reserved.</div>
+    <div class="border-t py-8 text-center text-sm text-gray-400">
+      © {{ date('Y') }} Clínica Veterinaria Vivet. Todos los derechos reservados.
+    </div>
   </footer>
 </div>

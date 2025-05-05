@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'superadmin' => [ // Agregado para Superadmin
+            'driver' => 'session',
+            'provider' => 'superadmins',
+        ],
     ],
 
     /*
@@ -63,6 +68,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'superadmins' => [ // Agregado para Superadmin
+            'driver' => 'eloquent',
+            'model' => App\Models\Superadmin::class,
         ],
 
         // 'users' => [
