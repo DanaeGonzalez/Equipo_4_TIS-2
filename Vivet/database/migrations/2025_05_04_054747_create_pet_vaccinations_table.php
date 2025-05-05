@@ -42,7 +42,7 @@ class CreatePetVaccinationsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vaccines');
         Schema::dropIfExists('pet_vaccinations');
+        Schema::dropIfExists('vaccines');
     }
 };
