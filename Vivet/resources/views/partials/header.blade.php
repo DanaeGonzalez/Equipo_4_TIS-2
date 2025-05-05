@@ -42,17 +42,17 @@
       <!-- (en caso de no estar autenticado) -->
       @else
       <div class="-ml-8 hidden flex-col gap-2.5 sm:flex-row sm:justify-center lg:flex lg:justify-start">
-        <a href="#" class="inline-block rounded-lg px-4 py-3 text-center text-sm font-semibold text-white transition duration-100 hover:opacity-80 md:text-base"
+        <a href="{{ route('login') }}" class="inline-block rounded-lg px-4 py-3 text-center text-sm font-semibold text-white transition duration-100 hover:opacity-80 md:text-base"
            style="background-color: var(--color-button-secondary)">
            Iniciar Sesión
         </a>
 
-        <a href="#" class="inline-block rounded-lg px-8 py-3 text-center text-sm font-semibold text-white transition duration-100 hover:opacity-80 md:text-base"
+        <a href="{{ route('register') }}" class="inline-block rounded-lg px-8 py-3 text-center text-sm font-semibold text-white transition duration-100 hover:opacity-80 md:text-base"
            style="background-color: var(--color-button-primary)">
            Registrarse
         </a>
       </div>
-
+      @endauth
       <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-white px-2.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 md:text-base lg:hidden">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
