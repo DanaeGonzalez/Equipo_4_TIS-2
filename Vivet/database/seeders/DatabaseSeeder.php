@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
             SuperAdminSeeder::class,
             ScheduleSeeder::class,
             UsersTableSeeder::class,
-            ClientsTableSeeder::class,
             PetsTableSeeder::class,
             ServicesTableSeeder::class,
             

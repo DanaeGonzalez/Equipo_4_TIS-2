@@ -11,19 +11,26 @@ class ServicesTableSeeder extends Seeder
     {
         Service::create([
             'name' => 'Vacunación',
-            'price' => '13000'
-
-    
+            'description' => 'hola',
+            'estimated_duration' => 1,
+            'price' => '13000',
+            'icon' => null,
         ]);
         
         Service::create([
             'name' => 'Desparasitación',
-            'price' => '15000'
+            'description' => 'hola',
+            'estimated_duration' => 2,
+            'price' => '15000',
+            'icon' => null,
         ]);
 
         Service::create([
             'name' => 'Consulta general',
-            'price' => '10000'
+            'description' => 'hola',
+            'estimated_duration' => 3,
+            'price' => '10000',
+            'icon' => null,
         ]);
     }
 }
