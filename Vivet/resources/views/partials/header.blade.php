@@ -1,23 +1,35 @@
-<div class="bg-[var(--color-bg-section)] shadow-md border-b border-gray-200 mb-8">
+<!-- Franja superior -->
+<div class="bg-[var(--color-accent-1)] text-white text-sm py-2">
+    <div class="mx-auto max-w-screen-xl px-4 flex justify-between items-center">
+        <span>
+            📞 Contáctanos: +56 9 4251 3361
+        </span>
+        <span>
+            🐾 Clínica Veterinaria Vivet
+        </span>
+    </div>
+</div>
+
+<div class="bg-[var(--color-bg-main)] shadow-md border-b border-gray-200 mb-8">
   <div class="mx-auto max-w-screen-xl px-4 md:px-8">
     <header class="flex items-center justify-between py-3 md:py-4">
       <!-- logo - start -->
-      <a href="/" class="inline-flex items-center gap-2.5 text-2xl font-bold text-white md:text-3xl" aria-label="logo">
+      <a href="/" class="inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl" aria-label="logo">
         <img src="{{ asset('images/clients/client1/logo.png') }}" alt="Logo Vivet" class="h-20 w-auto">
       </a>
       <!-- logo - end -->
 
       <!-- nav - start -->
       <nav class="hidden gap-12 lg:flex">
-        <a href="#" class="text-lg font-semibold text-white transition duration-100 hover:underline">Inicio</a>
-        <a href="#" class="inline-flex items-center gap-1 text-lg font-semibold text-white hover:underline">
+        <a href="#" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Inicio</a>
+        <a href="#" class="inline-flex items-center gap-1 text-lg font-semibold text-black hover:underline">
           Servicios
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
         </a>
-        <a href="#" class="text-lg font-semibold text-white transition duration-100 hover:underline">Contacto</a>
-        <a href="#" class="text-lg font-semibold text-white transition duration-100 hover:underline">Equipo</a>
+        <a href="#" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Contacto</a>
+        <a href="#" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Equipo</a>
       </nav>
       <!-- nav - end -->
 
