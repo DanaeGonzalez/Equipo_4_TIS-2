@@ -11,21 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            //$table->bigIncrements('role_id');
-            $table->id();
-            $table->string('name')->unique();
-            $table->boolean('is_active');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('sex',['Hombre','Mujer','Otro'])->after('run')->nullable();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('sex');
+        });
     }
 };

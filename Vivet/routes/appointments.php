@@ -15,3 +15,8 @@ Route::put('/appointments/{appointment}', [AppointmentController::class, 'update
 Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
 
 
+
+// Gestión de citas
+Route::middleware(['auth'])->group(function () {
+    Route::resource('appointments', AppointmentController::class);
+});

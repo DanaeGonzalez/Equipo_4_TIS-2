@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             PetsTableSeeder::class,
             ServicesTableSeeder::class,
             
+            TutorSeeder::class,
+            VeterinarioSeeder::class,
         ]);
         
     }

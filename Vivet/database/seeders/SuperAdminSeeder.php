@@ -4,25 +4,26 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Role;
 
 class SuperAdminSeeder extends Seeder
 {
     public function run()
     {
-        if (!User::where('email', 'admin@admin.com')->exists()) {
-            User::create([
+        $role = Role::find(1); 
+
+        User::updateOrCreate(
+            ['email' => 'admin@admin.com'], 
+            [ 
                 'name' => 'Danae',
-                'lastname'=> 'Gonzalez',
+                'lastname'=> 'González',
+                'run' => 21065316,
                 'email' => 'admin@admin.com',
                 'password' => bcrypt('password'),
-                'user_type' => 'SuperAdmin',
+                'user_type' => $role->name,
                 'is_active' => true,
-                'role_id' => 1,
-            ]);
-        }
-        else{
-            $this->command->info('La tabla "users" ya contiene a Danae');
-        }
+                'role_id' => $role->role_id,
+            ]
+        );
     }
 }
-
