@@ -69,7 +69,7 @@
         <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Ayuda</div>
         <nav class="flex flex-col gap-4">
           <a href="{{ route('contact') }}" class="text-gray-500 hover:text-indigo-500">Contacto</a>
-          <a href="#" class="text-gray-500 hover:text-indigo-500">Preguntas frecuentes</a>
+          <a href="{{ route('faq') }}" class="text-gray-500 hover:text-indigo-500">Preguntas frecuentes</a>
           <a href="#" class="text-gray-500 hover:text-indigo-500">Agendar cita</a>
         </nav>
       </div>
