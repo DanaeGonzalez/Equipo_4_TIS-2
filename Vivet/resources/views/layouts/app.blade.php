@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Clínica Veterinaria')</title>
     <!-- Incluye tu archivo de Tailwind compilado o los links a CDN -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.colors')
+
 </head>
 
 <body class="flex flex-col min-h-screen">
@@ -21,7 +22,5 @@
     {{-- Footer --}}
     @include('partials.footer')
 
-    <!-- Puedes incluir tus scripts JS al final -->
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

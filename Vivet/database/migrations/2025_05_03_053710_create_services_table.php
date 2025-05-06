@@ -38,13 +38,19 @@ class CreateServicesTable extends Migration
      */
     public function down(): void
     {
-        Schema::table('appointments', function (Blueprint $table) {
-            if (Schema::hasColumn('appointments', 'service_id')) {
-                $table->dropForeign(['service_id']);
-                $table->dropColumn('service_id');
-            }
-        });
-        
+        // Elimina la columna service_id de appointments si existe (revisar)
+        if (Schema::hasTable('appointments')) {
+            Schema::table('appointments', function (Blueprint $table) {
+                if (Schema::hasColumn('appointments', 'service_id')) {
+                    try {
+                        $table->dropForeign(['service_id']);
+                    } catch (\Illuminate\Database\QueryException $e) {
+
+                    }
+                    $table->dropColumn('service_id');
+                }
+            });
+        }
         Schema::dropIfExists('services');
     }
 };

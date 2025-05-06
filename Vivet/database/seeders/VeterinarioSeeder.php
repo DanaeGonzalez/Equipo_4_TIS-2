@@ -42,7 +42,7 @@ class VeterinarioSeeder extends Seeder
                     'password' => Hash::make($userData['password']),
                     'user_type' => $role->name,  
                     'is_active' => true,
-                    'role_id' => $role->role_id,
+                    'role_id' => $role->id,
                 ]
             );
 
