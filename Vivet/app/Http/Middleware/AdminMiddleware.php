@@ -19,7 +19,9 @@ class AdminMiddleware
         if (auth()->check() && auth()->user()->role?->name === 'Administrador') {
             return $next($request);
         } 
-        
+        if (auth()->user() && !auth()->user()->is_active) {
+            abort(403, 'Usuario desactivado.');
+        }
         return redirect()->route('home')->with('error', 'Acceso no autorizado');
     }
 }
