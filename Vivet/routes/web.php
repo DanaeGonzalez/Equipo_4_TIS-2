@@ -19,6 +19,14 @@ Route::get('/', function () {
     return view('landing');
 });
 
+Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
+
+Route::view('/terms-of-service', 'pages.terms-of-service')->name('terms-of-service');
+
+Route::view('/contact', 'pages.contact')->name('contact');
+
+Route::view('/about-us', 'pages.about-us')->name('about');
+
 Route::get('/registro', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
 
