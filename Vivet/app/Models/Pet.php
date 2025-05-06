@@ -11,11 +11,12 @@ class Pet extends Model
 
     protected $fillable = [
         'client_id',
-        'name',
+        'pet_name',
         'species',
         'breed',
-        'sex',
         'color',
+        'sex',
+        'status',
         'date_of_birth',
         'microchip_number',
         'notes',

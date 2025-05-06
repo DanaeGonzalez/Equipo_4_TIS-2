@@ -14,6 +14,9 @@ class ScheduleController extends Controller
             ->get()
             ->groupBy(function ($item) {
                 return \Carbon\Carbon::parse($item->event_date)->locale('es')->isoFormat('dddd'); 
+            })
+            ->map(function ($day) {
+                return $day->sortBy('event_time'); //ordena horario x dia
             });
 
         return view('schedules.index', compact('schedules'));

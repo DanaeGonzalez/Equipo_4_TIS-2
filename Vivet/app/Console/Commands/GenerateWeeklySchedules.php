@@ -30,13 +30,15 @@ class GenerateWeeklySchedules extends Command
                 Schedule::firstOrCreate([
                     'event_date' => $date->toDateString(),
                     'event_time' => sprintf('%02d:00:00', $hour),
+                    'user_id'    => 2 , // asigna al usuario con ID 2 , que es admi
                 ], [
                     'is_reserved' => 0,
+                    'event_type'  => 'general', // valor por defecto
                     
                 ]);
             }
         }
-
+        /* php artisan schedules:generate-weekly */
         $this->info(' Horarios generados exitosamente para la semana del ' . $startDate->toDateString());
     }
 }

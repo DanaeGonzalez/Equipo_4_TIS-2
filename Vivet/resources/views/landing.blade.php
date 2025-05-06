@@ -55,7 +55,7 @@
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-6">
                 <h2 class="text-white text-4xl font-bold mb-4">Bienvenido a la Clínica</h2>
                 <p class="text-white text-lg mb-6">Cuidamos a tu mascota como parte de nuestra familia.</p>
-                <a href="#contact"
+                <a href="{{ route('appointments.create') }}"
                     style="background-color: var(--color-button-secondary);"
                     class="hover:opacity-90 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">
                     Reserva una cita

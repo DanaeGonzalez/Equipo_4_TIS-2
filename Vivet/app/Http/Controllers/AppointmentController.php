@@ -26,8 +26,8 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
-        ->orderBy('appointment_date')// ordena por fecha completa
-        ->get();
+            ->orderBy('appointment_date')// ordena por fecha completa
+            ->get();
         return view('appointments.index', compact('appointments'));
     }
 
@@ -35,9 +35,9 @@ class AppointmentController extends Controller
     {
         try {
             $request->validate([
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'rut' => 'required|string|max:12',
+                'name' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'client_run' => 'required|string|max:12',
                 'email' => 'required|email',
                 'phone' => 'required|string',
                 'address' => 'nullable|string',
@@ -45,15 +45,15 @@ class AppointmentController extends Controller
                 'pet_name' => 'required|string|max:255',
                 'species' => 'required|string|max:255',
                 'breed' => 'nullable|string|max:255',
-                'sex' => 'required|in:macho,hembra',
                 'color' => 'nullable|string|max:255',
+                'sex' => 'required|in:Macho,Hembra',
                 'date_of_birth' => 'nullable|date',
                 'microchip_number' => 'nullable|string|max:255',
                 'notes' => 'nullable|string',
 
                 'schedule_id' => 'required|exists:schedules,id',
                 'service_id' => 'required|exists:services,id',
-                'user_id' => 'required|exists:users,id',
+                'vet_id' => 'required|exists:users,id',
                 'reason' => 'required|string',
             ]);
 
@@ -62,7 +62,7 @@ class AppointmentController extends Controller
                 return back()->withErrors(['schedule_id' => 'Este horario ya fue reservado.']);
             }
 
-            $veterinarian = User::where('id', $request->user_id)
+            $veterinarian = User::where('id', $request->vet_id)
                 ->where('role_id', 4)
                 ->where('is_active', 1)
                 ->first();
@@ -72,9 +72,10 @@ class AppointmentController extends Controller
             }
 
             $client = Client::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'rut' => $request->rut,
+                'user_id' => auth()->id(), // guardad quien registro al client
+                'name' => $request->name,
+                'lastname' => $request->lastname,
+                'client_run' => $request->client_run,
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'address' => $request->address,
@@ -82,11 +83,11 @@ class AppointmentController extends Controller
 
             $pet = Pet::create([
                 'client_id' => $client->id,
-                'name' => $request->pet_name,
+                'pet_name' => $request->pet_name,
                 'species' => $request->species,
                 'breed' => $request->breed,
-                'sex' => $request->sex,
                 'color' => $request->color,
+                'sex' => $request->sex,
                 'date_of_birth' => $request->date_of_birth,
                 'microchip_number' => $request->microchip_number,
                 'notes' => $request->notes,
@@ -95,7 +96,7 @@ class AppointmentController extends Controller
             Appointment::create([
                 'schedule_id' => $schedule->id,
                 'pet_id' => $pet->id,
-                'user_id' => $veterinarian->id,
+                'vet_id' => $veterinarian->id,
                 'service_id' => $request->service_id,
                 'appointment_date' => $schedule->event_date . ' ' . $schedule->event_time,
                 'reason' => $request->reason,
@@ -106,7 +107,11 @@ class AppointmentController extends Controller
 
             return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
         } catch (Exception $e) {
-            Log::error('Error al registrar cita: ' . $e->getMessage());
+            Log::error('Error al registrar cita: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'request' => $request->all()
+
+            ]);
             return back()->withErrors(['general' => 'Ocurrió un error al registrar la cita. Intenta nuevamente.']);
         }
     }

@@ -1,88 +1,125 @@
 @extends('layouts.app')
-<!--este funciona-->
+
+
 @section('content')
-    <div class="container mx-auto max-w-lg p-2 bg-white shadow rounded">
-        <h2 class="text-xl font-bold mb-4">Agendar Cita</h2>
+    <div class="container mx-auto max-w-3xl p-8 bg-gradient-to-br from-white to-gray-100 shadow-xl rounded-2xl mt-10">
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-extrabold text-indigo-700"  style="color: var(--color-title);">Reserva tu Cita</h2>
+
+        </div>
 
         @if(session('success'))
-            <div class="bg-green-200 text-green-800 p-2 mb-4 rounded">{{ session('success') }}</div>
+            <div class="bg-green-100 border border-green-300 text-green-700 p-4 rounded mb-4">
+                {{ session('success') }}
+            </div>
         @endif
 
         @if($errors->any())
-            <div class="bg-red-200 text-red-800 p-2 mb-4 rounded">
-                <ul>
+            <div class="bg-red-100 border border-red-300 text-red-700 p-4 rounded mb-4">
+                <ul class="list-disc pl-5">
                     @foreach($errors->all() as $error)
-                        <li>• {{ $error }}</li>
+                        <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
-        <form action="{{ route('appointments.store') }}" method="POST">
+
+        <form action="{{ route('appointments.store') }}" method="POST" class="space-y-6">
             @csrf
 
             <!-- Cliente -->
-            <h3 class="font-semibold mb-2">Datos del Cliente</h3>
-            <input type="text" name="first_name" placeholder="Nombre" class="w-full mb-2 p-2 border rounded" required>
-            <input type="text" name="last_name" placeholder="Apellido" class="w-full mb-2 p-2 border rounded" required>
-            <input type="text" name="rut" placeholder="RUT" class="w-full mb-2 p-2 border rounded" required>
-            <input type="email" name="email" placeholder="Correo Electrónico" class="w-full mb-2 p-2 border rounded"
-                required>
-            <input type="text" name="phone" placeholder="Teléfono" class="w-full mb-2 p-2 border rounded" required>
-            <input type="text" name="address" placeholder="Dirección" class="w-full mb-4 p-2 border rounded">
+            <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
+                <h3 class="col-span-2 text-lg font-semibold text-indigo-700"  style="color: var(--color-title);">Datos del Cliente</h3>
+                <input type="text" name="name" placeholder="Nombre" class="input" required>
+                <input type="text" name="lastname" placeholder="Apellido" class="input" required>
+                <input type="text" name="client_run" placeholder="RUT" class="input col-span-2" required>
+                <input type="email" name="email" placeholder="Correo Electrónico" class="input col-span-2" required>
+                <input type="text" name="phone" placeholder="Teléfono" class="input">
+                <input type="text" name="address" placeholder="Dirección" class="input">
+            </div>
 
             <!-- Mascota -->
-            <h3 class="font-semibold mb-2">Datos de la Mascota</h3>
-            <input type="text" name="pet_name" placeholder="Nombre" class="w-full mb-2 p-2 border rounded" required>
-            <input type="text" name="species" placeholder="Especie" class="w-full mb-2 p-2 border rounded" required>
-            <input type="text" name="breed" placeholder="Raza" class="w-full mb-2 p-2 border rounded">
-            <select name="sex" class="w-full mb-2 p-2 border rounded" required>
-                <option value="">Seleccione Sexo</option>
-                <option value="macho">Macho</option>
-                <option value="hembra">Hembra</option>
-            </select>
-            <input type="text" name="color" placeholder="Color" class="w-full mb-2 p-2 border rounded">
-            <input type="date" name="date_of_birth" placeholder="Fecha de Nacimiento"
-                class="w-full mb-2 p-2 border rounded">
-            <input type="text" name="microchip_number" placeholder="Número de Microchip"
-                class="w-full mb-2 p-2 border rounded">
-            <textarea name="notes" placeholder="Notas" class="w-full mb-4 p-2 border rounded"></textarea>
+            <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4" >
+                <h3 class="col-span-2 text-lg font-semibold "  style="color: var(--color-title);">Datos de la Mascota</h3>
+                <input type="text" name="pet_name" placeholder="Nombre" class="input" required>
+                <input type="text" name="species" placeholder="Especie" class="input" required>
+                <input type="text" name="breed" placeholder="Raza" class="input">
+                <input type="text" name="color" placeholder="Color" class="input">
+                <select name="sex" class="input" required>
+                    <option value="">Seleccione Sexo</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                </select>
+                <input type="date" name="date_of_birth" class="input">
+                <input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
+                <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>
+            </div>
 
-            <!-- Servicio -->
-            <h3 class="font-semibold mb-2">Servicio</h3>
-            <select name="service_id" class="w-full mb-2 p-2 border rounded" required>
-                @foreach($services as $service)
-                    <option value="{{ $service->id }}">{{ $service->name }}</option>
-                @endforeach
-            </select>
+            <!-- Servicio y Veterinario -->
+            <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
+                <h3 class="col-span-2 text-lg font-semibold" style="color: var(--color-title);"> Servicio y Veterinario</h3>
+                <select name="service_id" class="input col-span-2" required>
+                    @foreach($services as $service)
+                        <option value="{{ $service->id }}">{{ $service->name }}</option>
+                    @endforeach
+                </select>
+                <select name="vet_id" class="input col-span-2" required>
+                    @foreach($veterinarians as $veterinarian)
+                        <option value="{{ $veterinarian->id }}">{{ $veterinarian->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-            <!-- Veterinario -->
-            <h3 class="font-semibold mb-2">Veterinario</h3>
-            <select name="user_id" class="w-full mb-2 p-2 border rounded" required>
-                @foreach($veterinarians as $veterinarian)
-                    <option value="{{ $veterinarian->id }}">
-                        {{ $veterinarian->name }}
-                    </option>
-                @endforeach
-            </select>
+            <!-- horario
+                <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
+                    <h3 class="col-span-2 text-lg font-semibold text-indigo-700"> Horario & Motivo</h3>
 
+                    <select name="schedule_id" class="input col-span-2" required>
+                        @foreach($schedules as $schedule)
+                            <option value="{{ $schedule->id }}">{{ $schedule->event_date }} - {{ $schedule->event_time }}</option>
+                        @endforeach
+                    </select> 
+
+                    <input type="text" name="reason" placeholder="Motivo" class="input col-span-2" required>
+                </div> -->
 
             <!-- Horario -->
-            <h3 class="font-semibold mb-2">Horario</h3>
-            <select name="schedule_id" class="w-full mb-2 p-2 border rounded" required>
-                @foreach($schedules as $schedule)
-                    <option value="{{ $schedule->id }}">
-                        {{ $schedule->event_date }} - {{ $schedule->event_time }}
-                    </option>
-                @endforeach
-            </select>
+            <div class="bg-white p-6 rounded-2xl shadow-md grid grid-cols-2 gap-4">
+                <h3 class="col-span-2 text-lg font-semibold" style="color: var(--color-title);">Horario & Motivo</h3>
 
-            <!-- Fecha de la Cita 
-                <input type="datetime-local" name="appointment_date" class="w-full mb-2 p-2 border rounded" required>-->
-            <input type="text" name="reason" class="w-full mb-2 p-2 border rounded" placeholder="Motivo" required>
+                <select name="schedule_id" class="input-elegante col-span-2" required>
+                    @php
+                        $groupedSchedules = $schedules->groupBy('event_date');
+                    @endphp
 
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    @foreach($groupedSchedules as $date => $daySchedules)
+                        <optgroup label="{{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}">
+                            @foreach($daySchedules as $schedule)
+                                <option value="{{ $schedule->id }}">
+                                    {{ $schedule->event_time }}
+                                </option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                </select>
+
+                <input type="text" name="reason" placeholder="Motivo" class="input-elegante col-span-2" required>
+            </div>
+
+
+
+
+            <!--  gaurdar reserva -->
+            <button type="submit" style="background-color: var(--color-button-secondary);"
+                class="w-full bg-indigo-600 text-white py-3 rounded-xl shadow hover:bg-indigo-700 transition transform hover:scale-105">
                 Guardar Cita
             </button>
         </form>
     </div>
+
+    <style>
+        .input {
+            @apply w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500;
+        }
+    </style>
 @endsection
