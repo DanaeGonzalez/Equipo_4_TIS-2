@@ -1,5 +1,5 @@
 <?php
-
+/*
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\ClinicController;
@@ -10,3 +10,4 @@ Route::prefix('sa')->name('superadmin.')->middleware('auth:superadmin')->group(f
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //Route::resource('clinics', ClinicController::class);
 });
+*/
