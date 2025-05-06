@@ -23,6 +23,8 @@ class CreateClientsTable extends Migration
             $table->text('address')->nullable();
             //$table->string('');
             $table->timestamps();
+
+            
         });
     }
 
