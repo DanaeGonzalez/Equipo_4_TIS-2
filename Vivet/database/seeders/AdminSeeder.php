@@ -7,43 +7,37 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
 
-class TutorSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        $role = Role::where('name', 'Tutor')->first();
+        $role = Role::where('name', 'Administrador')->first();
 
         if (!$role) {
-            throw new \Exception("El rol 'Tutor' no fue encontrado. Asegúrate de haberlo creado en el RoleSeeder.");
+            throw new \Exception("El rol 'Administrador' no fue encontrado. Asegúrate de haberlo creado.");
         }
         // Lista de usuarios a crear o actualizar
         $users = [
             [
-                'name' => 'Natalia',
-                'lastname' => 'Marileo',
-                'run' => 21000000,
-                'email' => 'nmarileo@ing.ucsc.cl',
-                'password' => '12345678',
+                'name' => 'Danae',
+                'lastname' => 'González',
+                'run' => 21065316,
+                'email' => 'dgonzalezv@ing.ucsc.cl',
+                'password' => 'password',
                 'sex' => 'Mujer',
             ],
             [
-                'name' => 'César',
-                'lastname' => 'Avendaño',
-                'run' => 21072053,
-                'email' => 'cavendano@ing.ucsc.cl',
-                'password' => '12345678',
-                'sex' => 'Hombre',
-            ],
-            [
-                'name' => 'Pablo',
-                'lastname' => 'Gonzalez',
-                'run' => 12345678,
-                'email' => 'pgonzalezk@ing.ucsc.cl',
-                'password' => '12345678',
+                'name' => 'Javier',
+                'lastname' => 'Pino',
+                'run' => 22293459,
+                'email' => 'jpinoh@ing.ucsc.cl',
+                'password' => 'password',
                 'sex' => 'Hombre',
             ],
         ];
-
         foreach ($users as $userData) {
             $user = User::updateOrCreate(
                 ['email' => $userData['email']],
@@ -54,15 +48,15 @@ class TutorSeeder extends Seeder
                     'sex' => $userData['sex'],
                     'email' => $userData['email'],
                     'password' => Hash::make($userData['password']),
-                    'user_type' => $role->name,  
+                    'user_type' => $role->name,
                     'is_active' => true,
                     'role_id' => $role->id,
                 ]
             );
 
             echo $user->wasRecentlyCreated
-            ? "Usuario {$userData['email']} creado.\n"
-            : "Usuario {$userData['email']} actualizado.\n";
+                ? "Usuario {$userData['email']} creado.\n"
+                : "Usuario {$userData['email']} actualizado.\n";
         }
     }
 }

@@ -44,11 +44,12 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'superadmin' => [
+        /* 'superadmin' => [
         \App\Http\Middleware\SuperAdminMiddleware::class,
-        ],
+        ],*/
         'admin' => [\App\Http\Middleware\AdminMiddleware::class],
         'tutor' => [\App\Http\Middleware\TutorMiddleware::class],
+        //'vet' =>[\App\Http\Middleware\VeterinarioMiddleware::class],
     ];
 
     /**
