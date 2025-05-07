@@ -26,6 +26,16 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     //Por ej: agendar horas
 });
 
+Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
+
+Route::view('/terms-of-service', 'pages.terms-of-service')->name('terms-of-service');
+
+Route::view('/contact', 'pages.contact')->name('contact');
+
+Route::view('/about-us', 'pages.about-us')->name('about');
+
+Route::view('/faq', 'pages.faq')->name('faq');
+
 Route::get('/registro', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
 

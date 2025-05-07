@@ -9,3 +9,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('posts', PostController::class);
     Route::resource('post-categories', PostCategoryController::class);
 });*/
+
+Route::view('/blog', 'blog.index')->name('blog.index');
