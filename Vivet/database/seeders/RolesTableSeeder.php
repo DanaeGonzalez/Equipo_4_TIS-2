@@ -14,13 +14,7 @@ class RolesTableSeeder extends Seeder
         if (DB::table('roles')->count() == 0) {
             // Si está vacía, insertamos los tres roles predeterminados + 1
             DB::table('roles')->insert([
-                /*
-                ['user_type' => 'SuperAdmin', 'is_active' => true],
-                ['user_type' => 'Administrador', 'is_active' => true],
-                ['user_type' => 'Tutor', 'is_active' => true],
-                ['user_type' => 'Veterinario', 'is_active' => true],*/
-
-                ['name' => 'SuperAdmin', 'is_active' => true], //pendiente de eliminar
+                //['name' => 'SuperAdmin', 'is_active' => true], //pendiente de eliminar
                 ['name' => 'Administrador', 'is_active' => true],
                 ['name' => 'Tutor', 'is_active' => true],
                 ['name' => 'Veterinario', 'is_active' => true],

@@ -21,13 +21,21 @@ Route::get('/', function () {
     return view('landing');
 });
 
+Route::middleware(['auth', 'is_active'])->group(function () {
+    // Rutas protegidas para usuarios activos
+    //Por ej: agendar horas
+});
 
+Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
 
+Route::view('/terms-of-service', 'pages.terms-of-service')->name('terms-of-service');
 
-// Rutas protegidas: solo usuarios autenticados pueden acceder a la agenda
-/*Route::middleware(['auth'])->group(function () {
-    
-});*/
+Route::view('/contact', 'pages.contact')->name('contact');
+
+Route::view('/about-us', 'pages.about-us')->name('about');
+
+Route::view('/faq', 'pages.faq')->name('faq');
+
 Route::get('/registro', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
 
@@ -38,9 +46,10 @@ Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')
 Route::middleware(['admin'])->group(function() {
     // Rutas que solo puede ver un administrador
     Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
     // Otras rutas protegidas
     Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
     Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
-
+    
 });

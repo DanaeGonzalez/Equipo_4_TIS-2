@@ -11,8 +11,8 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $hidden = [
-        'id',
-        'role_id',
+        //'id',
+        //'role_id',
         'password',
         'remember_token',
     ];
@@ -25,6 +25,7 @@ class User extends Authenticatable
         'run',
         'sex',
         'role_id',
+        'is_active',
     ];
 
     protected $casts = [

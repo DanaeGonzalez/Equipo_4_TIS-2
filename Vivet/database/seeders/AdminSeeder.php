@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
             [
                 'name' => 'Danae',
                 'lastname' => 'González',
-                'run' => 22293459,
+                'run' => 21065316,
                 'email' => 'dgonzalezv@ing.ucsc.cl',
                 'password' => 'password',
                 'sex' => 'Mujer',
@@ -48,15 +48,15 @@ class AdminSeeder extends Seeder
                     'sex' => $userData['sex'],
                     'email' => $userData['email'],
                     'password' => Hash::make($userData['password']),
-                    'user_type' => $role->name,  
+                    'user_type' => $role->name,
                     'is_active' => true,
                     'role_id' => $role->id,
                 ]
             );
 
             echo $user->wasRecentlyCreated
-            ? "Usuario {$userData['email']} creado.\n"
-            : "Usuario {$userData['email']} actualizado.\n";
+                ? "Usuario {$userData['email']} creado.\n"
+                : "Usuario {$userData['email']} actualizado.\n";
         }
     }
 }

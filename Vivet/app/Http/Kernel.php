@@ -44,12 +44,12 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'superadmin' => [
+        /* 'superadmin' => [
         \App\Http\Middleware\SuperAdminMiddleware::class,
-        ],
+        ],*/
         'admin' => [\App\Http\Middleware\AdminMiddleware::class],
         'tutor' => [\App\Http\Middleware\TutorMiddleware::class],
-        //'vet' =>
+        //'vet' =>[\App\Http\Middleware\VeterinarioMiddleware::class],
     ];
 
     /**
@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'is_active' => \App\Http\Middleware\CheckUserIsActive::class,
     ];
 }

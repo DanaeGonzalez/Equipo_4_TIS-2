@@ -64,21 +64,22 @@
                                     </svg>
                                     Permisos
                                 </a>
-
-                                <form action="{{ route('roles.destroy', $role) }}" method="POST"
-                                    class="inline flex items-center gap-1">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este rol?')"
-                                        class="text-red-600 hover:underline flex items-center gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                            stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                        Eliminar
-                                    </button>
-                                </form>
+                                @unless(in_array(strtolower($role->name), ['administrador', 'superadmin']))
+                                    <form action="{{ route('roles.destroy', $role) }}" method="POST"
+                                        class="inline flex items-center gap-1">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este rol?')"
+                                            class="text-red-600 hover:underline flex items-center gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                @endunless
                             </td>
                         </tr>
                     @empty
