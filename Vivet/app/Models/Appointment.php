@@ -21,6 +21,11 @@ class Appointment extends Model
 
     protected $dates = ['appointment_date'];
 
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
     // Relaciones (opcional, pero recomendado)
     public function pet()
     {
@@ -41,4 +46,7 @@ class Appointment extends Model
     {
         return $this->belongsTo(Schedule::class);
     }
+
+   
+
 }

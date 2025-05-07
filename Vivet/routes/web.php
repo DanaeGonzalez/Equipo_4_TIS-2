@@ -8,7 +8,7 @@ use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\AppointmentController;
 
 
 /*
@@ -53,3 +53,9 @@ Route::middleware(['admin'])->group(function() {
     Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
     
 });
+
+Route::middleware(['auth', 'admin_or_vet'])->group(function () {
+    Route::resource('appointments', AppointmentController::class);
+    Route::resource('schedules', ScheduleController::class);
+});
+

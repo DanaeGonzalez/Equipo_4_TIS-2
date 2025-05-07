@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
+
+    public function __construct()//solo admi y veterinaria pueden acceder
+    {
+        $this->middleware(function ($request, $next) {
+            if (!auth()->check() || !in_array(auth()->user()->role_id, [1, 3])) {
+                return redirect('/')->withErrors(['access' => 'No tienes permiso para acceder a esta sección.']);
+            }
+            return $next($request);
+        });
+    }
     public function index()
     {
         $schedules = Schedule::where('is_reserved', 1)

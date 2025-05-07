@@ -60,28 +60,16 @@
                 <h3 class="col-span-2 text-lg font-semibold" style="color: var(--color-title);"> Servicio y Veterinario</h3>
                 <select name="service_id" class="input col-span-2" required>
                     @foreach($services as $service)
-                        <option value="{{ $service->id }}">{{ $service->name }}</option>
+                        <option value="{{ $service->id }}">{{ $service->name }} - ${{ $service->price }}</option>
                     @endforeach
                 </select>
+                
                 <select name="vet_id" class="input col-span-2" required>
                     @foreach($veterinarians as $veterinarian)
                         <option value="{{ $veterinarian->id }}">{{ $veterinarian->name }}</option>
                     @endforeach
                 </select>
             </div>
-
-            <!-- horario
-                <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
-                    <h3 class="col-span-2 text-lg font-semibold text-indigo-700"> Horario & Motivo</h3>
-
-                    <select name="schedule_id" class="input col-span-2" required>
-                        @foreach($schedules as $schedule)
-                            <option value="{{ $schedule->id }}">{{ $schedule->event_date }} - {{ $schedule->event_time }}</option>
-                        @endforeach
-                    </select> 
-
-                    <input type="text" name="reason" placeholder="Motivo" class="input col-span-2" required>
-                </div> -->
 
             <!-- Horario -->
             <div class="bg-white p-6 rounded-2xl shadow-md grid grid-cols-2 gap-4">

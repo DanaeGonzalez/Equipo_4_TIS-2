@@ -21,5 +21,11 @@ class Pet extends Model
         'microchip_number',
         'notes',
     ];
-    
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+
 }
