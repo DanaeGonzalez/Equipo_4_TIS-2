@@ -1,10 +1,10 @@
 <!-- Franja superior -->
 <div class="bg-[var(--color-accent-1)] text-white text-sm py-2">
-    <div class="mx-auto max-w-screen-xl px-4 flex justify-between items-center">
-        <span>
+    <div class="mx-auto max-w-screen-xl px-4 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 text-center sm:text-left">
+        <span class="text-xs sm:text-sm">
             📞 Contáctanos: +56 9 4251 3361
         </span>
-        <span>
+        <span class="text-xs sm:text-sm">
             🐾 Clínica Veterinaria Vivet
         </span>
     </div>
@@ -28,7 +28,7 @@
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
         </a>
-        <a href="#" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Contacto</a>
+        <a href="{{ route('contact') }}" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Contacto</a>
         <a href="#" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Equipo</a>
       </nav>
       <!-- nav - end -->
