@@ -21,7 +21,7 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedBigInteger('service_id');
             $table->dateTime('appointment_date');
             $table->text('reason')->nullable();
-            $table->enum('status', ['Confirmada','Pendiente','Realizada','Cancelada'])->nullable();
+            $table->enum('status', ['Confirmada','Pendiente','Realizada','Cancelada','Activar'])->nullable();
             $table->timestamps();
         });
     }

@@ -26,10 +26,7 @@ class CreateSchedulesTable extends Migration
             if (!Schema::hasColumn('appointments', 'schedule_id')) {
                 $table->unsignedBigInteger('schedule_id')->nullable()->after('id');
 
-                $table->foreign('schedule_id')
-                    ->references('id')
-                    ->on('schedules')
-                    ->onDelete('cascade');
+                $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
             }
         });
     }

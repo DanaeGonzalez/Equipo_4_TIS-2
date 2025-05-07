@@ -7,8 +7,9 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\AppointmentController;
 
 
 /*
@@ -54,3 +55,9 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('services', ServiceController::class);
 });
+
+Route::middleware(['auth', 'admin_or_vet'])->group(function () {
+    Route::resource('appointments', AppointmentController::class);
+    Route::resource('schedules', ScheduleController::class);
+});
+

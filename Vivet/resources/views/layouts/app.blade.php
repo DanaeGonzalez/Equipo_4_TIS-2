@@ -10,6 +10,7 @@
     @include('partials.colors')
 
 </head>
+
 <body class="flex flex-col min-h-screen">
     {{-- Header --}}
     @include('partials.header')
