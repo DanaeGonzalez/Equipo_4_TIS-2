@@ -20,18 +20,6 @@ class CreateProductsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('billing_products', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('billing_id');
-            $table->foreign('billing_id')->references('id')->on('billing')->onDelete('cascade');
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->unsignedBigInteger('quantity');
-            $table->unsignedBigInteger('unit_price');
-            $table->unsignedBigInteger('total_price');
-            $table->timestamps();
-        });
-        
     }
 
     /**
@@ -39,8 +27,6 @@ class CreateProductsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('billing');
-        Schema::dropIfExists('billing_products');
         Schema::dropIfExists('products');
     }
 };
