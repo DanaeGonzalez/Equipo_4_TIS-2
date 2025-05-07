@@ -15,6 +15,7 @@ class CreateBillingTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->enum('sale_type',['servicio', 'producto']);
             $table->unsignedBigInteger('appointment_id')->nullable();
             //$table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('set null');
             $table->unsignedBigInteger('total_amount');
