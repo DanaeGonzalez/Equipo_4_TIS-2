@@ -25,8 +25,12 @@ class ServiceController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'estimated_duration' => 'required|integer|max:255',
-            'icon' => 'nullable|string|max:255',
+            'icon' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
         ]);
+
+        if ($request->hasFile('icon')) {
+            $path = $request->file('icon')->store('images/clients/client1/services', 'public');
+        }
 
         Service::create($validated);
 
@@ -46,8 +50,10 @@ class ServiceController extends Controller
             'price' => 'required|numeric|min:0',
             'estimated_duration' => 'required|integer|max:255',
             'icon' => 'nullable|string|max:255',
+            //'is_active' => 'nullable|boolean', //activar una vez que tenga arreglada la migración
         ]);
 
+        //$validated['is_active'] = $request->has('is_active');
         $service->update($validated);
 
         return redirect()->route('services.index')->with('success', 'Servicio actualizado.');
