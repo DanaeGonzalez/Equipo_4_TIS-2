@@ -4,27 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBillingTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('billing', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
-            $table->enum('sale_type',['servicio', 'producto']);
-            $table->unsignedBigInteger('appointment_id')->nullable();
-            //$table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('set null');
-            $table->unsignedBigInteger('total_amount');
-            $table->enum('payment_method',['Efectivo', 'Crédito', 'Débito']);
-            $table->date('payment_date');
-            $table->enum('status',['Pendiente', 'Pagado', 'Cancelado']);
-            $table->timestamps();
-        });
-        
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
