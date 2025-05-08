@@ -6,7 +6,7 @@
     <div class="max-w-lg mx-auto">
         <h1 class="text-2xl font-bold mb-4">Editar Servicio</h1>
 
-        <form action="{{ route('services.update', $service) }}" method="POST" class="space-y-4">
+        <form action="{{ route('services.update', $service) }}" method="POST" class="space-y-4" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -37,7 +37,7 @@
 
             <div>
                 <label for="icon">Ícono (opcional)</label>
-                <input type="file" name="icon" accept="image/*">
+                <input type="file" class ="bg-indigo-600 text-white px-4 py-2 rounded" name="icon" accept="image/*">
             </div>
 
             <div>

@@ -64,7 +64,7 @@
                                     </svg>
                                     Permisos
                                 </a>
-                                @unless(in_array(strtolower($role->name), ['administrador', 'superadmin']))
+                                @unless(in_array(strtolower($role->name), ['administrador'/*, 'superadmin'*/]))
                                     <form action="{{ route('roles.destroy', $role) }}" method="POST"
                                         class="inline flex items-center gap-1">
                                         @csrf

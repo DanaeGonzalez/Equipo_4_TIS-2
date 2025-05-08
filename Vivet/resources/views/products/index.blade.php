@@ -22,15 +22,18 @@
                     <th class="p-2 border">Nombre</th>
                     <th class="p-2 border">Precio</th>
                     <th class="p-2 border">Stock</th>
+                    @if (in_array(strtolower($role->name), ['administrador'/*, 'superadmin'*/]))
+                    <th class="p-2 border">Activo</th>
+                    @endif<th class="p-2 border">Stock</th>
                     <th class="p-2 border">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($products as $product)
                     <tr>
-                        <td class="p-2 border">{{ $product->name }}</td>
-                        <td class="p-2 border">${{ number_format($product->price, 0, ',', '.') }}</td>
-                        <td class="p-2 border">{{ $product->stock }}</td>
+                        <td class="p-2 border text-center">{{ $product->name }}</td>
+                        <td class="p-2 border text-center">${{ number_format($product->price, 0, ',', '.') }}</td>
+                        <td class="p-2 border text-center">{{ $product->stock }}</td>
                         <td class="py-2 px-4 border-b space-x-2 flex justify-center items-center gap-4">
                             <a href="{{ route('products.edit', $product) }}"
                                 class="text-blue-600 hover:underline flex items-center gap-1">

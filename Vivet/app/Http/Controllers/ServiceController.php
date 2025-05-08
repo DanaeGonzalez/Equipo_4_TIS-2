@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
     public function index()
     {
         $services = Service::all();
-        return view('services.index', compact('services'));
+        $role = Auth::user()->user_type;
+        return view('services.index', compact('services','role'));
     }
 
     public function create()
@@ -29,7 +32,16 @@ class ServiceController extends Controller
         ]);
 
         if ($request->hasFile('icon')) {
-            $path = $request->file('icon')->store('images/clients/client1/services', 'public');
+            $file = $request->file('icon');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('images/client/client1/services');
+
+            /*if (!file_exists($destinationPath)) { //aún no sé si es necesario
+                mkdir($destinationPath, 0755, true);
+            }*/
+
+            $file->move($destinationPath, $filename);
+            $validated['icon'] = 'images/client/client1/services/' . $filename;
         }
 
         Service::create($validated);
@@ -49,13 +61,35 @@ class ServiceController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'estimated_duration' => 'required|integer|max:255',
-            'icon' => 'nullable|string|max:255',
+            'icon' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
             //'is_active' => 'nullable|boolean', //activar una vez que tenga arreglada la migración
         ]);
 
+        if ($request->hasFile('icon')) {
+            $file = $request->file('icon');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('images/client/client1/services');
+
+            /* Crear el directorio si no existe
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }*/
+
+            if ($request->hasFile('icon')) { //corrobora si existe un archivo anterior
+                if ($service->icon && file_exists(public_path($service->icon))) {
+                    unlink(public_path($service->icon));
+                }
+
+
+                $file = $request->file('icon');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $destinationPath = public_path('images/client/client1/services');
+            }
+            $file->move($destinationPath, $filename);
+            $validated['icon'] = 'images/client/client1/services/' . $filename;
+        }
         //$validated['is_active'] = $request->has('is_active');
         $service->update($validated);
-
         return redirect()->route('services.index')->with('success', 'Servicio actualizado.');
     }
 

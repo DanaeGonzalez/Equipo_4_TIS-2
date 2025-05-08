@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('stock');
+            $table->boolean('is_active');
             $table->timestamps();
         });
 

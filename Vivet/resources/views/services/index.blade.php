@@ -22,16 +22,27 @@
                     <th class="p-2 border">Nombre</th>
                     <th class="p-2 border">Duración estimada</th>
                     <th class="p-2 border">Precio</th>
+                    <th class="p-2 border">Icono</th>
+                    @if ($role === 'Administrador')
+                        <th class="p-2 border">Activo</th>
+                    @endif
                     <th class="p-2 border">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($services as $service)
                     <tr>
-                        <td class="p-2 border">{{ $service->name }}</td>
-                        <td class="p-2 border">{{ $service->estimated_duration }} min</td>
-                        <td class="p-2 border">${{ number_format($service->price, 0, ',', '.') }}</td>
-                        <td class="py-2 px-4 border-b space-x-2 flex justify-center items-center gap-4">
+                        <td class="p-2 border text-center">{{ $service->name }}</td>
+                        <td class="p-2 border text-center">{{ $service->estimated_duration }} min</td>
+                        <td class="p-2 border text-center">${{ number_format($service->price, 0, ',', '.') }}</td>
+                        <td class="p-2 border"><img src="{{ asset($service->icon) }}" alt="Ícono del servicio"
+                                class="w-16 h-16 object-cover rounded mx-auto">
+                        </td>
+
+                        @if ($role === 'Administrador')
+                                <td class="p-2 border text-center">{{ $service->is_active }}j</td>
+                            @endif
+                        <td class="p-2 border">
                             <a href="{{ route('services.edit', $service) }}"
                                 class="text-blue-600 hover:underline flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -41,18 +52,19 @@
                                 </svg>
                                 Editar
                             </a>
-                            <form action="{{ route('services.destroy', $service) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:underline flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                    Eliminar
-                                </button>
-                            </form>
+
+                        <form action="{{ route('services.destroy', $service) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:underline flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Eliminar
+                            </button>
+                        </form>
                         </td>
                     </tr>
                 @empty
