@@ -7,34 +7,33 @@
     <title>@yield('title', 'Clínica Veterinaria')</title>
     <!-- Incluye tu archivo de Tailwind compilado o los links a CDN -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.colors')
 </head>
 
 <body>
-    <div class="bg-white py-6 sm:py-8 lg:py-12">
+    <!-- text - start -->
+    <div style="background-color: var(--color-bg-section);" class="mb-2 md:mb-2 pb-4 pt-6">
+        <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Regístrate</h2>
+    </div>
+    <!-- text - end -->
+    <div class="bg-white py-3 sm:py-5 lg:py-8">
         <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-            <!-- text - start -->
-            <div class="mb-10 md:mb-16">
-                <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Regístrate</h2>
-
-                <!-- <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">This is a section of some simple filler text, also known as placeholder text. It shares some characteristics of a real written text but is random or otherwise generated.</p> -->
-            </div>
-            <!-- text - end -->
             @if ($errors->any())
-                <div class="mb-4 text-red-600">
-                    <ul class="list-disc list-inside">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="mb-4 text-red-600">
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
             @endif
 
             <!-- form - start -->
             <form class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2" method="POST"
                 action="{{ route('register.submit') }}">
                 @csrf
-                
+
                 <div>
                     <label for="nombre" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Nombre</label>
                     <input type="text" name="nombre" placeholder="Juan" value="{{ old('nombre') }}"
@@ -73,19 +72,21 @@
                         class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
                 </div>
 
-                <div class="flex items-center justify-between sm:col-span-2 mt-5">
+                <div class="flex items-center justify-center sm:col-span-2 mt-5">
                     <button type="submit"
-                        class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Crear
-                        cuenta</button>
+                        style="background-color: var(--color-button-secondary);"
+                        class="inline-block rounded-lg px-10 py-4 text-center text-base font-semibold text-white outline-none transition duration-100 hover:opacity-90 focus-visible:ring active:opacity-80 md:text-base">Crear cuenta
+                    </button>
                     <!-- <button type="submit" class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base" disabled>Crear cuenta</button> -->
 
                     <!-- <span class="text-sm text-gray-500">*Required</span> -->
                 </div>
-
-                <p class="text text-gray-400 text-center">Si ya tienes tu cuenta, inicia sesión <a
-                        href="{{ route('login') }}"
-                        class="underline transition duration-100 hover:text-indigo-500 active:text-indigo-600">aquí</a>.
-                </p>
+                <div class="flex items-center justify-center sm:col-span-2">
+                    <p class="text text-gray-600 text-center">Si ya tienes tu cuenta, inicia sesión <a
+                            href="{{ route('login') }}"
+                            class="underline transition duration-100 hover:text-indigo-500 active:text-indigo-600">aquí</a>.
+                    </p>
+                </div>
             </form>
             <!-- form - end -->
         </div>
@@ -98,11 +99,11 @@
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <script>
-    $("form").submit(function () {
+    $("form").submit(function() {
         $("button[type='submit']").attr('disabled', true);
     });
 
-    $("form").on('ajaxStop', function () {
+    $("form").on('ajaxStop', function() {
         $("button[type='submit']").attr('disabled', false);
     });
 </script>
