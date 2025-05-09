@@ -40,8 +40,16 @@
                         </td>
 
                         @if ($role === 'Administrador')
-                                <td class="p-2 border text-center">{{ $service->is_active }}j</td>
+                            <td class="p-2 border text-center">
+                                @if($service->is_active)
+                                <span class="text-green-600 font-bold">Sí</span>
+                            @else
+                                <span class="text-red-600 font-bold">No</span>
                             @endif
+                                {{--{{ $service->is_active }}--}}
+
+                            </td>
+                        @endif
                         <td class="p-2 border">
                             <a href="{{ route('services.edit', $service) }}"
                                 class="text-blue-600 hover:underline flex items-center gap-1">
@@ -53,18 +61,18 @@
                                 Editar
                             </a>
 
-                        <form action="{{ route('services.destroy', $service) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                Eliminar
-                            </button>
-                        </form>
+                            <form action="{{ route('services.destroy', $service) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                    Eliminar
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty

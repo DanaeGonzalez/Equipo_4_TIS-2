@@ -34,14 +34,14 @@ class ServiceController extends Controller
         if ($request->hasFile('icon')) {
             $file = $request->file('icon');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $destinationPath = public_path('images/client/client1/services');
+            $destinationPath = public_path('images/clients/client1/services');
 
             /*if (!file_exists($destinationPath)) { //aún no sé si es necesario
                 mkdir($destinationPath, 0755, true);
             }*/
 
             $file->move($destinationPath, $filename);
-            $validated['icon'] = 'images/client/client1/services/' . $filename;
+            $validated['icon'] = 'images/clients/client1/services/' . $filename;
         }
 
         Service::create($validated);
@@ -68,7 +68,7 @@ class ServiceController extends Controller
         if ($request->hasFile('icon')) {
             $file = $request->file('icon');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $destinationPath = public_path('images/client/client1/services');
+            $destinationPath = public_path('images/clients/client1/services');
 
             /* Crear el directorio si no existe
             if (!file_exists($destinationPath)) {
@@ -83,10 +83,10 @@ class ServiceController extends Controller
 
                 $file = $request->file('icon');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $destinationPath = public_path('images/client/client1/services');
+                $destinationPath = public_path('images/clients/client1/services');
             }
             $file->move($destinationPath, $filename);
-            $validated['icon'] = 'images/client/client1/services/' . $filename;
+            $validated['icon'] = 'images/clients/client1/services/' . $filename;
         }
         //$validated['is_active'] = $request->has('is_active');
         $service->update($validated);
