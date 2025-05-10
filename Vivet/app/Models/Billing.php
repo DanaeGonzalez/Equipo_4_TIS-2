@@ -31,13 +31,13 @@ class Billing extends Model
     // Relación con la cita (appointment)
     public function appointment()
     {
-        //return $this->belongsTo(Appointment::class);
+        return $this->belongsTo(Appointment::class);
     }
 
     // Relación con productos facturados
     public function billingProducts()
     {
-        //return $this->hasMany(BillingProduct::class);
+        return $this->hasMany(BillingProducts::class);
     }
 }
 

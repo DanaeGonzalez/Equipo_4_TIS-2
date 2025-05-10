@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('manage-schedule', function ($user) {
-            return in_array($user->role, ['Admin', 'SuperAdmin']);
+            return in_array($user->role, ['Administrador']);
         });
         //
     }
