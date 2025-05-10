@@ -13,8 +13,8 @@ class CreatePetVaccinationsTable extends Migration
     {
         Schema::create('vaccines', function (Blueprint $table) {
             $table->id();
-            //$table->unsignedBigInteger('product_id');
-            //$table->foreign('product_id')->references('id')->on('products')->onDelete('cascade'); //preguntar
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade'); //preguntar
             $table->string('name');
             $table->text('description');
             $table->string('species');

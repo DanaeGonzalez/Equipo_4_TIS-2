@@ -16,10 +16,10 @@ class TutorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role_id == 3) {
+        if (auth()->check() && auth()->user()->role?->name === 'Tutor') {
             return $next($request);
         }
         
-        return redirect()->route('home')->with('error', 'Acceso no autorizado');
+        return redirect()->route('/')->with('error', 'Acceso no autorizado');
     }
 }

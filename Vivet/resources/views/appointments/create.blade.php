@@ -3,8 +3,20 @@
 
 @section('content')
     <div class="container mx-auto max-w-3xl p-8 bg-gradient-to-br from-white to-gray-100 shadow-xl rounded-2xl mt-10">
+        <div class="mb-4">
+            <a href="{{ route('appointments.index') }}"
+                class="inline-flex items-center px-4 py-2 rounded-lg text-white hover:opacity-90"
+                style="background-color: var(--color-button-secondary);">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                
+            </a>
+        </div>
+
         <div class="text-center mb-8">
-            <h2 class="text-4xl font-extrabold text-indigo-700"  style="color: var(--color-title);">Reserva tu Cita</h2>
+            <h2 class="text-4xl font-extrabold text-indigo-700" style="color: var(--color-title);">Reserva tu Cita</h2>
 
         </div>
 
@@ -29,7 +41,8 @@
 
             <!-- Cliente -->
             <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
-                <h3 class="col-span-2 text-lg font-semibold text-indigo-700"  style="color: var(--color-title);">Datos del Cliente</h3>
+                <h3 class="col-span-2 text-lg font-semibold text-indigo-700" style="color: var(--color-title);">Datos del
+                    Cliente</h3>
                 <input type="text" name="name" placeholder="Nombre" class="input" required>
                 <input type="text" name="lastname" placeholder="Apellido" class="input" required>
                 <input type="text" name="client_run" placeholder="RUT" class="input col-span-2" required>
@@ -39,8 +52,8 @@
             </div>
 
             <!-- Mascota -->
-            <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4" >
-                <h3 class="col-span-2 text-lg font-semibold "  style="color: var(--color-title);">Datos de la Mascota</h3>
+            <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
+                <h3 class="col-span-2 text-lg font-semibold " style="color: var(--color-title);">Datos de la Mascota</h3>
                 <input type="text" name="pet_name" placeholder="Nombre" class="input" required>
                 <input type="text" name="species" placeholder="Especie" class="input" required>
                 <input type="text" name="breed" placeholder="Raza" class="input">
@@ -63,7 +76,7 @@
                         <option value="{{ $service->id }}">{{ $service->name }} - ${{ $service->price }}</option>
                     @endforeach
                 </select>
-                
+
                 <select name="vet_id" class="input col-span-2" required>
                     @foreach($veterinarians as $veterinarian)
                         <option value="{{ $veterinarian->id }}">{{ $veterinarian->name }}</option>
