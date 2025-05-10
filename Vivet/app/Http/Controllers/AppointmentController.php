@@ -25,7 +25,17 @@ class AppointmentController extends Controller
     }
     public function create()
     {
-        $schedules = Schedule::where('is_reserved', 0)->get();
+        $now = \Carbon\Carbon::now();
+
+        $schedules = Schedule::where('is_reserved', 0)
+            ->where(function ($query) use ($now) {
+                $query->where('event_date', '>', $now->format('Y-m-d'))
+                    ->orWhere(function ($q) use ($now) {
+                        $q->where('event_date', '=', $now->format('Y-m-d'))
+                            ->where('event_time', '>', $now->format('H:i:s'));
+                    });
+            })->get();
+
         $services = Service::all();
         $veterinarians = User::where('role_id', 3)->where('is_active', 1)->get();
 
@@ -35,6 +45,7 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
+            ->where('status', '!=', 'Finalizada')
             ->orderBy('appointment_date')
             ->get();
         return view('appointments.index', compact('appointments'));
@@ -126,12 +137,12 @@ class AppointmentController extends Controller
     }
 
     public function edit(Appointment $appointment)
-    {   
+    {
         $appointment->load('client', 'pet', 'service', 'user', 'schedule');
         $services = Service::all();
         $veterinarians = User::where('role_id', 3)->where('is_active', 1)->get();
         $schedules = Schedule::where('is_reserved', false)->get();
-        
+
 
         return view('appointments.edit', compact('appointment', 'services', 'veterinarians', 'schedules'));
     }

@@ -72,7 +72,7 @@
                     Cuidamos a tu mascota como parte de nuestra familia.
                 </p>
 
-                <a href="#contact"
+                <a href="{{route('appointments.index')}}"
                     class="hover:opacity-90 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transition text-sm sm:text-base"
                     style="background-color: var(--color-button-secondary);">
                     Reserva una cita
