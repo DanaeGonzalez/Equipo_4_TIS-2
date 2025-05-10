@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -22,6 +23,6 @@ class AdminMiddleware
         if (auth()->user() && !auth()->user()->is_active) {
             abort(403, 'Usuario desactivado.');
         }
-        return redirect()->route('home')->with('error', 'Acceso no autorizado');
+        return  redirect('/')->with('error', 'Acceso no autorizado');
     }
 }

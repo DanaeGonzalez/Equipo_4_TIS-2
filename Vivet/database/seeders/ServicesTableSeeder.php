@@ -15,6 +15,7 @@ class ServicesTableSeeder extends Seeder
             'estimated_duration' => 1,
             'price' => '13000',
             'icon' => null,
+            'is_active'=> true,
         ]);
         
         Service::create([
@@ -23,6 +24,7 @@ class ServicesTableSeeder extends Seeder
             'estimated_duration' => 2,
             'price' => '15000',
             'icon' => null,
+            'is_active'=> true,
         ]);
 
         Service::create([
@@ -31,6 +33,7 @@ class ServicesTableSeeder extends Seeder
             'estimated_duration' => 3,
             'price' => '10000',
             'icon' => null,
+            'is_active'=> false,
         ]);
     }
 }

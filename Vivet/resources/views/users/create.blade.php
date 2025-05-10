@@ -70,7 +70,7 @@
             </label>
         </div>
 
-        <div>
+        {{--<div>
             <label for="password" class="block font-medium">Contraseña</label>
             <input type="password" name="password" id="password" class="w-full border rounded p-2" required>
         </div>
@@ -78,7 +78,7 @@
         <div>
             <label for="password_confirmation" class="block font-medium">Confirmar contraseña</label>
             <input type="password" name="password_confirmation" id="password_confirmation" class="w-full border rounded p-2" required>
-        </div>
+        </div>--}}
 
         <div>
             <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Crear usuario</button>
