@@ -6,7 +6,8 @@
     <div class="max-w-lg mx-auto">
         <h1 class="text-2xl font-bold mb-4">Editar Servicio</h1>
 
-        <form action="{{ route('services.update', $service) }}" method="POST" class="space-y-4" enctype="multipart/form-data">
+        <form action="{{ route('services.update', $service) }}" method="POST" class="space-y-4"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -34,10 +35,15 @@
                 <input type="number" name="price" id="price" step="0.01" value="{{ old('price', $service->price) }}"
                     class="w-full border p-2 rounded" required>
             </div>
-
+            <div>
+                <label for="is_active" class="inline-flex items-center">
+                    <input type="checkbox" name="is_active" id="is_active" class="mr-2" {{ old('is_active') ? 'checked' : '' }}>
+                    ¿Activo?
+                </label>
+            </div>
             <div>
                 <label for="icon">Ícono (opcional)</label>
-                <input type="file" class ="bg-indigo-600 text-white px-4 py-2 rounded" name="icon" accept="image/*">
+                <input type="file" class="bg-indigo-600 text-white px-4 py-2 rounded" name="icon" accept="image/*">
             </div>
 
             <div>

@@ -22,9 +22,9 @@
                     <th class="p-2 border">Nombre</th>
                     <th class="p-2 border">Precio</th>
                     <th class="p-2 border">Stock</th>
-                    @if (in_array(strtolower($role->name), ['administrador'/*, 'superadmin'*/]))
-                    <th class="p-2 border">Activo</th>
-                    @endif<th class="p-2 border">Stock</th>
+                    @if ($role === 'Administrador')
+                        <th class="p-2 border">Activo</th>
+                    @endif
                     <th class="p-2 border">Acciones</th>
                 </tr>
             </thead>
@@ -34,6 +34,16 @@
                         <td class="p-2 border text-center">{{ $product->name }}</td>
                         <td class="p-2 border text-center">${{ number_format($product->price, 0, ',', '.') }}</td>
                         <td class="p-2 border text-center">{{ $product->stock }}</td>
+
+                        @if ($role === 'Administrador')
+                            <td class="p-2 border text-center">
+                                @if($product->is_active)
+                                    <span class="text-green-600 font-bold">Sí</span>
+                                @else
+                                    <span class="text-red-600 font-bold">No</span>
+                                @endif
+                            </td>
+                        @endif
                         <td class="py-2 px-4 border-b space-x-2 flex justify-center items-center gap-4">
                             <a href="{{ route('products.edit', $product) }}"
                                 class="text-blue-600 hover:underline flex items-center gap-1">

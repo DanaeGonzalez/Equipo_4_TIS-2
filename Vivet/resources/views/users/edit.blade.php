@@ -70,7 +70,7 @@
             </div>
             @endif
 
-            <div>
+            {{--<div>
                 <label for="password" class="block font-semibold">Contraseña (dejar en blanco si no deseas
                     cambiarla)</label>
                 <input type="password" name="password" id="password" class="w-full border px-3 py-2 rounded">
@@ -80,7 +80,7 @@
                 <label for="password_confirmation" class="block font-semibold">Confirmar contraseña</label>
                 <input type="password" name="password_confirmation" id="password_confirmation"
                     class="w-full border px-3 py-2 rounded">
-            </div>
+            </div>--}}
 
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Actualizar Usuario

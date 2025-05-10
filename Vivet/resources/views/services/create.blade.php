@@ -46,6 +46,13 @@
             </div>
 
             <div>
+                <label for="is_active" class="inline-flex items-center">
+                    <input type="checkbox" name="is_active" id="is_active" class="mr-2" {{ old('is_active') ? 'checked' : '' }}>
+                    ¿Activo?
+                </label>
+            </div>
+
+            <div>
                 <label for="icon">Ícono (opcional)</label>
                 <input type="file" class="bg-indigo-600 text-white px-4 py-2 rounded" name="icon" accept="image/*">
             </div>
