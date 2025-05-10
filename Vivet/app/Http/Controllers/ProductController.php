@@ -28,6 +28,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'is_active' => 'boolean',
         ]);
 
         Product::create($validated);
@@ -39,17 +40,17 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
-     public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'is_active' => 'nullable|boolean',
+            'is_active' => 'boolean',
         ]);
         $product->update($validated);
-        return redirect()->route('services.index')->with('success', 'Servicio actualizado.');
+        return redirect()->route('products.index')->with('success', 'Producto actualizado.');
     }
     public function destroy(Product $product)
     {
