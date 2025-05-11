@@ -13,15 +13,15 @@
 
 <body>
     <!-- text - start -->
-    <div style="background-color: var(--color-bg-section);" class="mb-2 md:mb-2 pb-4 pt-6">
+    <div style="background-color: var(--color-bg-section);" class="mb-2 md:mb-2 pb-3 pt-5 shadow-md">
         <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Regístrate</h2>
     </div>
     <!-- text - end -->
-    <div class="bg-white py-3 sm:py-5 lg:py-8">
+    <div class="bg-white py-2 sm:py-4 lg:py-6">
         <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
             @if ($errors->any())
-            <div class="mb-4 text-red-600">
-                <ul class="list-disc list-inside">
+            <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
+                <ul class="list-disc list-inside pl-4">
                     @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                     @endforeach
@@ -30,10 +30,9 @@
             @endif
 
             <!-- form - start -->
-            <form class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2" method="POST"
+            <form class="mx-auto grid max-w-screen-md gap-3 sm:grid-cols-2 p-5 rounded-lg border shadow-md" method="POST"
                 action="{{ route('register.submit') }}">
                 @csrf
-
                 <div>
                     <label for="nombre" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Nombre</label>
                     <input type="text" name="nombre" placeholder="Juan" value="{{ old('nombre') }}"
@@ -72,7 +71,7 @@
                         class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-600 outline-none ring-indigo-300 transition duration-100 focus:ring" />
                 </div>
 
-                <div class="flex items-center justify-center sm:col-span-2 mt-5">
+                <div class="flex items-center justify-center sm:col-span-2 mt-2">
                     <button type="submit"
                         style="background-color: var(--color-button-secondary);"
                         class="inline-block rounded-lg px-10 py-4 text-center text-base font-semibold text-white outline-none transition duration-100 hover:opacity-90 focus-visible:ring active:opacity-80 md:text-base">Crear cuenta
