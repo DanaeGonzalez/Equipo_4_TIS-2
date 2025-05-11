@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Superadmin extends Authenticatable
 {
-    use Notifiable;
+    /*use Notifiable;
 
     protected $fillable = [
         'name',
@@ -18,5 +18,5 @@ class Superadmin extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-    ];
+    ];*/
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Permission;
 
 class AdminSeeder extends Seeder
 {
@@ -17,7 +18,10 @@ class AdminSeeder extends Seeder
         $role = Role::where('name', 'Administrador')->first();
 
         if (!$role) {
-            throw new \Exception("El rol 'Administrador' no fue encontrado. Asegúrate de haberlo creado.");
+            $role = Role::firstOrCreate(
+                ['name' => 'Administrador'],
+                ['is_active' => true]
+            );
         }
         // Lista de usuarios a crear o actualizar
         $users = [
@@ -58,5 +62,9 @@ class AdminSeeder extends Seeder
                 ? "Usuario {$userData['email']} creado.\n"
                 : "Usuario {$userData['email']} actualizado.\n";
         }
+        $allPermissions = Permission::pluck('id');
+        $role->permissions()->sync($allPermissions);
+
+        $this->command->info("Todos los permisos asignados al rol Administrador.");
     }
 }

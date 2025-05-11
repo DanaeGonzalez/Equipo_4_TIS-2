@@ -44,20 +44,30 @@ Route::get('/inicio-sesion', [LoginController::class, 'showLoginForm'])->name('l
 Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
-Route::middleware(['admin'])->group(function () {
-    // Rutas que solo puede ver un administrador
+Route::middleware(['check.permission'])->group(function () {
+    Route::resource('products', ProductController::class);
+    Route::resource('services', ServiceController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
-    // Otras rutas protegidas
     Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
     Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
-    Route::resource('products', ProductController::class);
-    Route::resource('services', ServiceController::class);
-});
-
-Route::middleware(['auth', 'admin_or_vet'])->group(function () {
     Route::resource('appointments', AppointmentController::class);
     Route::resource('schedules', ScheduleController::class);
 });
 
+/*Route::middleware(['admin'])->group(function () {
+    // Rutas que solo puede ver un administrador
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
+    Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
+    //Route::resource('products', ProductController::class);
+    //Route::resource('services', ServiceController::class);
+});*/
+
+/*Route::middleware(['auth', 'admin_or_vet'])->group(function () {
+    Route::resource('appointments', AppointmentController::class);
+    Route::resource('schedules', ScheduleController::class);
+});*/
