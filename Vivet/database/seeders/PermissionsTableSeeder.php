@@ -41,6 +41,7 @@ class PermissionsTableSeeder extends Seeder
             // Permisos
             ['name' => 'Ver Permisos', 'route_name' => 'permissions.index'],
             ['name' => 'Asignar Permisos', 'route_name' => 'roles.permissions.edit'],
+            ['name' => 'Actualizar Permisos', 'route_name' => 'roles.permissions.update'],
         ];
 
         foreach ($permissions as $perm) {
