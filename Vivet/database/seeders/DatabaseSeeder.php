@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             VeterinarioSeeder::class,
             AdminSeeder::class,
             ServicesTableSeeder::class,
+            PermissionRouteSeeder::class,
         ]);
         
     }
