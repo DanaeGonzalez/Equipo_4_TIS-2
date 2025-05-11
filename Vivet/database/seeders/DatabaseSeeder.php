@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             PermissionsTableSeeder::class,
             PermissionRouteSeeder::class,
-            RolesTableSeeder::class,
             //SuperAdminSeeder::class,
             TutorSeeder::class,
             VeterinarioSeeder::class,
