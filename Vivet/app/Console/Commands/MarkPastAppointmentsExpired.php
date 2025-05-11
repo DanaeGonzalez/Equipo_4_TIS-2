@@ -37,5 +37,6 @@ class MarkPastAppointmentsExpired extends Command
 
         $this->info("Se marcaron $count citas como finalizadas y se liberaron sus horarios.");
     }
-
+    /*comando para finalizar las horas que ya caducaronphp artisan appointments:mark-expired
+*/ 
 }
