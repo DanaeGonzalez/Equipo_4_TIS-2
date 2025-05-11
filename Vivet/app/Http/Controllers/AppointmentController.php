@@ -91,7 +91,7 @@ class AppointmentController extends Controller
                 return back()->withErrors(['user_id' => 'El veterinario seleccionado no es válido.']);
             }
 
-            $client = Client::create([
+            /*$client = Client::create([
                 'user_id' => auth()->id(), // guardad quien registro al client
                 'name' => $request->name,
                 'lastname' => $request->lastname,
@@ -99,7 +99,30 @@ class AppointmentController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'address' => $request->address,
-            ]);
+            ]);*/
+            $client = Client::where('client_run', $request->client_run)->first();
+
+            if ($client) {
+                // Validar que el correo coincida con el RUT
+                if ($client->email !== $request->email) {
+                    return back()->withErrors([
+                        'email' => 'Ya existe un cliente con este RUT pero con otro correo.',
+                    ]);
+                }
+            } else {
+                // Crear nuevo cliente si no existe por RUT
+                $client = Client::create([
+                    'user_id' => auth()->id(),
+                    'name' => $request->name,
+                    'lastname' => $request->lastname,
+                    'client_run' => $request->client_run,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'address' => $request->address,
+                ]);
+            }
+
+
 
             $pet = Pet::create([
                 'client_id' => $client->id,

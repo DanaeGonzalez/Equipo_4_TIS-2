@@ -52,6 +52,8 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('permissions', PermissionController::class);
     Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
     Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
+    Route::resource('appointments', AppointmentController::class);
+    Route::resource('schedules', ScheduleController::class);
 });
 
 /*Route::middleware(['admin'])->group(function () {
@@ -65,7 +67,7 @@ Route::middleware(['check.permission'])->group(function () {
     //Route::resource('services', ServiceController::class);
 });*/
 
-Route::middleware(['auth', 'admin_or_vet'])->group(function () {
+/*Route::middleware(['auth', 'admin_or_vet'])->group(function () {
     Route::resource('appointments', AppointmentController::class);
     Route::resource('schedules', ScheduleController::class);
-});
+});*/

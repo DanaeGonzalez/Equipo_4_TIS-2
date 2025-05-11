@@ -11,7 +11,7 @@ class CheckAdminOrVet
     {
         $user = auth()->user();
 
-        if (!$user || !in_array($user->role_id, [1, 3])) {
+        if (!$user || !in_array($user->role?->name, ['Administrador', 'Veterinario'])) {
             return redirect('/')->withErrors(['access' => 'No tienes permiso para acceder a esta sección.']);
         }
 

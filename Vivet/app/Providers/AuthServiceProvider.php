@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+//use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -28,5 +28,8 @@ class AuthServiceProvider extends ServiceProvider
             return in_array($user->role, ['Administrador']);
         });
         //
+        Gate::before(function($user,$ability){
+            return $user->role && $user->role->permissions->contains('route_name',$ability);
+        });
     }
 }
