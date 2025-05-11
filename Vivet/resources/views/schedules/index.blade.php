@@ -11,13 +11,17 @@
                     @if($schedules->has($day))
                         @foreach($schedules[$day] as $schedule)
                             @if($schedule->appointment)
-                                <div class="block max-w-sm text-white p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100"
+                                @php
+                                    $isFinalizada = $schedule->appointment->status === 'Finalizada';
+                                @endphp
+
+                                <div class="block max-w-sm text-white p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 {{ $isFinalizada ? 'opacity-50' : '' }}"
                                     style="background-color: var(--color-button-secondary);">
                                     <strong>Hora:</strong> {{ $schedule->event_time }} <br>
                                     <strong>Mascota:</strong> {{ $schedule->appointment->pet->pet_name }} <br>
                                     <strong>Dueño:</strong> {{ $schedule->appointment->pet->client->name }} <br>
                                     <strong>Teléfono:</strong> {{ $schedule->appointment->pet->client->phone }}
-                                    
+
                                     <div class="mt-3 flex justify-center">
                                         <form action="{{ route('appointments.cancel', $schedule->appointment->id) }}" method="POST"
                                             onsubmit="return confirm('¿Estás seguro de cancelar esta cita?');">
