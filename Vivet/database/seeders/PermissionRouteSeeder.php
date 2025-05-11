@@ -20,6 +20,11 @@ class PermissionRouteSeeder extends Seeder
             'Editar Servicios' => 'services.edit',
             'Eliminar Servicios' => 'services.destroy',
 
+            'Ver Citas' => 'schedules.index',
+            'Crear Citas' => 'schedules.create',
+            'Editar Citas' => 'schedules.edit',
+            'Eliminar Citas' => 'schedules.destroy',
+
         ];
 
         foreach ($map as $permissionName => $routeName) {

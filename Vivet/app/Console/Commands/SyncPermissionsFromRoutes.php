@@ -14,7 +14,21 @@ class SyncPermissionsFromRoutes extends Command
 
     public function handle()
     {
-        $this->info("Sincronizando permisos...");
+        /*$this->info("Sincronizando permisos...");
+
+         $customPermissions = [
+            'Asignar Permisos' => 'roles.permissions.edit',
+            'Actualizar Permisos' => 'roles.permissions.update'
+        ];
+
+        foreach ($customPermissions as $name => $route) {
+            $permission = Permission::updateOrCreate(
+                ['route_name' => $route],
+                ['name' => $name]
+            );
+
+            $this->info("Permiso '{$name}' asociado a ruta '{$route}'");
+        }*/
 
         $permissions = Permission::all();
 
@@ -36,17 +50,21 @@ class SyncPermissionsFromRoutes extends Command
 
     protected function mapPermissionToRoute(string $permissionName): ?string
     {
+        $customPermissions = [
+            'Asignar Permisos' => 'roles.permissions.edit',
+            'Actualizar Permisos' => 'roles.permissions.update'
+        ];
+        if(isset($customPermissions[$permissionName])){
+            return $customPermissions[$permissionName];
+        }
+        
         $map = [
             'ver detalle de' => 'show',
             'ver' => 'index',
             'crear' => 'create',
             'editar' => 'edit',
             'eliminar' => 'destroy',
-            'Ver' => 'index',
-            'Crear' => 'create',
-            'Editar' => 'edit',
-            'Eliminar' => 'destroy',
-            //'Agendar' => 'create',
+            'asignar' => 'edit',
         ];
 
         $dictionary = [
@@ -70,7 +88,6 @@ class SyncPermissionsFromRoutes extends Command
                 return "$entity.$routeSuffix";             // → "products.index"
             }
         }
-
         return null;
     }
 }
