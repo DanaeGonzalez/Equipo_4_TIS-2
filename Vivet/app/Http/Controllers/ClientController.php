@@ -15,7 +15,7 @@ class ClientController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Client::class);
+        //$this->authorize('create', Client::class);
         return view('clients.create');
     }
 

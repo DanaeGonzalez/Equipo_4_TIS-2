@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-semibold">Listado de Clientes</h2>
-        @can('create', App\Models\Client::class)
+        @can('clients.create')
             <a href="{{ route('clients.create') }}"
                 class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
                 Crear Cliente
