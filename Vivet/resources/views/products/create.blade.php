@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('title', 'Editar Producto')
+<div class="bg-red-100 text-red-800 p-4 rounded">
+    <strong>¡Ups! Algo salió mal:</strong>
+    <ul class="list-disc pl-5 mt-2">
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+
 @section('title', 'Crear Producto')
 
 @section('content')

@@ -27,7 +27,9 @@
                     @if ($role === 'Administrador')
                         <th class="p-2 border">Activo</th>
                     @endif
+                    @can('services.edit')
                     <th class="p-2 border">Acciones</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>

@@ -9,9 +9,10 @@
                 {{ session('success') }}
             </div>
         @endif
-
-        <a href="{{ route('users.create') }}"
-            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">Nuevo Usuario</a>
+        @can('users.create')
+            <a href="{{ route('users.create') }}"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">Nuevo Usuario</a>
+        @endcan
 
         <div class="overflow-x-auto">
             <table class="min-w-full border border-gray-300">
@@ -25,7 +26,9 @@
                         <th class="p-2 border">Email</th>
                         <th class="p-2 border">Rol</th>
                         <th class="p-2 border">Activo</th>
+                        @can('users.edit')
                         <th class="p-2 border">Acciones</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +48,7 @@
                                     <span class="text-red-600 font-bold">No</span>
                                 @endif
                             </td>
-
+                            @can('users.edit')
                             <td class="p-2 border">
                                 <a href="{{ route('users.edit', $user->id) }}"
                                     class="text-indigo-600 hover:underline flex items-center gap-1">
@@ -72,6 +75,7 @@
                                     </form>
                                 @endif
                             </td>
+                            @endcan
                         </tr>
                     @empty
                         <tr>
