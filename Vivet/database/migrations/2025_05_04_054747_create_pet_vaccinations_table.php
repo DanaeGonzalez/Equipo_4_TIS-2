@@ -11,6 +11,18 @@ class CreatePetVaccinationsTable extends Migration
      */
     public function up(): void
     {
+        Schema::create('vaccines', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade'); //preguntar
+            $table->string('name');
+            $table->text('description');
+            $table->string('species');
+            $table->integer('validity_period');
+            $table->timestamps();
+        });
+        
+        
         Schema::create('pet_vaccinations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pet_id');
@@ -20,7 +32,7 @@ class CreatePetVaccinationsTable extends Migration
             $table->unsignedBigInteger('vet_id');
             $table->foreign('vet_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('application_date');
-            $table->date('next_due_date')->nullable(); //No todas las vacunas tienen más dosis
+            $table->date('next_due_date');
             $table->timestamps();
         });
     }
@@ -31,5 +43,6 @@ class CreatePetVaccinationsTable extends Migration
     public function down(): void
     {
         Schema::dropIfExists('pet_vaccinations');
+        Schema::dropIfExists('vaccines');
     }
 };

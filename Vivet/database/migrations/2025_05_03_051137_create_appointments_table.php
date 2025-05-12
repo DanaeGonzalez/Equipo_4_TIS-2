@@ -13,12 +13,12 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('schedule_id')->nullable();
+            $table->unsignedBigInteger('schedule_id');
             $table->unsignedBigInteger('pet_id');
             $table->foreign('pet_id')->references('id')->on('pets')->onDelete('cascade');
             $table->unsignedBigInteger('vet_id');
             $table->foreign('vet_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('service_id')->nullable();
+            $table->unsignedBigInteger('service_id');
             $table->dateTime('appointment_date');
             $table->text('reason')->nullable();
             $table->enum('status', ['Confirmada','Pendiente','Realizada','Cancelado','Activar', 'Finalizada'])->nullable();

@@ -31,6 +31,6 @@ class CreateBillingTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('billing');
+        Schema::dropIfExists('billings');
     }
 };

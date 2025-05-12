@@ -21,6 +21,17 @@ class CreateServicesTable extends Migration
             $table->boolean('is_active')->default(true);  
             $table->timestamps();
         });
+
+        Schema::table('appointments', function (Blueprint $table) {
+            if (!Schema::hasColumn('appointments', 'service_id')) {
+                $table->unsignedBigInteger('service_id')->nullable()->after('vet_id');
+
+                $table->foreign('service_id')
+                    ->references('id')
+                    ->on('services')
+                    ->onDelete('cascade');
+            }
+        });
     }
 
     /**
@@ -28,6 +39,19 @@ class CreateServicesTable extends Migration
      */
     public function down(): void
     {
+        // Elimina la columna service_id de appointments si existe (revisar)
+        if (Schema::hasTable('appointments')) {
+            Schema::table('appointments', function (Blueprint $table) {
+                if (Schema::hasColumn('appointments', 'service_id')) {
+                    try {
+                        $table->dropForeign(['service_id']);
+                    } catch (\Illuminate\Database\QueryException $e) {
+
+                    }
+                    $table->dropColumn('service_id');
+                }
+            });
+        }
         Schema::dropIfExists('services');
     }
 };
