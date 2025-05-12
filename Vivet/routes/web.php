@@ -23,8 +23,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'is_active'])->group(function () {
-    // Rutas protegidas para usuarios activos
-    //Por ej: agendar horas
+    
 });
 
 Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
