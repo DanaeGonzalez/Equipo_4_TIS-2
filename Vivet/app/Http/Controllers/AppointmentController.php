@@ -229,6 +229,15 @@ class AppointmentController extends Controller
 
     public function destroy(Appointment $appointment)
     {
+        // Cambiar el estado a "Cancelada"
+        //$appointment->status = 'Cancelado';
+        //$appointment->save();
+        // Verifica si tiene un horario asociado y libéralo
+        if ($appointment->schedule) {
+            $appointment->schedule->is_reserved = false;
+            $appointment->schedule->save();
+        }
+        // Eliminar realmente la cita
         $appointment->delete();
         return redirect()->route('appointments.index')->with('success', 'Cita eliminada correctamente.');
     }
@@ -244,7 +253,10 @@ class AppointmentController extends Controller
     }
     public function reactivate(Appointment $appointment)
     {
-        $appointment->status = 'Activar'; // o 'confirmed', según manejes estados activos
+        if ($appointment->schedule->is_reserved) {
+            return redirect()->back()->withErrors(['error' => 'No se puede reactivar la cita. El horario ya fue reservado por otra persona.']);
+        }
+        $appointment->status = 'Activar'; //  estados activos
         $appointment->save();
 
         $appointment->schedule->is_reserved = true;
