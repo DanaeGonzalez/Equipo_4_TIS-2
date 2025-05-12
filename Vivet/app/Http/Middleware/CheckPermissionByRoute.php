@@ -27,7 +27,7 @@ class CheckPermissionByRoute
         $hasPermission = $user->role->permissions->contains('route_name', $currentRoute);
 
         if (!$hasPermission) {
-            abort(403, 'No tienes permiso para acceder a esta ruta');
+            //abort(403, 'No tienes permiso para acceder a esta ruta');
             return  redirect('/')->with('error', 'Acceso no autorizado');
         }
 
