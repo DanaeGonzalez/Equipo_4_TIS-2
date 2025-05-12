@@ -6,9 +6,11 @@
     <div class="container mx-auto">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Listado de Roles</h1>
+            @can('roles.create')
             <a href="{{ route('roles.create') }}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">
                 Crear Rol
             </a>
+            @endcan
         </div>
 
         @if(session('success'))
@@ -30,7 +32,9 @@
 
                         <th class="py-2 px-4 border-b">Nombre</th>
                         <th class="py-2 px-4 border-b">Activo</th>
+                        @can('roles.edit')
                         <th class="py-2 px-4 border-b">Acciones</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +49,7 @@
                                     <span class="text-red-600 font-semibold">No</span>
                                 @endif
                             </td>
+                            @can('roles.edit')
                             <td class="py-2 px-4 border-b space-x-2 flex justify-center items-center gap-4">
                                 <a href="{{ route('roles.edit', $role) }}"
                                     class="text-blue-600 hover:underline flex items-center gap-1">
@@ -81,6 +86,7 @@
                                     </form>
                                 @endunless
                             </td>
+                            @endcan
                         </tr>
                     @empty
                         <tr>

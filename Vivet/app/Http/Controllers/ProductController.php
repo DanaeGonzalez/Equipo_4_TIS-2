@@ -28,7 +28,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'is_active' => 'boolean',
+            //'is_active' => 'required|boolean',
         ]);
 
         Product::create($validated);
@@ -47,7 +47,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
         $product->update($validated);
         return redirect()->route('products.index')->with('success', 'Producto actualizado.');

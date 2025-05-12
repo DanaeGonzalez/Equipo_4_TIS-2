@@ -37,7 +37,8 @@
             </div>
             <div>
                 <label for="is_active" class="inline-flex items-center">
-                    <input type="checkbox" name="is_active" id="is_active" class="mr-2" {{ old('is_active') ? 'checked' : '' }}>
+                    <input type="hidden" name="is_active" value="0">
+                    <input type="checkbox" name="is_active" id="is_active" class="mr-2" value="1" {{ old('is_active', $service->is_active) ? 'checked' : '' }}>
                     ¿Activo?
                 </label>
             </div>

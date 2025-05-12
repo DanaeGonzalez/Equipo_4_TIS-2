@@ -37,10 +37,10 @@ Route::view('/about-us', 'pages.about-us')->name('about');
 
 Route::view('/faq', 'pages.faq')->name('faq');
 
-Route::get('/registro', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::get('/register-form', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
 
-Route::get('/inicio-sesion', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login-form', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 

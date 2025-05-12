@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,8 +22,9 @@ class RegisterController extends Controller
             'password' => ['required', "min:8", 'confirmed']
         ]);
 
+        $role = Role::where('name', 'Tutor')->first();
         User::create([
-            'role_id' => '1',
+            'role_id' => $role->id,
             'name' => $request->nombre,
             'lastname' => $request->apellido,
             'run' => $request->run,

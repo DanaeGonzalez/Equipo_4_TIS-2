@@ -14,18 +14,21 @@ class CheckPermissionByRoute
         $user = auth()->user();
 
         if (!$user || !$user->role || !$user->role->permissions) {
-            abort(403, 'No autorizado');
+            //abort(403, 'No autorizado');
+            return  redirect('/')->with('error', 'Acceso no autorizado');
         }
 
         $currentRoute = $request->route()->getName();
         if (!$currentRoute) {
-            abort(403, 'Ruta sin nombre: no se puede verificar permiso.');
+            //abort(403, 'Ruta sin nombre: no se puede verificar permiso.');
+            return  redirect('/')->with('error', 'Acceso no autorizado');
         }
 
         $hasPermission = $user->role->permissions->contains('route_name', $currentRoute);
 
         if (!$hasPermission) {
-            abort(403, 'No tienes permiso para acceder a esta ruta');
+            //abort(403, 'No tienes permiso para acceder a esta ruta');
+            return  redirect('/')->with('error', 'Acceso no autorizado');
         }
 
         return $next($request);
