@@ -54,10 +54,10 @@ class SyncPermissionsFromRoutes extends Command
             'Asignar Permisos' => 'roles.permissions.edit',
             'Actualizar Permisos' => 'roles.permissions.update'
         ];
-        if(isset($customPermissions[$permissionName])){
+        if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
         }
-        
+
         $map = [
             'ver detalle de' => 'show',
             'ver' => 'index',
@@ -65,18 +65,24 @@ class SyncPermissionsFromRoutes extends Command
             'editar' => 'edit',
             'eliminar' => 'destroy',
             'asignar' => 'edit',
-            'actualizar' =>'update',
+            'actualizar' => 'update',
             'guardar' => 'store'
         ];
 
         $dictionary = [
+            'servicio' => 'services',
             'servicios' => 'services',
+            'producto' => 'products',
             'productos' => 'products',
+            'usuario' => 'users',
             'usuarios' => 'users',
-            'roles' => 'roles',
             'rol' => 'roles',
+            'roles' => 'roles',
+            'permiso' => 'permissions',
             'permisos' => 'permissions',
             'agenda' => 'appointments',
+            'agendas' => 'appointments',
+            'cita' => 'schedules',
             'citas' => 'schedules'
         ];
 
@@ -85,9 +91,10 @@ class SyncPermissionsFromRoutes extends Command
         foreach ($map as $action => $routeSuffix) {
             if (str_starts_with($permissionName, $action)) {
                 $entity = trim(str_replace($action, '', $permissionName));
-                $entity = Str::plural(Str::lower($entity)); // "Producto" → "productos"
-                $entity = $dictionary[$entity] ?? $entity; // Usa el nombre mapeado si existe
-                return "$entity.$routeSuffix";             // → "products.index"
+                $entity = Str::lower($entity);
+                $entity = $dictionary[$entity] ?? $entity;
+                $entity = Str::plural($entity);
+                return "$entity.$routeSuffix";
             }
         }
         return null;

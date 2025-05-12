@@ -34,13 +34,22 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('appointments', function (Blueprint $table) {
+            // Revisa si la columna y la FK existen antes de eliminar
             if (Schema::hasColumn('appointments', 'schedule_id')) {
-                $table->dropForeign(['schedule_id']);
+                try {
+                    $table->dropForeign(['schedule_id']);
+                } catch (\Throwable $e) {
+                    // Ignorar si no existe
+                }
                 $table->dropColumn('schedule_id');
             }
 
             if (Schema::hasColumn('appointments', 'service_id')) {
-                $table->dropForeign(['service_id']);
+                try {
+                    $table->dropForeign(['service_id']);
+                } catch (\Throwable $e) {
+                    // Ignorar si no existe
+                }
                 $table->dropColumn('service_id');
             }
         });
