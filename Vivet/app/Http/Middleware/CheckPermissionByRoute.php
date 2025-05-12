@@ -13,7 +13,7 @@ class CheckPermissionByRoute
     {
         $user = auth()->user();
 
-        if (!$user || !$user->role || !$user->role->permissions) {
+        if (!$user || !$user->role || $user->role->permissions->isEmpty()) {
             //abort(403, 'No autorizado');
             return  redirect('/')->with('error', 'Acceso no autorizado');
         }

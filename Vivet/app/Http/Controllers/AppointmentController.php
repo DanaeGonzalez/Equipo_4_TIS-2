@@ -16,12 +16,12 @@ class AppointmentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
+        /*$this->middleware(function ($request, $next) {
             if (!auth()->check() || !in_array(auth()->user()->role_id, [1, 3])) {
                 return redirect('/')->withErrors(['access' => 'No tienes permiso para acceder a esta sección.']);
             }
             return $next($request);
-        });
+        });*/
     }
     public function create()
     {

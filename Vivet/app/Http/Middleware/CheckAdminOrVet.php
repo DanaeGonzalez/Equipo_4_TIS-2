@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CheckAdminOrVet
 {
-    public function handle(Request $request, Closure $next)
+    /*public function handle(Request $request, Closure $next)
     {
         $user = auth()->user();
 
@@ -16,5 +16,5 @@ class CheckAdminOrVet
         }
 
         return $next($request);
-    }
+    }*/
 }
