@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\PetController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\BillingController;
 
 
 /*
@@ -53,4 +59,7 @@ Route::middleware(['check.permission'])->group(function () {
     Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
     Route::resource('appointments', AppointmentController::class);
     Route::resource('schedules', ScheduleController::class);
+    Route::resource('pets', PetController::class);
+    Route::resource('clients', ClientController::class);
+    Route::resource('billing', BillingController::class);
 });

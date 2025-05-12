@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -31,6 +32,8 @@ class PermissionController extends Controller
             'name' => $request->name,
             'description' => $request->description,
         ]);
+
+        Artisan::call('permissions:sync');
 
         return redirect()->route('permissions.index')->with('success', 'Permiso creado.');
     }

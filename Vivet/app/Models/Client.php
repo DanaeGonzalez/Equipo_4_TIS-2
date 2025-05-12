@@ -15,5 +15,8 @@ class Client extends Model
         'phone',
         'address',
     ];
+    public function billing()
+    {
+        return $this->belongsTo(Billing::class);
+    }
 }
-

@@ -21,7 +21,7 @@ class CreatePetsTable extends Migration
             $table->string('breed')->nullable();
             $table->string('color');
             $table->enum('sex', ['Macho', 'Hembra']);
-            $table->enum('status', ['Vivo','Fallecido','Hospitalizado'])->nullable();
+            $table->enum('status', ['Vivo','Fallecido','Hospitalizado'])->nullable()->default('Vivo');
             $table->date('date_of_birth')->nullable();
             $table->string('microchip_number')->nullable();
             $table->text('notes');

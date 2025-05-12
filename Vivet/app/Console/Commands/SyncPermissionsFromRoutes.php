@@ -83,7 +83,13 @@ class SyncPermissionsFromRoutes extends Command
             'agenda' => 'appointments',
             'agendas' => 'appointments',
             'cita' => 'schedules',
-            'citas' => 'schedules'
+            'citas' => 'schedules',
+            'mascota'=>'pets',
+            'mascotas'=>'pets',
+            'cliente' =>'client',
+            'clientes' =>'client',
+            'boleta' => 'billing',
+            'boletas' => 'billing'
         ];
 
         $permissionName = strtolower($permissionName);
