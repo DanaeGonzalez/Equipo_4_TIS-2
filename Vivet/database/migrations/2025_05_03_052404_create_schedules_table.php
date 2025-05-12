@@ -21,14 +21,6 @@ class CreateSchedulesTable extends Migration
             $table->boolean('is_reserved')->default(false);;
             $table->timestamps();
         });
-
-        Schema::table('appointments', function (Blueprint $table) {
-            if (!Schema::hasColumn('appointments', 'schedule_id')) {
-                $table->unsignedBigInteger('schedule_id')->nullable()->after('id');
-
-                $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
-            }
-        });
     }
 
     /**
@@ -36,13 +28,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down(): void
     {
-        Schema::table('appointments', function (Blueprint $table) {
-            if (Schema::hasColumn('appointments', 'schedule_id')) {
-                $table->dropForeign(['schedule_id']);
-                $table->dropColumn('schedule_id');
-            }
-        });
-
         Schema::dropIfExists('schedules');
     }
 };
