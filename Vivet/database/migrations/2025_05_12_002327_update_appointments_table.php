@@ -12,19 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('appointments', function (Blueprint $table) {
-            if (!Schema::hasColumn('appointments', 'schedule_id')) {
-                $table->unsignedBigInteger('schedule_id')->nullable()->after('id');
 
-                $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
-            }
-            if (!Schema::hasColumn('appointments', 'service_id')) {
-                $table->unsignedBigInteger('service_id')->nullable()->after('vet_id');
+            $table->foreign('schedule_id')
+                ->references('id')
+                ->on('schedules')
+                ->onDelete('cascade');
 
-                $table->foreign('service_id')
-                    ->references('id')
-                    ->on('services')
-                    ->onDelete('cascade');
-            }
+
+            $table->foreign('service_id')
+                ->references('id')
+                ->on('services')
+                ->onDelete('cascade');
         });
     }
 
