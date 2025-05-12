@@ -11,19 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clinical_records', function (Blueprint $table) {
+        Schema::create('surgeries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pet_id');
             $table->foreign('pet_id')->references('id')->on('pets')->onDelete('cascade');
             $table->unsignedBigInteger('vet_id');
             $table->foreign('vet_id')->references('id')->on('users')->onDelete('cascade');
-            $table->date('date');
-            $table->float('weight');
-            $table->float('temperature');
-            $table->text('symptoms');
-            $table->text(column: 'diagnosis');
-            $table->text(column: 'treatment');
+            $table->dateTime('surgery_date');
+            $table->string('surgery_type');
+            $table->text('description');
             $table->text('notes');
+            $table->text('recovery_plan');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clinical_records');
+        Schema::dropIfExists('surgeries');
     }
 };
