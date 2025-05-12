@@ -4,21 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServicesTable extends Migration
+class CreateMedicationsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('medications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
             $table->string('name');
             $table->text('description');
-            $table->integer('estimated_duration');
-            $table->unsignedBigInteger('price');
-            $table->string('icon')->nullable();
-            $table->boolean('is_active')->default(true);  
+            $table->text('dosage_instructions');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateServicesTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('medications');
     }
 };
