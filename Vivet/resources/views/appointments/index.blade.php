@@ -70,12 +70,18 @@
                                             class="px-2 py-1 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition">Eliminar</button>
                                     </form>
                                 @else
-                                    <form action="{{ route('appointments.reactivate', $appointment->id) }}" method="POST"
-                                        onsubmit="return confirm('¿Estás seguro de reactivar esta cita?');">
-                                        @csrf
-                                        <button type="submit"
-                                            class="px-2 py-1 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition">Reactivar</button>
-                                    </form>
+                                    @if ($appointment->schedule->is_reserved)
+                                        <button disabled
+                                            class="px-2 py-1 bg-gray-400 text-white rounded-lg opacity-50 cursor-not-allowed"
+                                            title="Este horario ya fue reservado por otra persona">Reactivar</button>
+                                    @else
+                                        <form action="{{ route('appointments.reactivate', $appointment->id) }}" method="POST"
+                                            onsubmit="return confirm('¿Estás seguro de reactivar esta cita?');">
+                                            @csrf
+                                            <button type="submit"
+                                                class="px-2 py-1 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition">Reactivar</button>
+                                        </form>
+                                    @endif
                                 @endif
                             </div>
 
