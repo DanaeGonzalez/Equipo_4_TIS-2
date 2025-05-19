@@ -11,83 +11,155 @@
     @include('partials.colors')
 </head>
 
-<body>
-    <!-- text - start -->
-    <div style="background-color: var(--color-bg-section);" class="mb-2 md:mb-2 pb-3 pt-5 shadow-md">
-        <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Regístrate</h2>
-    </div>
-    <!-- text - end -->
-    <div class="bg-white py-2 sm:py-4 lg:py-6">
-        <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+<body class="bg-gradient-to-br from-blue-50 to-teal-50">
+    <div class="min-h-screen py-6 sm:py-8 lg:py-12">
+        <div class="mx-auto max-w-screen-2xl px-4 md:px-8 w-full">
+            <!-- Decorative paw prints -->
+            <div class="absolute top-10 left-10 opacity-10 hidden lg:block">
+                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="teal" class="transform rotate-12">
+                    <path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2zm-4.17-6c.37 0 .67.26.74.62.41 2.22 2.28 2.98 3.64 2.87.43-.02.79.32.79.75 0 .4-.32.73-.72.75-2.13.13-4.62-1.09-5.19-4.12-.08-.45.28-.87.74-.87z" />
+                </svg>
+            </div>
+            <div class="absolute bottom-10 right-10 opacity-10 hidden lg:block">
+                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="teal" class="transform -rotate-12">
+                    <path d="M4.5 9.5c-.96 0-1.75.79-1.75 1.75s.79 1.75 1.75 1.75 1.75-.79 1.75-1.75-.79-1.75-1.75-1.75zm5 0c-.96 0-1.75.79-1.75 1.75s.79 1.75 1.75 1.75 1.75-.79 1.75-1.75-.79-1.75-1.75-1.75zm5 0c-.96 0-1.75.79-1.75 1.75s.79 1.75 1.75 1.75 1.75-.79 1.75-1.75-.79-1.75-1.75-1.75zm5 0c-.96 0-1.75.79-1.75 1.75s.79 1.75 1.75 1.75 1.75-.79 1.75-1.75-.79-1.75-1.75-1.75zm-12.5 5c-.96 0-1.75.79-1.75 1.75s.79 1.75 1.75 1.75 1.75-.79 1.75-1.75-.79-1.75-1.75-1.75zm5 0c-.96 0-1.75.79-1.75 1.75s.79 1.75 1.75 1.75 1.75-.79 1.75-1.75-.79-1.75-1.75-1.75zm5 0c-.96 0-1.75.79-1.75 1.75s.79 1.75 1.75 1.75 1.75-.79 1.75-1.75-.79-1.75-1.75-1.75z" />
+                </svg>
+            </div>
+
+            <!-- Logo and Title -->
+            <div class="text-center mb-8">
+                <div class="inline-block p-4 bg-white rounded-full shadow-md mb-4">
+                    <img src="{{ asset('images/clients/client1/logo1.png') }}" alt="Logo Vivet" class="h-20 w-auto">
+                </div>
+                <h1 class="text-3xl font-bold text-teal-800 md:text-4xl lg:text-5xl">Vivet</h1>
+                <p class="mt-2 text-gray-600">Crea tu cuenta para acceder a nuestros servicios</p>
+            </div>
+
             @if ($errors->any())
-            <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
-                <ul class="list-disc list-inside pl-4">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <div class="mx-auto max-w-screen-md mb-6">
+                <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-md">
+                    <div class="flex items-center mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="font-semibold">Por favor corrige los siguientes errores:</span>
+                    </div>
+                    <ul class="list-disc list-inside pl-4 space-y-1">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
             @endif
 
             <!-- form - start -->
-            <form class="mx-auto grid max-w-screen-md gap-3 sm:grid-cols-2 p-5 rounded-lg border shadow-md" method="POST"
-                action="{{ route('register.submit') }}">
-                @csrf
-                <div>
-                    <label for="nombre" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Nombre</label>
-                    <input type="text" name="nombre" placeholder="Juan" value="{{ old('nombre') }}"
-                        class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-600 outline-none ring-indigo-300 transition duration-100 focus:ring" />
-                </div>
+            <div class="mx-auto max-w-screen-md">
+                <form class="bg-white rounded-2xl shadow-xl overflow-hidden" method="POST" action="{{ route('register.submit') }}">
+                    @csrf
+                    <div class="p-6 md:p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registro de Usuario</h2>
 
-                <div>
-                    <label for="apellido" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Apellido</label>
-                    <input type="text" name="apellido" placeholder="Pérez" value="{{ old('apellido') }}"
-                        class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-600 outline-none ring-indigo-300 transition duration-100 focus:ring" />
-                </div>
+                        <div class="grid gap-6 sm:grid-cols-2">
+                            <div>
+                                <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <input type="text" name="nombre" placeholder="Juan" value="{{ old('nombre') }}" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                </div>
+                            </div>
 
-                <div class="sm:col-span-2">
-                    <label for="email" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Correo</label>
-                    <input type="email" name="email" placeholder="correo@ejemplo.com" value="{{ old('email') }}"
-                        class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-600 outline-none ring-indigo-300 transition duration-100 focus:ring" />
-                </div>
+                            <div>
+                                <label for="apellido" class="block text-sm font-medium text-gray-700 mb-2">Apellido</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <input type="text" name="apellido" placeholder="Pérez" value="{{ old('apellido') }}" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                </div>
+                            </div>
 
-                <div class="sm:col-span-2">
-                    <label for="run" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">RUN (sin puntos ni dígito verificador)</label>
-                    <input type="text" name="run" placeholder="12345678" value="{{ old('run') }}"
-                        class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-600 outline-none ring-indigo-300 transition duration-100 focus:ring" />
-                </div>
+                            <div class="sm:col-span-2">
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                        </svg>
+                                    </div>
+                                    <input type="email" name="email" placeholder="correo@ejemplo.com" value="{{ old('email') }}" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                </div>
+                            </div>
 
-                <div class="sm:col-span-2">
-                    <label for="password"
-                        class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Contraseña</label>
-                    <input type="password" name="password"
-                        class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-600 outline-none ring-indigo-300 transition duration-100 focus:ring" />
-                </div>
+                            <div class="sm:col-span-2">
+                                <label for="run" class="block text-sm font-medium text-gray-700 mb-2">RUN (sin puntos ni dígito verificador)</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <input type="text" name="run" placeholder="12345678" value="{{ old('run') }}" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                </div>
+                            </div>
 
-                <div class="sm:col-span-2">
-                    <label for="confirm-password" class="mb-2 inline-block text-sm text-gray-600 sm:text-base">Confirmar
-                        Contraseña</label>
-                    <input type="password" name="password_confirmation"
-                        class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-600 outline-none ring-indigo-300 transition duration-100 focus:ring" />
-                </div>
+                            <div class="sm:col-span-2">
+                                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <input type="password" name="password" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                </div>
+                            </div>
 
-                <div class="flex items-center justify-center sm:col-span-2 mt-2">
-                    <button type="submit"
-                        style="background-color: var(--color-button-secondary);"
-                        class="inline-block rounded-lg px-10 py-4 text-center text-base font-semibold text-white outline-none transition duration-100 hover:opacity-90 focus-visible:ring active:opacity-80 md:text-base">Crear cuenta
-                    </button>
-                    <!-- <button type="submit" class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base" disabled>Crear cuenta</button> -->
+                            <div class="sm:col-span-2">
+                                <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <input type="password" name="password_confirmation" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                </div>
+                            </div>
 
-                    <!-- <span class="text-sm text-gray-500">*Required</span> -->
-                </div>
-                <div class="flex items-center justify-center sm:col-span-2">
-                    <p class="text text-gray-600 text-center">Si ya tienes tu cuenta, inicia sesión <a
-                            href="{{ route('login') }}"
-                            class="underline transition duration-100 hover:text-indigo-500 active:text-indigo-600">aquí</a>.
-                    </p>
-                </div>
-            </form>
+                            <div class="flex items-center justify-center sm:col-span-2 mt-4">
+                                <button type="submit" style="background-color: var(--color-button-secondary);" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                                    </svg>
+                                    Crear cuenta
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 border-t border-gray-200 flex items-center justify-center">
+                        <p class="text-center text-sm text-gray-600">¿Ya tienes una cuenta?
+                            <a href="{{ route('login') }}" class="font-medium text-teal-600 hover:text-teal-500 transition duration-150 ease-in-out">
+                                Inicia sesión aquí
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
             <!-- form - end -->
+
+            <!-- Decorative elements -->
+            <div class="mt-12 text-center text-gray-500 text-sm">
+                <p>© {{ date('Y') }} Clínica Veterinaria. Todos los derechos reservados.</p>
+            </div>
         </div>
     </div>
 </body>
