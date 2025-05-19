@@ -21,7 +21,7 @@ class Schedule extends Model
     ];
 
     public function user()
-    { //permite acceder a los datos del usuario que creó el horario
+    {
         return $this->belongsTo(User::class);
     }
     // App\Models\Schedule.php
@@ -29,8 +29,4 @@ class Schedule extends Model
     {
         return $this->hasOne(Appointment::class, 'schedule_id');
     }
-
-
-
 }
-

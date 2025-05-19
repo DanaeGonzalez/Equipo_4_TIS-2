@@ -9,6 +9,20 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'description', 'price', 'stock', 'is_active'
+        'name',
+        'description',
+        'price',
+        'stock',
+        'is_active'
     ];
+
+    public function billingProducts()
+    {
+        return $this->hasMany(BillingProducts::class);
+    }
+
+    /*public function vaccines()
+    {
+        return $this->hasMany(Vaccine::class);
+    }*/
 }
