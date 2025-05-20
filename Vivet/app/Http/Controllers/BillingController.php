@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Billing;
+use App\Models\BillingProducts;
 use App\Models\Client;
 use App\Models\Appointment;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class BillingController extends Controller
@@ -17,9 +19,10 @@ class BillingController extends Controller
 
     public function create()
     {
+        $products = Product::all();
         $clients = Client::all();
-        $appointments = Appointment::all();
-        return view('billing.create', compact('clients', 'appointments'));
+        $appointments = Appointment::where('status', 'realizada')->get();
+        return view('billing.create', compact('products', 'clients', 'appointments'));
     }
 
     public function store(Request $request)
@@ -34,11 +37,15 @@ class BillingController extends Controller
 
             'sale_type' => 'required|in:Servicio,Producto',
             'appointment_id' => 'nullable|exists:appointments,id',
+            'products' => 'nullable|array',
+            'products.*.id' => 'required_with:products|exists:products,id',
+            'products.*.quantity' => 'required_with:products|integer|min:1',
             'total_amount' => 'required|integer|min:0',
             'payment_method' => 'required|in:Débito,Crédito,Efectivo',
             'payment_date' => 'required|date',
             'status' => 'required|in:Pendiente,Pagado,Cancelado',
         ]);
+
         if ($request->sale_type === 'Servicio' && !$request->appointment_id) {
             return back()->withErrors(['appointment_id' => 'Debes seleccionar una cita para una venta de tipo Servicio.']);
         }
@@ -66,7 +73,7 @@ class BillingController extends Controller
             ]);
         }
 
-        Billing::create([
+        $billing = Billing::create([
             'client_id' => $client->id,
             'sale_type' => $request->sale_type,
             'appointment_id' => $request->appointment_id,
@@ -76,6 +83,22 @@ class BillingController extends Controller
             'status' => $request->status,
         ]);
 
+        if ($request->has('product_ids')) {
+            foreach ($validated['product_ids'] as $productId) {
+                $product = Product::findOrFail($productId);
+                $quantity = $request->input("quantities.$productId", 1);
+                $unitPrice = $product->price;
+                $totalPrice = $unitPrice * $quantity;
+
+                BillingProducts::create([
+                    'billing_id' => $billing->id,
+                    'product_id' => $productId,
+                    'quantity' => $quantity,
+                    'unit_price' => $unitPrice,
+                    'total_price' => $totalPrice,
+                ]);
+            }
+        }
         return redirect()->route('billing.index')->with('success', 'Factura registrada correctamente.');
     }
 
