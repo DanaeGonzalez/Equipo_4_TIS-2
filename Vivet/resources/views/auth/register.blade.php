@@ -55,7 +55,7 @@
 
             <!-- form - start -->
             <div class="mx-auto max-w-screen-md">
-                <form class="bg-white rounded-2xl shadow-xl overflow-hidden" method="POST" action="{{ route('register.submit') }}">
+                <form class="bg-white rounded-2xl shadow-xl overflow-hidden" method="POST" action="{{ route('register.submit') }}" autocomplete="off">
                     @csrf
                     <div class="p-6 md:p-8">
                         <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Registro de Usuario</h2>
@@ -106,19 +106,33 @@
                                             <path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="text" name="run" placeholder="12345678" value="{{ old('run') }}" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                    <input type="text" name="run" placeholder="12345678" minlength="7" maxlength="8" value="{{ old('run') }}" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
                                 </div>
                             </div>
 
                             <div class="sm:col-span-2">
-                                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Contraseña (8-15 caracteres)</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="password" name="password" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                    <input type="password" name="password" id="password" minlength="8" maxlength="15" autocomplete="new-password" class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                        <button type="button" id="togglePassword" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                                            <!-- Eye icon (show password) -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" id="showPasswordIcon" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                                            </svg>
+                                            <!-- Eye-slash icon (hide password) - initially hidden -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" id="hidePasswordIcon" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" />
+                                                <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -130,7 +144,21 @@
                                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="password" name="password_confirmation" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                    <input type="password" name="password_confirmation" id="confirmPassword" minlength="8" maxlength="15" class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                        <button type="button" id="toggleConfirmPassword" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                                            <!-- Eye icon (show password) -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" id="showConfirmPasswordIcon" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                                            </svg>
+                                            <!-- Eye-slash icon (hide password) - initially hidden -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" id="hideConfirmPasswordIcon" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" />
+                                                <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -162,8 +190,41 @@
             </div>
         </div>
     </div>
-</body>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup toggle for password field
+            setupPasswordToggle('password', 'togglePassword', 'showPasswordIcon', 'hidePasswordIcon');
+
+            // Setup toggle for confirm password field
+            setupPasswordToggle('confirmPassword', 'toggleConfirmPassword', 'showConfirmPasswordIcon', 'hideConfirmPasswordIcon');
+
+            // Function to setup password toggle functionality
+            function setupPasswordToggle(inputId, toggleId, showIconId, hideIconId) {
+                const passwordInput = document.getElementById(inputId);
+                const toggleButton = document.getElementById(toggleId);
+                const showPasswordIcon = document.getElementById(showIconId);
+                const hidePasswordIcon = document.getElementById(hideIconId);
+
+                if (passwordInput && toggleButton && showPasswordIcon && hidePasswordIcon) {
+                    toggleButton.addEventListener('click', function() {
+                        // Toggle the password visibility
+                        if (passwordInput.type === 'password') {
+                            passwordInput.type = 'text';
+                            showPasswordIcon.classList.add('hidden');
+                            hidePasswordIcon.classList.remove('hidden');
+                        } else {
+                            passwordInput.type = 'password';
+                            showPasswordIcon.classList.remove('hidden');
+                            hidePasswordIcon.classList.add('hidden');
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
 </html>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"

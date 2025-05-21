@@ -4,32 +4,49 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Auth\Events\Lockout;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
-    public function showLoginForm(){
-        return view('auth.login');
-    }
-
-    public function loginUser(Request $request)
+	public function showLoginForm()
 	{
-	    // Comprobamos que el email y la contraseña han sido introducidos
-	    $request->validate([
-	        'email' => 'required',
-	        'password' => 'required',
-	    ]);
-	
-	    // Almacenamos las credenciales de email y contraseña
-	    $credentials = $request->only('email', 'password');
-	
-	    // Si el usuario existe lo logamos y lo llevamos a la página principal con un mensaje
-	    if (Auth::attempt($credentials)) {
-	        return redirect()->intended('/')
-	            ->withSuccess('Sesión iniciada correctamente');
-	    }
-	
-	    // Si el usuario no existe devolvemos al usuario al formulario de login con un mensaje de error
-	    return redirect()->route('login')->with('error','Los datos introducidos no son correctos');
+		return view('auth.login');
+	}
+
+	public function loginUser(Request $request)
+	{
+		$request->validate([
+			'email' => 'required',
+			'password' => 'required',
+		]);
+
+		$throttleKey = Str::lower($request->input('email')) . '|' . $request->ip();
+
+		if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+			$seconds = RateLimiter::availableIn($throttleKey);
+
+			throw ValidationException::withMessages([
+				'email' => ["Demasiados intentos. Por favor espera $seconds segundos e inténtalo nuevamente."],
+			]);
+		}
+
+		RateLimiter::hit($throttleKey, 60);
+
+		$credentials = $request->only('email', 'password');
+
+		if (Auth::attempt($credentials)) {
+			RateLimiter::clear($throttleKey);
+
+			return redirect()->intended('/')
+				->withSuccess('Sesión iniciada correctamente');
+		}
+
+		return back()->withErrors([
+			'email' => 'Los datos introducidos no son correctos.',
+		])->onlyInput('email');
 	}
 }
