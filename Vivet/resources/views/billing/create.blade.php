@@ -5,28 +5,32 @@
     <div class="container mx-auto px-4 py-6 max-w-2xl">
         <h2 class="text-2xl font-bold mb-4">Registrar Factura</h2>
 
-        {{-- @if ($errors->any())
-        <div class="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded">
-            <ul class="list-disc list-inside">
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif --}}
+        @if ($errors->any())
+            <div class="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded">
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <form action="{{ route('billing.store') }}" method="POST" class="space-y-4 bg-white shadow p-6 rounded">
             @csrf
 
             <div>
                 <label class="block font-semibold">Cliente</label>
-                <select name="client_id" class="w-full border-gray-300 rounded">
+                <select id="client_id" name="client_id" class="w-full border-gray-300 rounded">
                     <option value="">-- Seleccionar cliente --</option>
                     @foreach($clients as $client)
-                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                        {{--buscar el run, pero que salga el nombre del cliente--}}
+                        <option value="{{ $client->id }}" {{ old('client_id', session('new_client_id')) == $client->id ? 'selected' : '' }}>
+                            {{ $client->client_run }} - {{ $client->name }} {{ $client->lastname }}
+                        </option>
                     @endforeach
                 </select>
-                <button type="button" onclick="openClientModal()" class="bg-green-500 text-white px-3 rounded">+</button>
+                <button style="background-color: var(--color-button-secondary);" type="button" onclick="openClientModal()"
+                    class="mt-2 bg-green-500 text-white px-3 rounded">Agregar Cliente</button>
             </div>
 
             <div>
@@ -75,8 +79,8 @@
 
             <div>
                 <label class="block font-semibold">Monto Total</label>
-                <input type="number" id="total_amount" name="total_amount" step="0.01"
-                    class="w-full border-gray-300 rounded" required readonly>
+                <input type="number" id="total_amount" name="total_amount" step="1" class="w-full border-gray-300 rounded"
+                    required readonly>
             </div>
 
             <div>
@@ -102,39 +106,39 @@
                 </select>
             </div>
 
-            <div class="flex justify-end">
+            <div class="flex justify-end gap-2 pt-2">
                 <a href="{{ route('billing.index') }}"
                     class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition">
                     Cancelar
                 </a>
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                <button style="background-color: var(--color-button-secondary);" type="submit"
+                    class="px-4 py-2 text-white rounded hover:bg-blue-700 transition">
                     Guardar Factura
                 </button>
             </div>
         </form>
-    </div>
+        {{-- Crear un cliente nuevo, en caso que no esté en la BD --}}
+        <div id="clientModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center">
+            <div class="bg-white rounded p-6 w-full max-w-md space-y-4">
+                <h3 class="text-xl font-bold">Nuevo Cliente</h3>
+                <form action="{{ route('clients.store.from.billing') }}" method="POST">
+                    @csrf
+                    <input type="text" name="name" placeholder="Nombre" required class="w-full border rounded p-2">
+                    <input type="text" name="lastname" placeholder="Apellido" required class="w-full border rounded p-2">
+                    <input type="text" name="client_run" placeholder="RUT" required class="w-full border rounded p-2">
+                    <input type="email" name="email" placeholder="Correo" required class="w-full border rounded p-2">
+                    <input type="text" name="phone" placeholder="Teléfono" required class="w-full border rounded p-2">
+                    <input type="text" name="address" placeholder="Dirección" class="w-full border rounded p-2">
 
+                    <div class="flex justify-end gap-2 pt-2">
+                        <button type="button" onclick="closeClientModal()"
+                            class="bg-gray-400 px-3 py-1 rounded text-white">Cancelar</button>
+                        <button style="background-color: var(--color-button-secondary);" type="submit"
+                            class="px-3 py-1 rounded text-white">Guardar</button>
+                    </div>
+                </form>
 
-
-    {{-- Crear un cliente nuevo, en caso que no esté en la BD --}}
-    <div id="clientModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center">
-        <div class="bg-white rounded p-6 w-full max-w-md space-y-4">
-            <h3 class="text-xl font-bold">Nuevo Cliente</h3>
-            <form id="clientForm">
-                @csrf
-                <input type="text" name="name" placeholder="Nombre" required class="w-full border rounded p-2">
-                <input type="text" name="lastname" placeholder="Apellido" required class="w-full border rounded p-2">
-                <input type="text" name="client_run" placeholder="RUT" required class="w-full border rounded p-2">
-                <input type="email" name="email" placeholder="Correo" required class="w-full border rounded p-2">
-                <input type="text" name="phone" placeholder="Teléfono" required class="w-full border rounded p-2">
-                <input type="text" name="address" placeholder="Dirección" class="w-full border rounded p-2">
-
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeClientModal()"
-                        class="bg-gray-400 px-3 py-1 rounded text-white">Cancelar</button>
-                    <button type="submit" class="bg-green-600 px-3 py-1 rounded text-white">Guardar</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -151,7 +155,7 @@
             input.disabled = !checkbox.checked;
             updateTotal();
         }
-        
+
         function updateTotal() {
             let total = 0;
             const type = document.querySelector('[name="sale_type"]').value;
@@ -162,13 +166,13 @@
             } else if (type === 'Producto') {
                 const productChecks = document.querySelectorAll('input[name="product_ids[]"]:checked');
                 productChecks.forEach(checkbox => {
-                    const price = parseFloat(checkbox.dataset.price);
+                    const price = parseInt(checkbox.dataset.price);
                     const quantity = parseInt(document.querySelector(`input[name="quantities[${checkbox.value}]"]`).value) || 0;
                     total += price * quantity;
                 });
             }
 
-            document.getElementById('total_amount').value = total.toFixed(2);
+            document.getElementById('total_amount').value = Math.round(total);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -186,34 +190,6 @@
             document.getElementById('clientModal').classList.add('hidden');
         }
 
-        document.getElementById('clientForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            fetch("{{ route('clients.store') }}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json',
-                },
-                body: formData
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.id) {
-                        const select = document.getElementById('client_id');
-                        const option = new Option(`${data.name} ${data.lastname}`, data.id, true, true);
-                        select.add(option);
-                        closeClientModal();
-                    } else {
-                        alert('Error al guardar cliente');
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert('Error al guardar cliente');
-                });
-        });
     </script>
 
 @endsection

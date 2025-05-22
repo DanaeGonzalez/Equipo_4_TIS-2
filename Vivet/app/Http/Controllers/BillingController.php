@@ -27,50 +27,66 @@ class BillingController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'client_run' => 'required|string|max:12',
-            'email' => 'required|email',
-            'phone' => 'required|string|max:20',
-            'address' => 'nullable|string|max:255',
+        // Si se selecciona un cliente existente:
+        if ($request->filled('client_id')) {
+            $validated = $request->validate([
+                'client_id' => 'required|exists:clients,id',
+                'sale_type' => 'required|in:Servicio,Producto',
+                'appointment_id' => 'nullable|exists:appointments,id',
+                'products' => 'nullable|array',
+                'products.*.id' => 'required_with:products|exists:products,id',
+                'products.*.quantity' => 'required_with:products|integer|min:1',
+                'total_amount' => 'required|integer|min:0',
+                'payment_method' => 'required|in:Débito,Crédito,Efectivo',
+                'payment_date' => 'required|date',
+                'status' => 'required|in:Pendiente,Pagado,Cancelado',
+            ]);
 
-            'sale_type' => 'required|in:Servicio,Producto',
-            'appointment_id' => 'nullable|exists:appointments,id',
-            'products' => 'nullable|array',
-            'products.*.id' => 'required_with:products|exists:products,id',
-            'products.*.quantity' => 'required_with:products|integer|min:1',
-            'total_amount' => 'required|integer|min:0',
-            'payment_method' => 'required|in:Débito,Crédito,Efectivo',
-            'payment_date' => 'required|date',
-            'status' => 'required|in:Pendiente,Pagado,Cancelado',
-        ]);
+            $client = Client::findOrFail($request->client_id);
+        } else {
+            // Si no hay cliente seleccionado, validar datos para crearlo
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'client_run' => 'required|string|max:12',
+                'email' => 'required|email',
+                'phone' => 'required|string|max:20',
+                'address' => 'nullable|string|max:255',
+
+                'sale_type' => 'required|in:Servicio,Producto',
+                'appointment_id' => 'nullable|exists:appointments,id',
+                'products' => 'nullable|array',
+                'products.*.id' => 'required_with:products|exists:products,id',
+                'products.*.quantity' => 'required_with:products|integer|min:1',
+                'total_amount' => 'required|integer|min:0',
+                'payment_method' => 'required|in:Débito,Crédito,Efectivo',
+                'payment_date' => 'required|date',
+                'status' => 'required|in:Pendiente,Pagado,Cancelado',
+            ]);
+
+            $client = Client::where('client_run', $request->client_run)->first();
+
+            if ($client) {
+                if ($client->email !== $request->email) {
+                    return back()->withErrors(['email' => 'Ya existe un cliente con este RUT pero con otro correo.']);
+                }
+            } else {
+                $user = \App\Models\User::where('run', $request->client_run)->first();
+
+                $client = Client::updateOrCreate([
+                    'user_id' => $user?->id ?? auth()->id(),
+                    'name' => $request->name,
+                    'lastname' => $request->lastname,
+                    'client_run' => $request->client_run,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'address' => $request->address,
+                ]);
+            }
+        }
 
         if ($request->sale_type === 'Servicio' && !$request->appointment_id) {
             return back()->withErrors(['appointment_id' => 'Debes seleccionar una cita para una venta de tipo Servicio.']);
-        }
-
-        $client = Client::where('client_run', $request->client_run)->first();
-
-        if ($client) {
-            // Validar coincidencia de correo electrónico
-            if ($client->email !== $request->email) {
-                return back()->withErrors(['email' => 'Ya existe un cliente con este RUT pero con otro correo.']);
-            }
-        } else {
-            // Buscar si existe un usuario con el mismo RUN
-            $user = \App\Models\User::where('run', $request->client_run)->first();
-
-            // Crear cliente
-            $client = Client::create([
-                'user_id' => $user?->id ?? auth()->id(),
-                'name' => $request->name,
-                'lastname' => $request->lastname,
-                'client_run' => $request->client_run,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'address' => $request->address,
-            ]);
         }
 
         $billing = Billing::create([
@@ -83,8 +99,8 @@ class BillingController extends Controller
             'status' => $request->status,
         ]);
 
-        if ($request->has('product_ids')) {
-            foreach ($validated['product_ids'] as $productId) {
+        if ($request->has('products')) {
+            foreach ($validated['products'] as $productId) {
                 $product = Product::findOrFail($productId);
                 $quantity = $request->input("quantities.$productId", 1);
                 $unitPrice = $product->price;

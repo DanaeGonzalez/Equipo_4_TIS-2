@@ -5,6 +5,15 @@
     <div class="container mx-auto px-4 py-6">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold">Facturas</h2>
+            {{-- @if ($errors->any())
+                <div class="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif --}}
             @can('billing.create')
                 <a href="{{ route('billing.create') }}"
                     class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">

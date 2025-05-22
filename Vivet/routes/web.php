@@ -62,4 +62,5 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('pets', PetController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('billing', BillingController::class);
+    Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
 });

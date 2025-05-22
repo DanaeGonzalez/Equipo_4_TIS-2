@@ -52,7 +52,8 @@ class SyncPermissionsFromRoutes extends Command
     {
         $customPermissions = [
             'Asignar Permisos' => 'roles.permissions.edit',
-            'Actualizar Permisos' => 'roles.permissions.update'
+            'Actualizar Permisos' => 'roles.permissions.update',
+            'Crear Clientes Factura' => 'clients.store.from.billing'
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
