@@ -19,7 +19,7 @@ class RegisterController extends Controller
             'apellido' => ['required', 'string', 'max:255'],
             'run' => ['required', 'string', 'min:7','max:8'],
             'email' => ['required', 'email', 'unique:users,email', 'max:250'],
-            'password' => ['required', "min:8", 'confirmed']
+            'password' => ['required', "min:8", "max:15", 'confirmed']
         ]);
 
         $role = Role::where('name', 'Tutor')->first();
