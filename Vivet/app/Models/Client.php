@@ -19,4 +19,10 @@ class Client extends Model
     {
         return $this->belongsTo(Billing::class);
     }
+
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
+
 }

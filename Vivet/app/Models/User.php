@@ -52,4 +52,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+    public function client()
+    {
+        return $this->hasOne(Client::class, 'user_id', 'id');
+    }
+
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
 }
