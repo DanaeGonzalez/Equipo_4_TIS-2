@@ -44,7 +44,7 @@ class AppointmentController extends Controller
         if ($user->role->name === 'Tutor') {
             $client = Client::where('client_run', $user->run)->first();
             // Agrega esta validación antes de acceder a client->pets
-            if (!$client) {
+            /*if (!$client) {
                 $client = Client::create([
                     'user_id' => $user->id,
                     'name' => $user->name,
@@ -52,12 +52,21 @@ class AppointmentController extends Controller
                     'email' => $user->email,
                     'client_run' => $user->run,
                 ]);
-            }
+            }*/
+
             // Cargar la relación para que esté disponible en el usuario
-            $client->load('pets');
-            $pets = $client->pets; // acá ya no debería fallar
+            if ($client) {
+                $client->load('pets');
+                $pets = $client->pets;
+            } else {
+                // Si no existe cliente, no hay mascotas
+                $pets = collect();
+            }
+
+            /*$client->load('pets');
+            $pets = $client->pets;  */
         } else {
-            $pets = collect(); // O lo que uses si no es tutor
+            $pets = collect();
         }
 
         return view('appointments.create', compact('schedules', 'services', 'veterinarians', 'pets'));
@@ -94,8 +103,8 @@ class AppointmentController extends Controller
                     'color' => 'nullable|string|max:255',
                     'sex' => 'required_if:pet_id,new|in:Macho,Hembra',
                     'date_of_birth' => 'nullable|date',
-                    'microchip_number' => 'nullable|string|max:255',
-                    'notes' => 'nullable|string',
+                    //'microchip_number' => 'nullable|string|max:255',
+                    //'notes' => 'nullable|string',
                 ]);
 
                 $schedule = Schedule::findOrFail($request->schedule_id);
@@ -134,8 +143,8 @@ class AppointmentController extends Controller
                         'color' => $request->color,
                         'sex' => $request->sex,
                         'date_of_birth' => $request->date_of_birth,
-                        'microchip_number' => $request->microchip_number,
-                        'notes' => $request->notes,
+                        //'microchip_number' => $request->microchip_number,
+                        //'notes' => $request->notes,
                     ]);
                 }
 
@@ -169,8 +178,8 @@ class AppointmentController extends Controller
                 'color' => 'nullable|string|max:255',
                 'sex' => 'required|in:Macho,Hembra',
                 'date_of_birth' => 'nullable|date',
-                'microchip_number' => 'nullable|string|max:255',
-                'notes' => 'nullable|string',
+                //'microchip_number' => 'nullable|string|max:255',
+                //'notes' => 'nullable|string',
 
                 'schedule_id' => 'required|exists:schedules,id',
                 'service_id' => 'required|exists:services,id',
@@ -298,8 +307,8 @@ class AppointmentController extends Controller
             'color' => $request->color,
             'sex' => $request->sex,
             'date_of_birth' => $request->date_of_birth,
-            'microchip_number' => $request->microchip_number,
-            'notes' => $request->notes,
+            //'microchip_number' => $request->microchip_number,
+            //'notes' => $request->notes,
         ]);
 
         // Actualiza cita

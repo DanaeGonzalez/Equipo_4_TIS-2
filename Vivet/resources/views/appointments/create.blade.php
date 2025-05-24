@@ -65,8 +65,8 @@
                         <option value="Hembra">Hembra</option>
                     </select>
                     <input type="date" name="date_of_birth" class="input">
-                    <input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
-                    <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>
+                    <!--<input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
+                    <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
                 </div>
 
                 <script>
@@ -118,8 +118,8 @@
                         <option value="Hembra">Hembra</option>
                     </select>
                     <input type="date" name="date_of_birth" class="input">
-                    <input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
-                    <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>
+                    <!--<input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
+                    <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
                 </div>
             @endif
 
