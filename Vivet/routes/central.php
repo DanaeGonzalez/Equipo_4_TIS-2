@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('central.landing');
+Route::get('/check', function () {
+    return 'CENTRAL!';
 });

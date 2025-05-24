@@ -2,20 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Stancl\Tenancy\Database\Concerns\HasDatabase;
+use Stancl\Tenancy\Database\Models\Tenant;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
+use Stancl\Tenancy\Database\Concerns\HasDatabase;
 
-class Clinic extends Model
+class Clinic extends Tenant
 {
-    use HasDatabase, HasDomains;
-
-    protected $table = 'clinics'; // 👈 Esto es clave
-
-    protected $fillable = [
-        'name',
-        'subdomain',
-        'domain',
-        'email',
-    ];
+    use HasDomains, HasDatabase;
 }
