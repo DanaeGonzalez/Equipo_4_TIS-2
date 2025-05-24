@@ -25,7 +25,7 @@ use App\Http\Controllers\BillingController;
 */
 
 Route::get('/', function () {
-    return view('landing');
+    return view('tenant.landing');
 });
 
 Route::middleware(['auth', 'is_active'])->group(function () {
