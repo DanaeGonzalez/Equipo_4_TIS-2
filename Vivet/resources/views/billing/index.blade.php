@@ -53,7 +53,7 @@
                             <td class="px-4 py-2">{{ $billing->payment_date->format('d/m/Y') }}</td>
                             <td class="px-4 py-2">{{ $billing->status }}</td>
                             <td class="px-4 py-2 space-x-2">
-                                @can('billing.view')
+                                @can('billing.show')
                                     <a href="{{ route('billing.show', $billing) }}" class="text-blue-600 hover:underline">Ver</a>
                                 @endcan
                                 @can('billing.edit')

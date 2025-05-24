@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Appointment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf; 
 
 class BillingController extends Controller
 {
@@ -152,5 +153,14 @@ class BillingController extends Controller
     {
         $billing->delete();
         return redirect()->route('billing.index')->with('success', 'Factura eliminada.');
+    }
+
+    public function download(Billing $billing)
+    {
+        $billing->load(['client', 'appointment', 'products']);
+
+        $pdf = PDF::loadView('billing.pdf', compact('billing'));
+
+        return $pdf->download('boleta_' . $billing->id . '.pdf');
     }
 }

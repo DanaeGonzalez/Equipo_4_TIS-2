@@ -68,7 +68,8 @@ class SyncPermissionsFromRoutes extends Command
             'eliminar' => 'destroy',
             'asignar' => 'edit',
             'actualizar' => 'update',
-            'guardar' => 'store'
+            'guardar' => 'store',
+            'descargar' => 'download'
         ];
 
         $dictionary = [
