@@ -42,7 +42,7 @@ class AppointmentController extends Controller
         $user = auth()->user();
 
         if ($user->role->name === 'Tutor') {
-            $client = Client::where('client_run', $user->run)->first();
+            $client = Client::where('user_id', $user->id)->first();
             // Agrega esta validación antes de acceder a client->pets
             /*if (!$client) {
                 $client = Client::create([
@@ -71,11 +71,21 @@ class AppointmentController extends Controller
 
         return view('appointments.create', compact('schedules', 'services', 'veterinarians', 'pets'));
     }
-
+    //cambios
     public function index()
     {
+        $user = auth()->user();
+        $client = Client::where('user_id', $user->id)->first();
+
+        if (!$client) {
+            return view('appointments.index', ['appointments' => collect()]);
+        }
         $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
             ->where('status', '!=', 'Finalizada')
+            ->where('appointment_date', '>', now())
+            ->whereHas('pet', function ($query) use ($client){
+                $query->where('client_id', $client->id);
+            })
             ->orderBy('appointment_date')
             ->get();
         return view('appointments.index', compact('appointments'));
@@ -121,7 +131,9 @@ class AppointmentController extends Controller
                     return back()->withErrors(['user_id' => 'El veterinario seleccionado no es válido.']);
                 }
 
-                $client = Client::where('client_run', $user->run)->first();
+                $client = Client::where('user_id', $user->id)->first();
+
+
                 if (!$client) {
                     $client = Client::create([
                         'user_id' => $user->id,
@@ -201,7 +213,7 @@ class AppointmentController extends Controller
                 return back()->withErrors(['user_id' => 'El veterinario seleccionado no es válido.']);
             }
 
-            $client = Client::where('client_run', $request->client_run)->first();
+            $client = Client::where('user_id', $user->id)->first();
 
             if ($client) {
                 if ($client->email !== $request->email) {
@@ -211,7 +223,7 @@ class AppointmentController extends Controller
                 }
             } else {
                 $client = Client::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => $user->id,
                     'name' => $request->name,
                     'lastname' => $request->lastname,
                     'client_run' => $request->client_run,

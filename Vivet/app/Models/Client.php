@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     protected $fillable = [
+        'user_id',
         'name',
         'lastname',
         'client_run',
@@ -24,5 +25,11 @@ class Client extends Model
     {
         return $this->hasMany(Pet::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 
 }

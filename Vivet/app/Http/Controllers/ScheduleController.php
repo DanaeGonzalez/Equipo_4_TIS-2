@@ -19,8 +19,11 @@ class ScheduleController extends Controller
     }
     public function index()
     {
+        \Carbon\Carbon::setLocale('es');
+        $now = now();
+        
         $schedules = Schedule::where('is_reserved', 1)
-            ->with(['appointment.pet']) // trae cita + mascota
+            ->with(['appointment.pet.client']) // trae cita + mascota + client
             ->get()
             ->groupBy(function ($item) {
                 return \Carbon\Carbon::parse($item->event_date)->locale('es')->isoFormat('dddd'); 
