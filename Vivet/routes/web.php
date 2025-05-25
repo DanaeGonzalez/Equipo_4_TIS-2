@@ -16,6 +16,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BillingController;
+use App\Http\Controllers\NoteController;
 
 
 /*
@@ -62,4 +63,5 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('pets', PetController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('billing', BillingController::class);
+    Route::resource('notes', NoteController::class);
 });

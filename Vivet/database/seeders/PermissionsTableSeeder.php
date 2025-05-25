@@ -72,6 +72,17 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Asignar Agenda', 'route_name' => 'appointments.edit'],
             ['name' => 'Eliminar Agenda', 'route_name' => 'appointments.destroy'],
             ['name' => 'Actualizar Agenda', 'route_name' => 'appointments.update'],
+            ['name' => 'Cancelar Agenda', 'route_name' => 'appointments.cancel'],
+            ['name' => 'Reactivar Agenda', 'route_name' => 'appointments.reactivate'],
+
+            // Notas
+            ['name' => 'Ver Notas', 'route_name' => 'notes.index'],
+            ['name' => 'Crear Notas', 'route_name' => 'notes.create'],
+            ['name' => 'Guardar Notas', 'route_name' => 'notes.store'],
+            ['name' => 'Editar Notas', 'route_name' => 'notes.edit'],
+            ['name' => 'Actualizar Notas', 'route_name' => 'notes.update'],
+            ['name' => 'Eliminar Notas', 'route_name' => 'notes.destroy'],
+
         ];
 
         foreach ($permissions as $perm) {
