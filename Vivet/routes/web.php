@@ -24,6 +24,8 @@ use App\Http\Controllers\BillingController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/check', fn () => 'TENANT: ' . tenant('id'));
+
 Route::get('/', function () {
     return view('tenant.landing');
 });
