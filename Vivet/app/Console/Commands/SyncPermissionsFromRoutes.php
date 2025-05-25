@@ -50,17 +50,21 @@ class SyncPermissionsFromRoutes extends Command
 
     protected function mapPermissionToRoute(string $permissionName): ?string
     {
-        $customPermissions = [
+        $customPermissions = [ //rutas más rebuscadas que no cumplen el estandar de map
             'Asignar Permisos' => 'roles.permissions.edit',
-            'Actualizar Permisos' => 'roles.permissions.update',
+            'Actualizar Permisos del Rol' => 'roles.permissions.update',
             'Crear Clientes Factura' => 'clients.store.from.billing',
             'Guardar Inventario' => 'inventory.storeForProduct',
+            'Cancelar Citas' => 'appointments.cancel',
+            'Cancelar Cita' => 'appointments.cancel',
+            'Reactivar Citas' => 'appointments.reactivate',
+            'Reactivar Cita' => 'appointments.reactivate',
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
         }
 
-        $map = [
+        $map = [ //acciones
             'ver detalle de' => 'show',
             'ver' => 'index',
             'crear' => 'create',
@@ -69,11 +73,12 @@ class SyncPermissionsFromRoutes extends Command
             'eliminar' => 'destroy',
             'asignar' => 'edit',
             'actualizar' => 'update',
+            'actualiza' => 'update',
             'guardar' => 'store',
             'descargar' => 'download'
         ];
 
-        $dictionary = [
+        $dictionary = [ //modelos
             'servicio' => 'services',
             'servicios' => 'services',
             'producto' => 'products',
@@ -107,10 +112,10 @@ class SyncPermissionsFromRoutes extends Command
                 $entity = trim($entity);
                 $entity = str_replace(['á','é','í','ó','ú','ñ'], ['a','e','i','o','u','n'], $entity);
                 $entity = $dictionary[$entity] ?? $entity;
-                if ($entity === 'billing' || $entity=== 'inventory'){ //es billing.action; no billings.action
+                if ($entity === 'billing' || $entity=== 'inventory'){ //es billing.action; no billings.action, inventory.action, no inventories(?)
                     return "$entity.$routeSuffix";
                 }
-                //$entity = Str::plural($entity);
+                $entity = Str::plural($entity);
                 return "$entity.$routeSuffix";
             }
         }

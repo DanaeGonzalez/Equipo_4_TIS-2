@@ -10,10 +10,57 @@ use App\Models\Permission;
 
 class PermissionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $permissions = Permission::all();
-        return view('permissions.index', compact('permissions'));
+        $permissions = Permission::query();
+        // Filtros
+        if ($request->has('entity') && $request->entity) {
+            $permissions->where('name', 'like', '%' . $request->entity . '%');
+        }
+
+        if ($request->has('action') && $request->action) {
+            $permissions->where('name', 'like', $request->action . '%');
+        }
+
+        // Obtener todos los permisos filtrados
+        $permissions = $permissions->get();
+
+        // Agrupar permisos por entidad detectada (ej: usuario, boleta, etc.)
+        $grouped = [];
+
+        foreach ($permissions as $permission) {
+            // Detectar entidad desde el nombre del permiso
+            preg_match('/(?:ver|crear|editar|eliminar|actualizar|descargar|asignar|guardar|cancelar|generar) (.+)/i', strtolower($permission->name), $matches);
+            $entity = $matches[1] ?? 'otros';
+            $entity = ucfirst(trim($entity));
+
+            $grouped[$entity][] = $permission;
+        }
+
+        // Lista de entidades únicas (para filtro)
+        $entities = array_keys($grouped);
+
+        // Acciones base (para filtro)
+        $actions = ['ver', 'crear', 'editar', 'eliminar', 'actualizar', 'asignar', 'guardar', 'descargar', 'cancelar', 'generar'];
+
+        return view('permissions.index', [
+            'groupedPermissions' => $grouped,
+            'entities' => $entities,
+            'actions' => $actions
+        ]);
+        /*if ($request->has('group') && $request->group !== '') {
+            $permissions->where('group', $request->group); // o el campo que uses para agrupar
+        }
+
+        $permissions = $permissions->orderBy('group')->orderBy('name')->paginate(10);
+
+        $grouped = $permissions->getCollection()->groupBy('group');
+
+        return view('permissions.index', [
+            'permissions' => $permissions,
+            'grouped' => $grouped,
+            'groups' => Permission::select('group')->distinct()->pluck('group') // para el filtro
+        ]);*/
     }
 
     public function create()
@@ -38,13 +85,13 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index')->with('success', 'Permiso creado.');
     }
 
-    public function editPermissions(Role $role) 
+    public function editPermissions(Role $role)
     {
         $permissions = Permission::all();
         return view('roles.edit-permissions', compact('role', 'permissions'));
     }
 
-    public function updatePermissions(Request $request, Role $role) 
+    public function updatePermissions(Request $request, Role $role)
     {
         $role->permissions()->sync($request->permissions);
         return redirect()->route('roles.index')->with('success', 'Permisos actualizados.');
@@ -57,6 +104,7 @@ class PermissionController extends Controller
 
     public function update(Request $request, Permission $permission)
     {
+        //$permission->update($request->permissions);
         $request->validate([
             'name' => 'required|string|max:255|unique:permissions,name,' . $permission->id,
             'description' => 'required|string|max:255',
