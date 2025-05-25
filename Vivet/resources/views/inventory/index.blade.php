@@ -15,8 +15,8 @@
 
         <select name="item_type" class="p-2 border rounded">
             <option value="">-- Tipo de ítem --</option>
-            <option value="App\Models\Product" {{ request('item_type') == 'App\Models\Product' ? 'selected' : '' }}>Producto</option>
-            <option value="App\Models\Supply" {{ request('item_type') == 'App\Models\Supply' ? 'selected' : '' }}>Insumo</option>
+            <option value="producto" {{ request('item_type') == 'producto' ? 'selected' : '' }}>Producto</option>
+            <option value="insumo" {{ request('item_type') == 'insumo' ? 'selected' : '' }}>Insumo</option>
         </select>
 
         <input type="date" name="from_date" value="{{ request('from_date') }}" class="p-2 border rounded" placeholder="Desde">
