@@ -53,7 +53,8 @@ class SyncPermissionsFromRoutes extends Command
         $customPermissions = [
             'Asignar Permisos' => 'roles.permissions.edit',
             'Actualizar Permisos' => 'roles.permissions.update',
-            'Crear Clientes Factura' => 'clients.store.from.billing'
+            'Crear Clientes Factura' => 'clients.store.from.billing',
+            'Guardar Inventario' => 'inventory.storeForProduct',
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
@@ -93,7 +94,8 @@ class SyncPermissionsFromRoutes extends Command
             'clientes' =>'client',
             'boleta' => 'billing',
             'boletas' => 'billing',
-            'venta' =>'billing'
+            'venta' =>'billing',
+            'inventario' => 'inventory'
         ];
 
         $permissionName = strtolower($permissionName);
@@ -103,11 +105,12 @@ class SyncPermissionsFromRoutes extends Command
                 $entity = trim(str_replace($action, '', $permissionName));
                 $entity = Str::lower($entity);
                 $entity = trim($entity);
+                $entity = str_replace(['á','é','í','ó','ú','ñ'], ['a','e','i','o','u','n'], $entity);
                 $entity = $dictionary[$entity] ?? $entity;
-                if ($entity === 'billing'){ //es billing.action; no billings.action
+                if ($entity === 'billing' || $entity=== 'inventory'){ //es billing.action; no billings.action
                     return "$entity.$routeSuffix";
                 }
-                $entity = Str::plural($entity);
+                //$entity = Str::plural($entity);
                 return "$entity.$routeSuffix";
             }
         }

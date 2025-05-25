@@ -64,4 +64,7 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('billing', BillingController::class);
     Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
     Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
+    Route::resource('inventory',InventoryController::class);
+    Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
+
 });

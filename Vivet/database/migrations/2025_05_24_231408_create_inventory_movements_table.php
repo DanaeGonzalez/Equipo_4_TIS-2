@@ -18,7 +18,8 @@ return new class extends Migration
             $table->enum('movement_type', ['entrada', 'salida']);
             $table->integer('quantity');
             $table->text('reason')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('setnull');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }
