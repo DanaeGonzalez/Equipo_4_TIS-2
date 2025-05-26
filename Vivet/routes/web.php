@@ -16,7 +16,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BillingController;
-use App\Http\Controllers\MedicalExamController;
+use App\Http\Controllers\ExamController;
 
 
 /*
@@ -29,9 +29,7 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::middleware(['auth', 'is_active'])->group(function () {
-    
-});
+Route::middleware(['auth', 'is_active'])->group(function () {});
 
 Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
 
@@ -50,9 +48,9 @@ Route::get('/login-form', [LoginController::class, 'showLoginForm'])->name('logi
 Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
-Route::get('/exams', [ExamController::class, 'showExams'])->name('exams');
-Route::get('/exams/history/{user}', [ExamController::class, 'examsHistory'])->name('exams.history');
-
+Route::get('/exams', [ExamController::class, 'showExams'])->name('exams.index');
+Route::post('/exams/send', [ExamController::class, 'send'])->name('exams.send');
+Route::get('/exams/history/{user}', [ExamController::class, 'history'])->name('exams.history');
 
 Route::middleware(['check.permission'])->group(function () {
     Route::resource('products', ProductController::class);
@@ -68,4 +66,3 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('clients', ClientController::class);
     Route::resource('billing', BillingController::class);
 });
-

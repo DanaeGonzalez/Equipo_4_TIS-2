@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto p-4">
+<!-- <div class="container mx-auto p-4">
         <h1 class="text-2xl font-bold mb-4">Lista de Tutores</h1>
 
         <div class="overflow-x-auto">
@@ -61,5 +61,55 @@
                 </tbody>
             </table>
         </div>
+    </div> -->
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-6">Enviar Examen a Usuarios</h1>
+
+    @if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        {{ session('success') }}
     </div>
+    @endif
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full border border-gray-300 text-sm">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="p-2 border">Nombre</th>
+                    <th class="p-2 border">Apellido</th>
+                    <th class="p-2 border">Email</th>
+                    <th class="p-2 border">Archivo</th>
+                    <th class="p-2 border">Enviar</th>
+                    <th class="p-2 border">Historial</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                <tr class="border-t">
+                    <form method="POST" action="{{ route('exams.send') }}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="recipient_id" value="{{ $user->id }}">
+                        <td class="p-2 border">{{ $user->name }}</td>
+                        <td class="p-2 border">{{ $user->lastname }}</td>
+                        <td class="p-2 border">{{ $user->email }}</td>
+                        <td class="p-2 border">
+                            <input type="file" name="exam_file" accept=".pdf,.doc,.docx" class="border p-1 w-full" required>
+                        </td>
+                        <td class="p-2 border text-center">
+                            <button type="submit" class="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600">
+                                Enviar
+                            </button>
+                        </td>
+                        <td class="p-2 border text-center">
+                            <a href="{{ route('exams.history', $user->id) }}" class="text-blue-600 hover:underline">
+                                Ver historial
+                            </a>
+                        </td>
+                    </form>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection
