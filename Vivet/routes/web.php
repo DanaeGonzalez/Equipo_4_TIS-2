@@ -18,6 +18,16 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BillingController;
 
 
+/*COMPROBACION TEMPORAL*/ 
+foreach (['vetcodex.test', 'localhost', '127.0.0.1'] as $centralDomain) {
+    Route::domain($centralDomain)->group(function () {
+        Route::get('/', fn () => view('central.landing'));
+        Route::get('/check', fn () => 'CENTRAL');
+    });
+}
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
