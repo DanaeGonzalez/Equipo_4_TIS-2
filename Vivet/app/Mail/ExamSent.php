@@ -33,9 +33,6 @@ class ExamSent extends Mailable
     {
         return $this->subject('Has recibido un nuevo examen')
             ->view('emails.exams.sent')
-            ->attach(storage_path("app/{$this->filePath}"), [
-                'as' => basename($this->filePath),
-                'mime' => \Illuminate\Support\Facades\File::mimeType(storage_path("app/{$this->filePath}")),
-            ]);
+            ->attach(storage_path('app/' . $this->filePath));
     }
 }
