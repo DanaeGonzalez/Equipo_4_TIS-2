@@ -20,20 +20,27 @@ class ScheduleController extends Controller
     public function index()
     {
         \Carbon\Carbon::setLocale('es');
-        $now = now();
-        
-        $schedules = Schedule::where('is_reserved', 1)
-            ->with(['appointment.pet.client']) // trae cita + mascota + client
+
+        $schedules = Schedule::whereHas('appointment', function ($query) {
+            $query->where('status', 'Pendiente');
+        })
+            ->with(['appointment.pet.client'])
             ->get()
+            ->map(function ($item) {
+                //  hora sin segundos
+                $item->event_time = \Carbon\Carbon::parse($item->event_time)->format('H:i');
+                return $item;
+            })
             ->groupBy(function ($item) {
-                return \Carbon\Carbon::parse($item->event_date)->locale('es')->isoFormat('dddd'); 
+                return \Carbon\Carbon::parse($item->event_date)->locale('es')->isoFormat('dddd');
             })
             ->map(function ($day) {
-                return $day->sortBy('event_time'); //ordena horario x dia
+                return $day->sortBy('event_time');
             });
 
         return view('schedules.index', compact('schedules'));
     }
+
 
 
     public function create()

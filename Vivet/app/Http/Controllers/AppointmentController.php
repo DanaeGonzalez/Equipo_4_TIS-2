@@ -32,9 +32,14 @@ class AppointmentController extends Controller
                 $query->where('event_date', '>', $now->format('Y-m-d'))
                     ->orWhere(function ($q) use ($now) {
                         $q->where('event_date', '=', $now->format('Y-m-d'))
-                            ->where('event_time', '>', $now->format('H:i:s'));
+                            ->where('event_time', '>', $now->format('H:i'));
                     });
-            })->get();
+            })
+            ->get()
+            ->map(function ($schedule) {
+                $schedule->event_time = \Carbon\Carbon::parse($schedule->event_time)->format('H:i');
+                return $schedule;
+            });
 
         $services = Service::all();
         $veterinarians = User::where('role_id', 3)->where('is_active', 1)->get();
@@ -83,11 +88,17 @@ class AppointmentController extends Controller
         $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
             ->where('status', '!=', 'Finalizada')
             ->where('appointment_date', '>', now())
-            ->whereHas('pet', function ($query) use ($client){
+            ->whereHas('pet', function ($query) use ($client) {
                 $query->where('client_id', $client->id);
             })
             ->orderBy('appointment_date')
-            ->get();
+            ->get()
+            ->map(function ($appointment) {
+                if ($appointment->schedule) {
+                    $appointment->schedule->event_time = \Carbon\Carbon::parse($appointment->schedule->event_time)->format('H:i');
+                }
+                return $appointment;
+            });
         return view('appointments.index', compact('appointments'));
     }
 
@@ -120,6 +131,10 @@ class AppointmentController extends Controller
                 $schedule = Schedule::findOrFail($request->schedule_id);
                 if ($schedule->is_reserved) {
                     return back()->withErrors(['schedule_id' => 'Este horario ya fue reservado.']);
+                }
+                // Validar que no haya cita activa para ese horario
+                if (Appointment::where('schedule_id', $schedule->id)->where('status', 'pendiente')->exists()) {
+                    return back()->withErrors(['schedule_id' => 'Este horario ya está reservado.']);
                 }
 
                 $veterinarian = User::where('id', $request->vet_id)
@@ -252,7 +267,7 @@ class AppointmentController extends Controller
                 'service_id' => $request->service_id,
                 'appointment_date' => $schedule->event_date . ' ' . $schedule->event_time,
                 'reason' => $request->reason,
-                'status' => 'pendiente',
+                'status' => 'Pendiente',
             ]);
 
             $schedule->update(['is_reserved' => 1]);
@@ -364,7 +379,7 @@ class AppointmentController extends Controller
         if ($appointment->schedule->is_reserved) {
             return redirect()->back()->withErrors(['error' => 'No se puede reactivar la cita. El horario ya fue reservado por otra persona.']);
         }
-        $appointment->status = 'Activar'; //  estados activos
+        $appointment->status = 'Pendiente'; //  estados activos
         $appointment->save();
 
         $appointment->schedule->is_reserved = true;
