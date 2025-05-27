@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Billing extends Model
 {
     use HasFactory;
-    protected $table = 'billing';
-    
     protected $fillable = [
         'client_id',
         'sale_type',
