@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->enum('unit_type',['unidades','cajas']);
             $table->integer('units_per_box')->nullable();
+            $table->boolean('is_active')->default(true);  
             $table->timestamps();
         });
     }

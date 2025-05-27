@@ -16,7 +16,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BillingController;
-
+use App\Models\Supply;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +28,7 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::middleware(['auth', 'is_active'])->group(function () {
-    
-});
+Route::middleware(['auth', 'is_active'])->group(function () {});
 
 Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
 
@@ -64,7 +62,11 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('billing', BillingController::class);
     Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
     Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
-    Route::resource('inventory',InventoryController::class);
+    Route::resource('inventory', InventoryController::class);
     Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
-
 });
+Route::resource('supplies', SupplyController::class);
+Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock'); //agregar a permissions:sync
+Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
+Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
+Route::resource('inventory', InventoryController::class);

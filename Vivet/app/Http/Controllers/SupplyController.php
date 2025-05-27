@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supply;
+use App\Models\InventoryMovement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class SupplyController extends Controller
 {
@@ -12,7 +15,8 @@ class SupplyController extends Controller
      */
     public function index()
     {
-        //
+        $supplies = Supply::orderBy('name')->get();
+        return view('supplies.index', compact('supplies'));
     }
 
     /**
@@ -20,7 +24,7 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        //
+        return view('supplies.create');
     }
 
     /**
@@ -28,7 +32,33 @@ class SupplyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:supplies',
+            'description' => 'nullable|string',
+            'stock' => 'required|integer|min:0',
+            'stock_reason' => 'nullable|string',
+            'units_per_box' => 'nullable|integer|min:1', //si la unidad de medidas son cajas, lo necesita
+            'unit_type' => ['required', Rule::in(['unidades', 'cajas'])],
+        ]);
+
+        $validated['unit_type'] = strtolower($validated['unit_type']);
+        $totalStockUnits = $validated['stock'];
+        if ($validated['unit_type'] === 'cajas' && !empty($validated['units_per_box'])) {
+            $totalStockUnits = $validated['stock'] * $validated['units_per_box'];
+        }
+        $supply = Supply::create(array_merge($validated, ['is_active' => true]));
+        if ($validated['stock'] > 0) {
+            InventoryMovement::create([
+                'item_type' => 'insumo',
+                'item_id' => $supply->id,
+                'movement_type' => 'entrada',
+                'quantity' => $totalStockUnits,
+                'reason' => $validated['stock_reason'] ?? 'Stock inicial',
+                'user_id' => auth()->id(),
+            ]);
+        }
+
+        return redirect()->route('supplies.index')->with('success', 'Insumo creado correctamente.');
     }
 
     /**
@@ -44,7 +74,7 @@ class SupplyController extends Controller
      */
     public function edit(Supply $supply)
     {
-        //
+        return view('supplies.edit', compact('supply'));
     }
 
     /**
@@ -52,7 +82,21 @@ class SupplyController extends Controller
      */
     public function update(Request $request, Supply $supply)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255', Rule::unique('supplies')->ignore($supply->id)],
+            'description' => 'nullable|string',
+            /*'unit_type' => ['required', Rule::in(['unidades', 'cajas'])],
+            'units_per_box' => 'nullable|integer|min:1|required_if:unit,cajas',*/
+        ]);
+
+        $supply->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            /*'unit_type' => $request->input('unit'),
+            'units_per_box' => $request->input('units_per_box'),*/
+        ]);
+
+        return redirect()->route('supplies.index')->with('success', 'Insumo actualizado correctamente.');
     }
 
     /**
@@ -60,6 +104,68 @@ class SupplyController extends Controller
      */
     public function destroy(Supply $supply)
     {
-        //
+        $supply->update(['is_active' => false]);
+
+        return redirect()->route('supplies.index')->with('success', 'Insumo no disponible.');
+    }
+
+    public function adjustStock(Request $request, Supply $supply)
+    {
+        $request->validate([
+            'movement_type' => ['required', Rule::in(['entrada', 'salida'])],
+            'quantity' => 'required|integer|min:1',
+            'unit_type' => ['required', Rule::in(['unidades', 'cajas'])],
+            'reason' => 'required|string|max:255',
+        ]);
+
+        $quantity = $request->quantity;
+
+        // Convertir cajas a unidades si es necesario
+        if ($request->unit_type === 'cajas') {
+            if (!$supply->units_per_box || $supply->units_per_box < 1) {
+                return back()->with('error', 'Este insumo no tiene unidades por caja definidas.');
+            }
+            $quantity *= $supply->units_per_box;
+        }
+
+        if ($request->movement_type === 'salida') {
+            $quantity = -$quantity;
+        }
+
+        $newStock = $supply->stock + $quantity;
+
+        if ($newStock < 0) {
+            return back()->with('error', 'No hay suficiente stock para esta salida.');
+        }
+
+        $supply->stock = $newStock;
+        $supply->is_active = $newStock > 0;
+        $supply->save();
+
+        InventoryMovement::create([
+            'item_type' => 'insumo',
+            'item_id' => $supply->id,
+            'movement_type' => $request->movement_type,
+            'quantity' => abs($quantity),
+            'reason' => $request->reason,
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('supplies.index')->with('success', 'Movimiento de inventario registrado.');
+    }
+
+    public function movements(Supply $supply) //Sirve para ver cuantos movimientos ha tenido el insumo (inventario más a detalle)
+    {
+        $movements = InventoryMovement::where('item_type', 'insumo')
+            ->where('item_id', $supply->id)
+            ->latest()
+            ->get();
+
+        return view('supplies.movements', compact('supply', 'movements'));
+    }
+
+    public function showAdjustForm(Supply $supply)
+    {
+        return view('supplies.adjustStock', compact('supply'));
     }
 }
