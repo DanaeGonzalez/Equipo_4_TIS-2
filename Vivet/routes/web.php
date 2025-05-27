@@ -25,8 +25,10 @@ use App\Http\Controllers\ExamController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/check', fn () => 'TENANT: ' . tenant('id'));
+
 Route::get('/', function () {
-    return view('landing');
+    return view('tenant.landing');
 });
 
 Route::middleware(['auth', 'is_active'])->group(function () {});
@@ -65,4 +67,5 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('pets', PetController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('billing', BillingController::class);
+    Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
 });
