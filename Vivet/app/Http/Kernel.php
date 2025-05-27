@@ -30,8 +30,10 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \Stancl\Tenancy\Middleware\InitializeTenancyByDomain::class,
-            \Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains::class,
+            //No funcionan estos dos aunque son los oficiales
+            // \Stancl\Tenancy\Middleware\InitializeTenancyByDomain::class,
+            // \App\Http\Middleware\BlockTenancyOnCentralDomains::class,
+            \App\Http\Middleware\CustomTenancyMiddleware::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
