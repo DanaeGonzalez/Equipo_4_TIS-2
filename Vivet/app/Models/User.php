@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -70,6 +72,16 @@ class User extends Authenticatable
     public function appointments()
     {
         return $this->hasMany(Appointment::class, 'vet_id');
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        \Log::info('Verificando acceso al panel', [
+            'user' => $this->email,
+            'panel' => $panel->getId(),
+        ]);
+
+        return true; // o usar alguna lógica como email o rol (Implementar sprint 3)
     }
 
     /* Descomentar a medida que vayan haciendo los modelos

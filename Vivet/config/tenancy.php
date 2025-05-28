@@ -18,9 +18,9 @@ return [
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
     'central_domains' => [
-        'vetcodex.test',
-        '127.0.0.1',
-        'localhost',
+        env('CENTRAL_DOMAIN', 'vetcodex.test'),
+        //'127.0.0.1',
+        //'localhost',
     ],
 
     /**
@@ -41,7 +41,8 @@ return [
      * Database tenancy config. Used by DatabaseTenancyBootstrapper.
      */
     'database' => [
-        'central_connection' => env('DB_CONNECTION', 'central'),
+        'central_connection' => 'mysql',
+        //'central_connection' => env('DB_CONNECTION', 'central'),
 
         /**
          * Connection used as a "template" for the dynamically created tenant database connection.
