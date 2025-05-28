@@ -88,7 +88,20 @@ class PermissionController extends Controller
     public function editPermissions(Role $role)
     {
         $permissions = Permission::all();
-        return view('roles.edit-permissions', compact('role', 'permissions'));
+
+        // Agrupar por entidad (similar al index)
+        $grouped = [];
+
+        foreach ($permissions as $permission) {
+            preg_match('/(?:ver|crear|editar|eliminar|actualizar|descargar|asignar|guardar|cancelar|generar) (.+)/i', strtolower($permission->name), $matches);
+            $entity = $matches[1] ?? 'Otros';
+            $entity = ucfirst(trim($entity));
+            $grouped[$entity][] = $permission;
+        }
+
+        ksort($grouped); // Ordena alfabéticamente por grupo
+
+        return view('roles.edit-permissions', compact('role', 'grouped'));
     }
 
     public function updatePermissions(Request $request, Role $role)

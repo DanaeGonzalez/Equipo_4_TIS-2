@@ -5,12 +5,12 @@
 @section('content')
     <div class="max-w-4xl mx-auto">
         <h1 class="text-2xl font-bold mb-4">Insumos</h1>
-        {{-- @can('supplies.create') --}}
+        @can('supplies.create')
         <a style="background-color: var(--color-button-secondary);" href="{{ route('supplies.create') }}"
             class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">
             + Nuevo Insumo
         </a>
-        {{-- @endcan --}}
+        @endcan
         @if (session('success'))
             <div class="bg-green-200 text-green-800 p-2 rounded mb-4">
                 {{ session('success') }}
@@ -67,9 +67,9 @@
                     <th class="p-2 border">Descripción</th>
                     <th class="p-2 border">Stock</th>
                     <th class="p-2 border">Disponible</th>
-                    {{-- @can('supplies.edit') --}}
+                    @can('supplies.edit')
                     <th class="p-2 border">Acciones</th>
-                    {{-- @endcan--}}
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -85,7 +85,7 @@
                             @endif
                         </td>
 
-                        {{-- @can('supplies.edit')--}}
+                        @can('supplies.edit')
                         <td class="border"> {{-- Al td no puedo dar más que borde, si no, queda desordenado--}}
                             <div class="flex py-2 px-4 flex justify-center items-center gap-4"> {{-- Aquí si puedo--}}
                                 <a href="{{ route('supplies.edit', $supply) }}"
@@ -132,7 +132,7 @@
 
                             </div>
                         </td>
-                        {{-- @endcan --}}
+                        @endcan
                     </tr>
                 @empty
                     <tr>

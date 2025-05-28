@@ -47,9 +47,8 @@ Route::get('/login-form', [LoginController::class, 'showLoginForm'])->name('logi
 Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
-Route::middleware(['check.permission'])->group(function () {
-    });
-Route::resource('products', ProductController::class);
+Route::middleware(['check.permission'])->group(function () { //Aquí van todas las rutas que necesitan tener permisos para poder ingresar
+    Route::resource('products', ProductController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
@@ -57,7 +56,10 @@ Route::resource('products', ProductController::class);
     Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
     Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
     Route::resource('appointments', AppointmentController::class);
+    Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+    Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
     Route::resource('schedules', ScheduleController::class);
+    Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
     Route::resource('pets', PetController::class);
     Route::resource('supplies', SupplyController::class);
     Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock'); //agregar a permissions:sync
@@ -70,3 +72,4 @@ Route::resource('products', ProductController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('inventory', InventoryController::class);
     Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
+});
