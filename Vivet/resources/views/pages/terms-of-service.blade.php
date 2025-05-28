@@ -1,5 +1,5 @@
 {{-- resources/views/pages/terms-of-service.blade.php --}}
-@extends('tenant.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Términos de Servicio - Clínica Veterinaria')
 
