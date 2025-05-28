@@ -9,7 +9,11 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $notes = Note::where('user_id', auth()->id())->latest()->get();
+        $notes = Note::where('user_id', auth()->id())
+            ->orderBy('is_pinned', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('notes.index', compact('notes'));
     }
 
@@ -29,6 +33,7 @@ class NoteController extends Controller
             'user_id' => auth()->id(),
             'title' => $request->title,
             'content' => $request->content,
+            'is_pinned' => $request->has('is_pinned'),
         ]);
 
         return redirect()->route('notes.index')->with('success', 'Nota creada exitosamente.');
@@ -51,9 +56,14 @@ class NoteController extends Controller
         $request->validate([
             'title' => 'nullable|string|max:255',
             'content' => 'required|string',
+            'is_pinned' => 'sometimes|boolean',
         ]);
 
-        $note->update($request->only('title', 'content'));
+        $note->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'is_pinned' => $request->has('is_pinned'),
+        ]);
 
         return redirect()->route('notes.index')->with('success', 'Nota actualizada.');
     }
