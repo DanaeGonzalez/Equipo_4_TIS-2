@@ -31,6 +31,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'is_active' => 'nullable|boolean',
             'is_vaccine' => 'nullable|boolean',
             'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
             'validity_period' => 'nullable|integer|required_if:is_vaccine,1',
@@ -42,7 +43,7 @@ class ProductController extends Controller
             'price' => $validated['price'],
             'stock' => $validated['stock'],
             'is_active' => $validated['is_active'],
-            'is_vaccine' => $request->has('is_vaccine'),
+            'is_vaccine' => $request->input('is_vaccine') == '1',
         ]);
         //dd($request->all());
 
@@ -55,15 +56,16 @@ class ProductController extends Controller
                 'reason' => $request->input('stock_reason'),
                 'user_id' => auth()->id(),
             ]);
-            if ($product->is_vaccine) {
-                Vaccine::create([
-                    'product_id' => $product->id,
-                    'name' => $product->name,
-                    'description' => $product->description,
-                    'species' => $validated['vaccine_species'],
-                    'validity_period' => $validated['validity_period'],
-                ]);
-            }
+        }
+
+        if ($request->has('is_vaccine')) {
+            Vaccine::create([
+                'product_id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'species' => $validated['vaccine_species'],
+                'validity_period' => $validated['validity_period'],
+            ]);
         }
 
         return redirect()->route('products.index')->with('success', 'Producto creado correctamente.');
@@ -74,21 +76,52 @@ class ProductController extends Controller
     }
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $vaccine = Vaccine::where('product_id', $product->id)->first();
+        return view('products.edit', compact('product', 'vaccine'));
     }
 
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
+            'is_vaccine' => 'nullable|boolean',
+            'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
+            'validity_period' => 'nullable|integer|required_if:is_vaccine,1',
         ]);
-        $product->update($validated);
+
+        $isVaccine = $request->boolean('is_vaccine');
+
+        $product->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? null,
+            'price' => $validated['price'],
+            'stock' => $validated['stock'],
+            'is_active' => $request->boolean('is_active'),
+            'is_vaccine' => $request->boolean('is_vaccine'),
+
+        ]);
+
+
+        if ($isVaccine) {
+            Vaccine::updateOrCreate(
+                ['product_id' => $product->id],
+                [
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'species' => $validated['vaccine_species'],
+                    'validity_period' => $validated['validity_period'],
+                ]
+            );
+        } else {
+            Vaccine::where('product_id', $product->id)->delete();
+        }
         return redirect()->route('products.index')->with('success', 'Producto actualizado.');
     }
+
     public function destroy(Product $product)
     {
         $product->update(['is_active' => false]);

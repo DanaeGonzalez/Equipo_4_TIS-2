@@ -61,16 +61,16 @@
             </label>
         </div>
 
-        <div id="vacinneinfo" class="mt-2 hidden">
-                <label for="description" class="block font-medium">Descripción</label>
-                <textarea name="description" id="description"
-                class="w-full border p-2 rounded">{{ old('$vaccine->description') }}</textarea>
+        <div id="vaccineinfo" class="mt-4 hidden space-y-4 border-t pt-4">
+            <div>
                 <label for="species" class="block font-medium">Especie dirigida</label>
-                <textarea name="species" id="species"
-                class="w-full border p-2 rounded">{{ old('species') }}</textarea>
-                <label for="validity_period" class="block font-medium">Tiempo de validez de la vacuna</label>
-                <input type="number" name="validity_period" id="validity_period" value="{{ old('validity_period') }}" class="w-full border p-2 rounded"
-                required>
+                <input type="text" name="vaccine_species" id="species" class="w-full border p-2 rounded" value="{{ old('vaccine_species') }}">
+            </div>
+
+            <div>
+                <label for="validity_period" class="block font-medium">Tiempo de validez (días)</label>
+                <input type="number" name="validity_period" id="validity_period" value="{{ old('validity_period') }}" class="w-full border p-2 rounded">
+            </div>
         </div>
 
         <input type="hidden" name="stock_reason" id="stock_reason_input" value="Stock inicial">
@@ -83,18 +83,20 @@
 
 </div>
 <script>
-    function toggleVaccines() {
-        const unitSelect = document.getElementById('is_vaccine');
-        const unitsPerBoxField = document.getElementById('vaccineinfo');
+    document.addEventListener('DOMContentLoaded', function() {
+        const isVaccineCheckbox = document.getElementById('is_vaccine');
+        const vaccineInfoSection = document.getElementById('vaccineinfo');
 
-        if (unitSelect.value === 'true') {
-            unitsPerBoxField.classList.remove('hidden');
-        } else {
-            unitsPerBoxField.classList.add('hidden');
+        function toggleVaccineFields() {
+            if (isVaccineCheckbox.checked) {
+                vaccineInfoSection.classList.remove('hidden');
+            } else {
+                vaccineInfoSection.classList.add('hidden');
+            }
         }
-    }
 
-    // Ejecutar al cargar
-    document.addEventListener('DOMContentLoaded', toggleVaccines);
+        isVaccineCheckbox.addEventListener('change', toggleVaccineFields);
+        toggleVaccineFields(); // para el estado inicial
+    });
 </script>
 @endsection

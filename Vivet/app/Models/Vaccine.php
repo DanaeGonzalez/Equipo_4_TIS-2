@@ -10,13 +10,14 @@ class Vaccine extends Model
     use HasFactory;
     
     protected $fillable = [
+        'product_id',
         'name',
         'description',
         'species',
         'validity_period',
     ];
 
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }
