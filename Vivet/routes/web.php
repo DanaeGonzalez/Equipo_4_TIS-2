@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Tenant;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
@@ -33,6 +35,18 @@ Route::get('/test-login-form', function () {
 Route::get('/test-user', function () {
     return Auth::check() ? Auth::user()->email : 'No autenticado';
 });
+
+Route::get('/prueba-tenant', function () {
+    tenancy()->initialize('vivet');
+    return DB::connection()->getDatabaseName();
+});
+
+Route::get('/prueba-db', function () {
+    $tenant = Tenant::find('vivet');
+    tenancy()->initialize($tenant);
+    return 'BD activa: ' . DB::connection()->getDatabaseName();
+});
+
 
 
 
