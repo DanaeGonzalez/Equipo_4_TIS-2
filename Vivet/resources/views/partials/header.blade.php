@@ -24,7 +24,7 @@
       <!-- nav - start -->
       <nav class="hidden gap-12 lg:flex">
         <a href="/" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Inicio</a>
-        <a href="#" class="inline-flex items-center gap-1 text-lg font-semibold text-black hover:underline">
+        <a href="#" class="inline-flex items-center mb-2 gap-1 text-lg font-semibold text-black hover:underline">
           Servicios
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"

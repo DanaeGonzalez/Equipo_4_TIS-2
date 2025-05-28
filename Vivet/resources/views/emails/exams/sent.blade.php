@@ -11,6 +11,6 @@
 
     <p>El archivo ha sido adjuntado a este correo.</p>
 
-    <p>Saludos,<br>Vivet</p>
+    <p>Gracias por confiar en nosotros!<br>Vivet</p>
 </body>
 </html>

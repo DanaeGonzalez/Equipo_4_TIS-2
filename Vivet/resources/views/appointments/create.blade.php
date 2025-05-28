@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
     <div class="container mx-auto max-w-3xl p-8 bg-gradient-to-br from-white to-gray-100 shadow-xl rounded-2xl mt-10">
         <div class="mb-4">
@@ -17,7 +16,6 @@
 
         <div class="text-center mb-8">
             <h2 class="text-4xl font-extrabold text-indigo-700" style="color: var(--color-title);">Reserva tu Cita</h2>
-
         </div>
 
         @if(session('success'))
@@ -38,7 +36,6 @@
 
         <form action="{{ route('appointments.store') }}" method="POST" class="space-y-6">
             @csrf
-
             <!-- Cliente -->
             <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
                 <h3 class="col-span-2 text-lg font-semibold text-indigo-700" style="color: var(--color-title);">Datos del
@@ -107,10 +104,7 @@
                 <input type="text" name="reason" placeholder="Motivo" class="input-elegante col-span-2" required>
             </div>
 
-
-
-
-            <!--  gaurdar reserva -->
+            <!--  guardar reserva -->
             <button type="submit" style="background-color: var(--color-button-secondary);"
                 class="w-full bg-indigo-600 text-white py-3 rounded-xl shadow hover:bg-indigo-700 transition transform hover:scale-105">
                 Guardar Cita

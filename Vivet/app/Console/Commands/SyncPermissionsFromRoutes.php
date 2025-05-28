@@ -51,6 +51,8 @@ class SyncPermissionsFromRoutes extends Command
     protected function mapPermissionToRoute(string $permissionName): ?string
     {
         $customPermissions = [
+            'Enviar Examenes' => 'exams.send',
+            'Ver Historial de Examenes' => 'exams.history',
             'Asignar Permisos' => 'roles.permissions.edit',
             'Actualizar Permisos' => 'roles.permissions.update'
         ];
@@ -90,7 +92,9 @@ class SyncPermissionsFromRoutes extends Command
             'clientes' =>'client',
             'boleta' => 'billing',
             'boletas' => 'billing',
-            'venta' =>'billing'
+            'venta' =>'billing',
+            'examenes' => 'exams',
+            'examen' => 'exams',
         ];
 
         $permissionName = strtolower($permissionName);

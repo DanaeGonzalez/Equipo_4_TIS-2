@@ -48,9 +48,6 @@ Route::get('/login-form', [LoginController::class, 'showLoginForm'])->name('logi
 Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
-Route::get('/exams', [ExamController::class, 'showExams'])->name('exams.index');
-Route::post('/exams/send', [ExamController::class, 'send'])->name('exams.send');
-Route::get('/exams/history/{user}', [ExamController::class, 'history'])->name('exams.history');
 
 Route::middleware(['check.permission'])->group(function () {
     Route::resource('products', ProductController::class);
@@ -65,4 +62,7 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('pets', PetController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('billing', BillingController::class);
+    Route::get('/exams', [ExamController::class, 'showExams'])->name('exams.index');
+    Route::post('/exams/send', [ExamController::class, 'send'])->name('exams.send');
+    Route::get('/exams/history/{user}', [ExamController::class, 'history'])->name('exams.history');
 });
