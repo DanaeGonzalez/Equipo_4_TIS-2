@@ -9,7 +9,11 @@ return new class extends Migration {
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->uuid('id')->primary();       // ID único (puede ser texto si lo deseas)
-            $table->json('data');                // Aquí se guarda name, email, etc.
+            //$table->json('data');                // Aquí se guarda name, email, etc.
+            $table->string('name');
+            $table->string('email');
+            $table->string('subdomain')->unique();
+            $table->json('data')->nullable(); //Para evitar errores con tenancy
             $table->timestamps();
         });
     }
