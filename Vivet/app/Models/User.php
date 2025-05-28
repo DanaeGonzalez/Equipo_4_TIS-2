@@ -89,18 +89,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }*/
-    public function exams()
-    {
-        return $this->hasMany(Exam::class, 'id');
-    }
-    
-    public function examsSent()
-    {
-        return $this->hasMany(Exam::class, 'sender_id');
-    }
-
-    public function examsReceived()
-    {
-        return $this->hasMany(Exam::class, 'recipient_id');
-    }
 }

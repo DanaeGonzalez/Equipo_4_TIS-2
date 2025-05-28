@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
-use App\Mail\AppointmentCreated;
 use App\Models\Schedule;
 use App\Models\Pet;
 use App\Models\Service;
@@ -11,7 +10,6 @@ use App\Models\User;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Exception;
 
 class AppointmentController extends Controller
@@ -124,6 +122,8 @@ class AppointmentController extends Controller
                 ]);
             }
 
+
+
             $pet = Pet::create([
                 'client_id' => $client->id,
                 'pet_name' => $request->pet_name,
@@ -136,7 +136,7 @@ class AppointmentController extends Controller
                 'notes' => $request->notes,
             ]);
 
-            $appointment = Appointment::create([
+            Appointment::create([
                 'schedule_id' => $schedule->id,
                 'pet_id' => $pet->id,
                 'vet_id' => $veterinarian->id,
@@ -147,8 +147,6 @@ class AppointmentController extends Controller
             ]);
 
             $schedule->update(['is_reserved' => 1]);
-
-            Mail::to($client->email)->send(new AppointmentCreated($veterinarian,$appointment));
 
             return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
         } catch (Exception $e) {
@@ -167,6 +165,7 @@ class AppointmentController extends Controller
         $services = Service::all();
         $veterinarians = User::where('role_id', 3)->where('is_active', 1)->get();
         $schedules = Schedule::where('is_reserved', false)->get();
+
 
         return view('appointments.edit', compact('appointment', 'services', 'veterinarians', 'schedules'));
     }
@@ -227,6 +226,7 @@ class AppointmentController extends Controller
         return redirect()->route('appointments.index')->with('success', 'Cita actualizada correctamente.');
     }
 
+
     public function destroy(Appointment $appointment)
     {
         // Cambiar el estado a "Cancelada"
@@ -264,4 +264,6 @@ class AppointmentController extends Controller
 
         return redirect()->back()->with('success', 'La cita ha sido reactivada exitosamente.');
     }
+
+
 }
