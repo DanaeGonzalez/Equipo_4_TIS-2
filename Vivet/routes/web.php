@@ -18,6 +18,18 @@ Route::post('/csrf-test', function () {
     return '¡CSRF y sesión funcionando!';
 })->name('csrf.test');
 
+Route::get('/test-login-form', function () {
+    return '
+        <form method="POST" action="/admin/login">
+            <input type="hidden" name="_token" value="' . csrf_token() . '">
+            <input name="email" type="email" value="admin@vetcodex.cl">
+            <input name="password" type="password">
+            <button type="submit">Login</button>
+        </form>
+    ';
+});
+
+
 
 /*COMPROBACION TEMPORAL
 foreach (['vetcodex.test', 'localhost', '127.0.0.1'] as $centralDomain) {
