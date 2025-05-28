@@ -32,7 +32,7 @@
               clip-rule="evenodd" />
           </svg>
         </a>
-        <a href="{{ route('contact') }}"
+        <a href="{{ route('tenant.contact') }}"
         class="text-lg font-semibold text-gray transition duration-100 hover:underline">Contacto</a>
         <a href="#" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Equipo</a>
         

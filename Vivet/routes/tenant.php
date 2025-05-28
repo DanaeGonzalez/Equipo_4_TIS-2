@@ -38,17 +38,17 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     //
 });
 
-Route::view('/privacy-policy', 'tenant.pages.privacy-policy')->name('privacy-policy');
+Route::view('/privacy-policy', 'tenant.pages.privacy-policy')->name('tenant.privacy-policy');
 
-Route::view('/terms-of-service', 'tenant.pages.terms-of-service')->name('terms-of-service');
+Route::view('/terms-of-service', 'tenant.pages.terms-of-service')->name('tenant.terms-of-service');
 
-Route::view('/contact', 'tenant.pages.contact')->name('contact');
+Route::view('/contact', 'tenant.pages.contact')->name('tenant.contact');
 
-Route::view('/blog', 'tenant.blog.index')->name('blog');
+Route::view('/blog', 'tenant.blog.index')->name('tenant.blog');
 
-Route::view('/about-us', 'tenant.pages.about-us')->name('about');
+Route::view('/about-us', 'tenant.pages.about-us')->name('tenant.about');
 
-Route::view('/faq', 'tenant.pages.faq')->name('faq');
+Route::view('/faq', 'tenant.pages.faq')->name('tenant.faq');
 
 Route::get('/register-form', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
@@ -61,7 +61,7 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
+    Route::resource('tenant.users', UserController::class);
     Route::resource('permissions', PermissionController::class);
     Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
     Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
