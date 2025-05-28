@@ -48,7 +48,8 @@ Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
 Route::middleware(['check.permission'])->group(function () {
-    Route::resource('products', ProductController::class);
+    });
+Route::resource('products', ProductController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
@@ -69,4 +70,3 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('clients', ClientController::class);
     Route::resource('inventory', InventoryController::class);
     Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
-});
