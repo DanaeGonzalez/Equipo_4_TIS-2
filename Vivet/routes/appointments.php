@@ -8,7 +8,7 @@ Route::middleware(['auth'])->group(function () {
 });*/
 
 Route::middleware(['check.permission'])->group(function () {
-    Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
+    Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('tenant.appointments.create');
     Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
     Route::get('/appointments/{appointment}/edit', [AppointmentController::class, 'edit'])->name('appointments.edit');

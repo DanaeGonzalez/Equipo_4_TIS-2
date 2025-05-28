@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
     public function showRegisterForm(){
-        return view('auth.register');
+        return view('tenant.auth.register');
     }
     public function registerUser(Request $request){
     
