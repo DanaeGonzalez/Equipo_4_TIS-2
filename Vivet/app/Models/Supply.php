@@ -15,6 +15,7 @@ class Supply extends Model
         'stock',
         'unit_type',
         'units_per_box',
+        'is_active'
     ];
 
     public function inventoryMovements()

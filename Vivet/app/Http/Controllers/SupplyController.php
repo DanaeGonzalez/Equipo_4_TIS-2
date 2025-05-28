@@ -13,9 +13,13 @@ class SupplyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $supplies = Supply::orderBy('name')->get();
+        $query = Supply::orderBy('name');
+        if ($request->has('search') && $request->search !== '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        $supplies = $query->get();
         return view('supplies.index', compact('supplies'));
     }
 
@@ -43,9 +47,12 @@ class SupplyController extends Controller
 
         $validated['unit_type'] = strtolower($validated['unit_type']);
         $totalStockUnits = $validated['stock'];
+        
         if ($validated['unit_type'] === 'cajas' && !empty($validated['units_per_box'])) {
             $totalStockUnits = $validated['stock'] * $validated['units_per_box'];
         }
+        $validated['stock'] = $totalStockUnits;
+
         $supply = Supply::create(array_merge($validated, ['is_active' => true]));
         if ($validated['stock'] > 0) {
             InventoryMovement::create([
@@ -85,6 +92,7 @@ class SupplyController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255', Rule::unique('supplies')->ignore($supply->id)],
             'description' => 'nullable|string',
+            'is_active' => 'boolean',
             /*'unit_type' => ['required', Rule::in(['unidades', 'cajas'])],
             'units_per_box' => 'nullable|integer|min:1|required_if:unit,cajas',*/
         ]);
@@ -92,6 +100,7 @@ class SupplyController extends Controller
         $supply->update([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
+            'is_active' => $request->input('is_active'),
             /*'unit_type' => $request->input('unit'),
             'units_per_box' => $request->input('units_per_box'),*/
         ]);

@@ -5,16 +5,57 @@
 @section('content')
 <div class="max-w-4xl mx-auto">
     <h1 class="text-2xl font-bold mb-4">Insumos</h1>
-    @can('supplies.create')
-    <a href="{{ route('supplies.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">
+    {{-- @can('supplies.create') --}}
+    <a style="background-color: var(--color-button-secondary);" href="{{ route('supplies.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">
         + Nuevo Insumo
     </a>
-    @endcan
+    {{-- @endcan --}}
     @if (session('success'))
     <div class="bg-green-200 text-green-800 p-2 rounded mb-4">
         {{ session('success') }}
     </div>
     @endif
+    <form method="GET" action="{{ route('supplies.index') }}" class="mb-4 flex gap-2 items-center">
+        <div class="flex-1">
+            <input type="text" name="search" list="supplySuggestions" value="{{ request('search') }}"
+                placeholder="Buscar insumo por nombre..."
+                class="border border-gray-300 px-3 py-2 rounded w-full" />
+            <datalist id="supplySuggestions">
+                @foreach ($supplies as $supply)
+                <option value="{{ $supply->name }}"></option>
+                @endforeach
+            </datalist>
+        </div>
+
+        <button type="submit" style="background-color: var(--color-button-secondary);"
+            class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 whitespace-nowrap">
+            Buscar
+        </button>
+
+        <a href="{{ route('supplies.index') }}"
+            class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 text-center whitespace-nowrap">
+            Restablecer
+        </a>
+    </form>
+
+
+    {{--<form method="GET" action="{{ route('supplies.index') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <select name="entity" class="p-2 border rounded">
+        <option value="">-- Filtrar por insumo --</option>
+        @foreach ($supplies as $supply)
+        <option value="{{ $supply }}" {{ request('supply') == $supply ? 'selected' : '' }}>
+            {{ $supply->name }}
+        </option>
+        @endforeach
+    </select>
+
+    <button style="background-color: var(--color-button-secondary);" type="submit" class="w-full col-span-1 md:col-span-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        Filtrar
+    </button>
+    <a href="{{ route('supplies.index') }}" class="w-full block text-center px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Restablecer filtros</a>
+
+
+    </form>--}}
 
     <table class="w-full table-auto border">
         <thead class="bg-gray-100">

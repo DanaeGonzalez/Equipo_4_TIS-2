@@ -44,6 +44,14 @@
             <label for="units_per_box" class="block font-medium mt-2">Unidades por caja</label>
             <input type="number" name="units_per_box" id="units_per_box" value="{{ old('units_per_box', $supply->units_per_box) }}" class="w-full border p-2 rounded">
         </div>
+        
+        <div>
+            <label for="is_active" class="inline-flex items-center">
+                <input type="hidden" name="is_active" value="0">
+                <input type="checkbox" name="is_active" id="is_active" class="mr-2" value="1" {{ old('is_active', $supply->is_active) ? 'checked' : ''}}>
+                ¿Activo?
+            </label>
+        </div>
 
         <div class="flex items-center gap-2">
             <a style="background-color: var(--color-button-secondary);" class="bg-indigo-600 text-white px-5 py-2 rounded" href="{{ route('supplies.index') }}">← Volver a insumos</a>
