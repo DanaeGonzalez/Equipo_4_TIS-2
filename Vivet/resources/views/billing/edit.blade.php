@@ -9,19 +9,19 @@
         @csrf
         @method('PUT')
 
-        {{-- Cliente --}}
+        
         <div>
             <label class="block font-semibold">Cliente</label>
             <input type="text" value="{{ $billing->client->client_run }} - {{ $billing->client->name }} {{ $billing->client->lastname }}" class="w-full border-gray-300 rounded bg-gray-100" disabled>
         </div>
 
-        {{-- Tipo de venta --}}
+        
         <div>
             <label class="block font-semibold">Tipo de Venta</label>
             <input type="text" value="{{ $billing->sale_type }}" class="w-full border-gray-300 rounded bg-gray-100" disabled>
         </div>
 
-        {{-- Cita asociada (si es Servicio) --}}
+        
         @if($billing->sale_type === 'Servicio' && $billing->appointment)
         <div>
             <label class="block font-semibold">Cita</label>
@@ -29,13 +29,13 @@
         </div>
         @endif
 
-        {{-- Monto total --}}
+       
         <div>
             <label class="block font-semibold">Monto Total</label>
             <input type="text" value="${{ $billing->total_amount }}" class="w-full border-gray-300 rounded bg-gray-100" disabled>
         </div>
 
-        {{-- Método de pago (editable) --}}
+        
         <div>
             <label class="block font-semibold">Método de Pago</label>
             <select name="payment_method" class="w-full border-gray-300 rounded">
@@ -45,7 +45,7 @@
             </select>
         </div>
 
-        {{-- Estado (editable) --}}
+       
         <div>
             <label class="block font-semibold">Estado</label>
             <select name="status" class="w-full border-gray-300 rounded">
@@ -55,13 +55,13 @@
             </select>
         </div>
 
-        {{-- Fecha de pago (solo visual) --}}
+       
         <div>
             <label class="block font-semibold">Fecha de Pago</label>
             <input type="text" value="{{ \Carbon\Carbon::parse($billing->payment_date)->format('d-m-Y H:i') }}" class="w-full border-gray-300 rounded bg-gray-100" disabled>
         </div>
 
-        {{-- Botones --}}
+        
         <div class="flex justify-end gap-2 pt-2">
             <a href="{{ route('billing.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition">
                 Cancelar
