@@ -43,7 +43,7 @@ class RouteServiceProvider extends ServiceProvider
                 Route::middleware('web')
                 ->group(base_path('routes/appointments.php'));
     
-            Route::middleware('web')
+           /* Route::middleware('web')
                 ->group(base_path('routes/billing.php'));
     
             Route::middleware('web')
@@ -59,7 +59,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/settings.php'));
             
             Route::middleware('web')
-                ->group(base_path('routes/notes.php'));
+                ->group(base_path('routes/notes.php'));*/
         });
     }
 
