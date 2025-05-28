@@ -32,15 +32,5 @@ class Client extends Model
         return $this->hasMany(Billing::class);
     }
 
-    public function pets()
-    {
-        return $this->hasMany(Pet::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
 
 }

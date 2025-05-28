@@ -100,7 +100,7 @@ class SyncPermissionsFromRoutes extends Command
             'boleta' => 'billing',
             'boletas' => 'billing',
             'nota' => 'notes',
-            'notas' => 'notes'
+            'notas' => 'notes',
             'venta' =>'billing'
         ];
 
