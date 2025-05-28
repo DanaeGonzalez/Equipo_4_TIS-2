@@ -8,7 +8,7 @@
     <!-- Incluye tu archivo de Tailwind compilado o los links a CDN -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @include('partials.colors')
+    @include('tenant.partials.colors')
 </head>
 
 <body class="bg-gradient-to-br from-blue-50 to-teal-50">
