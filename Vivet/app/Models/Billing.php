@@ -21,8 +21,9 @@ class Billing extends Model
     ];
 
     protected $casts = [
-        'payment_date' => 'date',
+        'payment_date' => 'datetime',
     ];
+
 
     public function client()
     {

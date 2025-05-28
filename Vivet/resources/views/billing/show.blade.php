@@ -12,7 +12,7 @@
 
     <div class="mb-4">
         <strong>Tipo de venta:</strong> {{ $billing->sale_type }}<br>
-        <strong>Fecha de pago:</strong> {{ $billing->payment_date }}<br>
+        <strong>Fecha de pago:</strong> {{ $billing->payment_date->format('d-m-Y H:i') }}<br>
         <strong>Método de pago:</strong> {{ $billing->payment_method }}<br>
         <strong>Estado:</strong> {{ $billing->status }}<br>
         <strong>Monto total:</strong> ${{ number_format($billing->total_amount, 0, ',', '.') }}
@@ -21,9 +21,9 @@
     @if($billing->sale_type === 'Servicio' && $billing->appointment)
         <div class="mb-4">
             <strong>Detalle del servicio (cita):</strong><br>
-            Fecha: {{ $billing->appointment->date }}<br>
-            Profesional: {{ $billing->appointment->professional->name ?? 'N/A' }}<br>
-            Descripción: {{ $billing->appointment->description ?? 'Sin detalles' }}
+            Fecha: {{ $billing->appointment->appointments_date }}<br>
+            Profesional: {{ $billing->appointment->vet_id->name ?? 'N/A' }}<br>
+            Servicio: {{ $billing->appointment->service_id ?? 'Sin detalles' }}
         </div>
     @endif
 

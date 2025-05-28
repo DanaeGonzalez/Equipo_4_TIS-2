@@ -47,13 +47,32 @@
             </div>
         </div>
 
-        <div>
-            <label for="is_active" class="inline-flex items-center">
+        <div id="toggleVaccines" class="flex items-center gap-2">
+            <label for="is_active" class="inline-flex items-center mx-4">
                 <input type="hidden" name="is_active" value="0">
                 <input type="checkbox" name="is_active" id="is_active" class="mr-2" value="1" {{ old('is_active') ? 'checked' : '' }}>
                 ¿Activo?
             </label>
+
+            <label for="is_vaccine" class="inline-flex items-center mx-4">
+                <input type="hidden" name="is_vaccine" value="0">
+                <input type="checkbox" name="is_vaccine" id="is_vaccine" class="mr-2" value="1" {{ old('is_vaccine') ? 'checked' : '' }}>
+                ¿Es una vacuna?
+            </label>
         </div>
+
+        <div id="vacinneinfo" class="mt-2 hidden">
+                <label for="description" class="block font-medium">Descripción</label>
+                <textarea name="description" id="description"
+                class="w-full border p-2 rounded">{{ old('$vaccine->description') }}</textarea>
+                <label for="species" class="block font-medium">Especie dirigida</label>
+                <textarea name="species" id="species"
+                class="w-full border p-2 rounded">{{ old('species') }}</textarea>
+                <label for="validity_period" class="block font-medium">Tiempo de validez de la vacuna</label>
+                <input type="number" name="validity_period" id="validity_period" value="{{ old('validity_period') }}" class="w-full border p-2 rounded"
+                required>
+        </div>
+
         <input type="hidden" name="stock_reason" id="stock_reason_input" value="Stock inicial">
         <input type="hidden" name="movement_type" id="movement_type_input" value="Entrada">
         <div>
@@ -63,5 +82,19 @@
     </form>
 
 </div>
+<script>
+    function toggleVaccines() {
+        const unitSelect = document.getElementById('is_vaccine');
+        const unitsPerBoxField = document.getElementById('vaccineinfo');
 
+        if (unitSelect.value === 'true') {
+            unitsPerBoxField.classList.remove('hidden');
+        } else {
+            unitsPerBoxField.classList.add('hidden');
+        }
+    }
+
+    // Ejecutar al cargar
+    document.addEventListener('DOMContentLoaded', toggleVaccines);
+</script>
 @endsection

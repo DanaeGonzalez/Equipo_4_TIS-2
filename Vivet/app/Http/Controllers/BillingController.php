@@ -8,7 +8,7 @@ use App\Models\Client;
 use App\Models\Appointment;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf; 
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BillingController extends Controller
 {
@@ -100,8 +100,8 @@ class BillingController extends Controller
             'status' => $request->status,
         ]);
 
-        if ($request->has('products')) {
-            foreach ($validated['products'] as $productId) {
+        if ($request->has('product_ids')) {
+            foreach ($request->product_ids as $productId) {
                 $product = Product::findOrFail($productId);
                 $quantity = $request->input("quantities.$productId", 1);
                 $unitPrice = $product->price;
@@ -116,12 +116,13 @@ class BillingController extends Controller
                 ]);
             }
         }
+
         return redirect()->route('billing.index')->with('success', 'Factura registrada correctamente.');
     }
 
     public function show(Billing $billing)
     {
-        $billing->load(['client', 'appointment']);
+        $billing->load(['client', 'appointment', 'products']);
         return view('billing.show', compact('billing'));
     }
 

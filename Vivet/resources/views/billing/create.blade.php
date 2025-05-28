@@ -94,7 +94,7 @@
 
             <div>
                 <label class="block font-semibold">Fecha de Pago</label>
-                <input type="date" name="payment_date" class="w-full border-gray-300 rounded" required>
+                <input type="datetime-local" name="payment_date" class="w-full border-gray-300 rounded" required>
             </div>
 
             <div>

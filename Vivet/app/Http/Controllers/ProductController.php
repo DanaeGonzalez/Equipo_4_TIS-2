@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use App\Models\Product;
 use App\Models\InventoryMovement;
+use App\Models\Vaccine;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
@@ -26,13 +27,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            //'stock_quantity' => 'nullable|integer|min:0',
-            'stock_reason' => 'nullable|string',
-            'stock' => 'required|integer|min:0',
-            'is_active' => 'required|boolean',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'is_vaccine' => 'nullable|boolean',
+            'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
+            'validity_period' => 'nullable|integer|required_if:is_vaccine,1',
         ]);
 
         $product = Product::create([
@@ -41,6 +42,7 @@ class ProductController extends Controller
             'price' => $validated['price'],
             'stock' => $validated['stock'],
             'is_active' => $validated['is_active'],
+            'is_vaccine' => $request->has('is_vaccine'),
         ]);
         //dd($request->all());
 
@@ -53,6 +55,15 @@ class ProductController extends Controller
                 'reason' => $request->input('stock_reason'),
                 'user_id' => auth()->id(),
             ]);
+            if ($product->is_vaccine) {
+                Vaccine::create([
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'species' => $validated['vaccine_species'],
+                    'validity_period' => $validated['validity_period'],
+                ]);
+            }
         }
 
         return redirect()->route('products.index')->with('success', 'Producto creado correctamente.');

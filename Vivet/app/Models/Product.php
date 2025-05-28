@@ -21,8 +21,8 @@ class Product extends Model
         return $this->hasMany(BillingProducts::class);
     }
 
-    /*public function vaccines()
+    public function vaccines()
     {
         return $this->hasMany(Vaccine::class);
-    }*/
+    }
 }

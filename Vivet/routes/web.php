@@ -59,9 +59,7 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('schedules', ScheduleController::class);
     Route::resource('pets', PetController::class);
     Route::resource('clients', ClientController::class);
-    Route::resource('billing', BillingController::class);
-    Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
-    Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
+    
     Route::resource('inventory', InventoryController::class);
     Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
 });
@@ -70,3 +68,6 @@ Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'
 Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
 Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
 Route::resource('inventory', InventoryController::class);
+Route::resource('billing', BillingController::class);
+    Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
+    Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
