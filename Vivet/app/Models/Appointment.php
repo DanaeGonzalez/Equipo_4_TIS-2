@@ -21,12 +21,12 @@ class Appointment extends Model
 
     protected $dates = ['appointment_date'];
 
+    /* Se puede obtener el cliente desde la relación con pet
     public function client()
     {
         return $this->belongsTo(Client::class);
-    }
+    }*/
 
-    // Relaciones (opcional, pero recomendado)
     public function pet()
     {
         return $this->belongsTo(Pet::class,'pet_id');
@@ -47,6 +47,8 @@ class Appointment extends Model
         return $this->belongsTo(Schedule::class);
     }
 
-   
-
+    public function billing()
+    {
+        return $this->hasOne(Billing::class);
+    }
 }

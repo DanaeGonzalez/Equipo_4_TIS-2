@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Billing extends Model
 {
     use HasFactory;
+    protected $table = 'billing';
+    
     protected $fillable = [
         'client_id',
         'sale_type',
@@ -22,19 +24,16 @@ class Billing extends Model
         'payment_date' => 'date',
     ];
 
-    // Relación con el cliente
     public function client()
     {
         return $this->belongsTo(Client::class);
     }
 
-    // Relación con la cita (appointment)
     public function appointment()
     {
         return $this->belongsTo(Appointment::class);
     }
 
-    // Relación con productos facturados
     public function billingProducts()
     {
         return $this->hasMany(BillingProducts::class);

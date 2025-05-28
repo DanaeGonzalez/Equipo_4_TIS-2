@@ -61,4 +61,35 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pet::class);
     }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'vet_id');
+    }
+
+    /* Descomentar a medida que vayan haciendo los modelos
+    public function clinicalRecords()
+    {
+        return $this->hasMany(ClinicalRecord::class, 'vet_id');
+    }
+
+    public function petVaccinations()
+    {
+        return $this->hasMany(PetVaccination::class, 'vet_id');
+    }
+
+    public function surgeries()
+    {
+        return $this->hasMany(Surgery::class, 'vet_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }*/
 }

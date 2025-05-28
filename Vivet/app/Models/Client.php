@@ -16,9 +16,20 @@ class Client extends Model
         'phone',
         'address',
     ];
-    public function billing()
+
+    public function user()
     {
-        return $this->belongsTo(Billing::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
+
+    public function billings()
+    {
+        return $this->hasMany(Billing::class);
     }
 
     public function pets()

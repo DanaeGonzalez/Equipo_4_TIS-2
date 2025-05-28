@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
     public function showRegisterForm(){
-        return view('auth.register');
+        return view('tenant.auth.register');
     }
     public function registerUser(Request $request){
     
@@ -19,7 +19,7 @@ class RegisterController extends Controller
             'apellido' => ['required', 'string', 'max:255'],
             'run' => ['required', 'string', 'min:7','max:8'],
             'email' => ['required', 'email', 'unique:users,email', 'max:250'],
-            'password' => ['required', "min:8", 'confirmed']
+            'password' => ['required', "min:8", "max:15", 'confirmed']
         ]);
 
         $role = Role::where('name', 'Tutor')->first();

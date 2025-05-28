@@ -58,6 +58,7 @@ class SyncPermissionsFromRoutes extends Command
             'Reactivar Cita' => 'appointments.reactivate',
             'Reactivar Citas' => 'appointments.reactivate',
 
+            'Crear Clientes Factura' => 'clients.store.from.billing'
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
@@ -67,6 +68,7 @@ class SyncPermissionsFromRoutes extends Command
             'ver detalle de' => 'show',
             'ver' => 'index',
             'crear' => 'create',
+            'generar' => 'create',
             'editar' => 'edit',
             'eliminar' => 'destroy',
             'asignar' => 'edit',
@@ -99,6 +101,7 @@ class SyncPermissionsFromRoutes extends Command
             'boletas' => 'billing',
             'nota' => 'notes',
             'notas' => 'notes'
+            'venta' =>'billing'
         ];
 
         $permissionName = strtolower($permissionName);
@@ -107,7 +110,11 @@ class SyncPermissionsFromRoutes extends Command
             if (str_starts_with($permissionName, $action)) {
                 $entity = trim(str_replace($action, '', $permissionName));
                 $entity = Str::lower($entity);
+                $entity = trim($entity);
                 $entity = $dictionary[$entity] ?? $entity;
+                if ($entity === 'billing'){ //es billing.action; no billings.action
+                    return "$entity.$routeSuffix";
+                }
                 $entity = Str::plural($entity);
                 return "$entity.$routeSuffix";
             }

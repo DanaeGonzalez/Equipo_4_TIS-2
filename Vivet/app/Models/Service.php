@@ -9,6 +9,15 @@ class Service extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'description', 'estimated_duration', 'price', 'icon',
+        'name',
+        'description',
+        'estimated_duration',
+        'price',
+        'icon',
     ];
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }
