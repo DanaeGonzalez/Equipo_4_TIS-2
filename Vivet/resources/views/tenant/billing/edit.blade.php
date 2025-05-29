@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('title', 'Editar Factura')
+@extends('tenant.layouts.app')
+@section('tenant.title', 'Editar Factura')
 
 @section('content')
 <div class="container mx-auto px-4 py-6 max-w-xl">
