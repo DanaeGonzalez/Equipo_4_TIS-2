@@ -13,12 +13,12 @@ class ProductController extends Controller
     {
         $products = Product::all();
          $role = Auth::user()->user_type;
-        return view('products.index', compact('products','role'));
+        return view('tenant.products.index', compact('products','role'));
     }
 
     public function create()
     {
-        return view('products.create');
+        return view('tenant.products.create');
     }
 
     public function store(Request $request)
@@ -33,11 +33,11 @@ class ProductController extends Controller
 
         Product::create($validated);
 
-        return redirect()->route('products.index')->with('success', 'Producto creado correctamente.');
+        return redirect()->route('tenant.products.index')->with('success', 'Producto creado correctamente.');
     }
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        return view('tenant.products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
@@ -50,12 +50,12 @@ class ProductController extends Controller
             'is_active' => 'nullable|boolean',
         ]);
         $product->update($validated);
-        return redirect()->route('products.index')->with('success', 'Producto actualizado.');
+        return redirect()->route('tenant.products.index')->with('success', 'Producto actualizado.');
     }
     public function destroy(Product $product)
     {
         $product->update(['is_active' => false]);
-        return redirect()->route('products.index')->with('success', 'Producto desactivado.');
+        return redirect()->route('tenant.products.index')->with('success', 'Producto desactivado.');
     }
 
 }
