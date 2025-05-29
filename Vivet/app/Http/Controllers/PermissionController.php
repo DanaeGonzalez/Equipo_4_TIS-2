@@ -35,24 +35,24 @@ class PermissionController extends Controller
 
         Artisan::call('permissions:sync');
 
-        return redirect()->route('permissions.index')->with('success', 'Permiso creado.');
+        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso creado.');
     }
 
     public function editPermissions(Role $role) 
     {
         $permissions = Permission::all();
-        return view('roles.edit-permissions', compact('role', 'permissions'));
+        return view('tenant.roles.edit-permissions', compact('role', 'permissions'));
     }
 
     public function updatePermissions(Request $request, Role $role) 
     {
         $role->permissions()->sync($request->permissions);
-        return redirect()->route('roles.index')->with('success', 'Permisos actualizados.');
+        return redirect()->route('tenant.roles.index')->with('success', 'Permisos actualizados.');
     }
 
     public function edit(Permission $permission)
     {
-        return view('permissions.edit', compact('permission'));
+        return view('tenant.permissions.edit', compact('permission'));
     }
 
     public function update(Request $request, Permission $permission)
@@ -68,12 +68,12 @@ class PermissionController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('permissions.index')->with('success', 'Permiso actualizado.');
+        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso actualizado.');
     }
 
     public function destroy(Permission $permission)
     {
         $permission->delete();
-        return redirect()->route('permissions.index')->with('success', 'Permiso eliminado.');
+        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso eliminado.');
     }
 }
