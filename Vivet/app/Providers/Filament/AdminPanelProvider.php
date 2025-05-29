@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->domain(config('app.central_domain'))
+            ->domain(env('CENTRAL_DOMAIN', 'vetcodex.test'))
             ->login()
             ->colors([
                 'primary' => Color::Amber,
