@@ -29,7 +29,7 @@ class RoleController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('tenant.roles.index')->with('success', 'Rol creado.');
+        return redirect()->route('roles.index')->with('success', 'Rol creado.');
     }
 
     public function edit(Role $role)
