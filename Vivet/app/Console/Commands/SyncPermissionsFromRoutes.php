@@ -54,7 +54,13 @@ class SyncPermissionsFromRoutes extends Command
             'Enviar Examenes' => 'exams.send',
             'Ver Historial de Examenes' => 'exams.history',
             'Asignar Permisos' => 'roles.permissions.edit',
-            'Actualizar Permisos' => 'roles.permissions.update'
+            'Actualizar Permisos' => 'roles.permissions.update',
+            'Cancelar Cita' => 'appointments.cancel',
+            'Cancelar Citas' => 'appointments.cancel',
+            'Reactivar Cita' => 'appointments.reactivate',
+            'Reactivar Citas' => 'appointments.reactivate',
+
+            'Crear Clientes Factura' => 'clients.store.from.billing'
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
@@ -68,7 +74,9 @@ class SyncPermissionsFromRoutes extends Command
             'eliminar' => 'destroy',
             'asignar' => 'edit',
             'actualizar' => 'update',
-            'guardar' => 'store'
+            'guardar' => 'store',
+            'Cancelar' => 'cancel',
+            'Reactivar' => 'reactivate'
         ];
 
         $dictionary = [
@@ -95,6 +103,8 @@ class SyncPermissionsFromRoutes extends Command
             'venta' =>'billing',
             'examenes' => 'exams',
             'examen' => 'exams',
+            'nota' => 'notes',
+            'notas' => 'notes'
         ];
 
         $permissionName = strtolower($permissionName);

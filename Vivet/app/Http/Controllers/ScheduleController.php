@@ -19,23 +19,33 @@ class ScheduleController extends Controller
     }
     public function index()
     {
-        $schedules = Schedule::where('is_reserved', 1)
-            ->with(['appointment.pet']) // trae cita + mascota
+        \Carbon\Carbon::setLocale('es');
+
+        $schedules = Schedule::whereHas('appointment', function ($query) {
+            $query->where('status', 'Pendiente');
+        })
+            ->with(['appointment.pet.client'])
             ->get()
+            ->map(function ($item) {
+                //  hora sin segundos
+                $item->event_time = \Carbon\Carbon::parse($item->event_time)->format('H:i');
+                return $item;
+            })
             ->groupBy(function ($item) {
-                return \Carbon\Carbon::parse($item->event_date)->locale('es')->isoFormat('dddd'); 
+                return \Carbon\Carbon::parse($item->event_date)->locale('es')->isoFormat('dddd');
             })
             ->map(function ($day) {
-                return $day->sortBy('event_time'); //ordena horario x dia
+                return $day->sortBy('event_time');
             });
 
-        return view('schedules.index', compact('schedules'));
+        return view('tenant.schedules.index', compact('schedules'));
     }
+
 
 
     public function create()
     {
-        return view('schedules.create');
+        return view('tenant.schedules.create');
     }
 
     public function store(Request $request)
@@ -51,12 +61,12 @@ class ScheduleController extends Controller
             'is_reserved' => 0,
         ]);
 
-        return redirect()->route('schedules.index')->with('success', 'Horario creado correctamente.');
+        return redirect()->route('tenant.schedules.index')->with('success', 'Horario creado correctamente.');
     }
 
     public function edit(Schedule $schedule)
     {
-        return view('schedules.edit', compact('schedule'));
+        return view('tenant.schedules.edit', compact('schedule'));
     }
 
     public function update(Request $request, Schedule $schedule)
@@ -68,13 +78,13 @@ class ScheduleController extends Controller
 
         $schedule->update($request->only('event_date', 'event_time'));
 
-        return redirect()->route('schedules.index')->with('success', 'Horario actualizado correctamente.');
+        return redirect()->route('tenant.schedules.index')->with('success', 'Horario actualizado correctamente.');
     }
 
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();
 
-        return redirect()->route('schedules.index')->with('success', 'Horario eliminado correctamente.');
+        return redirect()->route('tenant.schedules.index')->with('success', 'Horario eliminado correctamente.');
     }
 }

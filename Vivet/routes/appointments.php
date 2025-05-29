@@ -1,11 +1,11 @@
 <?php
-
+/*
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 /*
 Route::middleware(['auth'])->group(function () {  
 
-});*/
+});
 
 Route::middleware(['check.permission'])->group(function () {
     Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
@@ -16,6 +16,7 @@ Route::middleware(['check.permission'])->group(function () {
     Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
     Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
     Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
+    
 });
 
 // Gestión de citas

@@ -1,5 +1,5 @@
 <?php
-
+/*
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScheduleController;
 
@@ -12,3 +12,4 @@ Route::middleware(['check.permission'])->group(function () {
     Route::put('/schedules/{schedule}', [ScheduleController::class, 'update'])->name('schedules.update');
     Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
 });
+*/

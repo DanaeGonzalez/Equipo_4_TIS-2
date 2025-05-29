@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 @section('content')
-@can('pets.create')
+<!--@can('pets.create')-->
 <div class="container mx-auto px-4 py-6 max-w-3xl">
     <h2 class="text-2xl font-bold mb-6">Registrar Nueva Mascota</h2>
 
@@ -103,5 +103,5 @@
     <div class="text-center mt-10 text-red-500 font-bold">
         No tienes permiso para crear mascotas.
     </div>
-@endcan
+<!--@endcan-->
 @endsection

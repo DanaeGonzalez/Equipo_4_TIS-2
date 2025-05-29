@@ -61,6 +61,7 @@
           <a href="{{ route('about') }}" class="text-gray-500 hover:text-indigo-500">Quiénes somos</a>
           <a href="#" class="text-gray-500 hover:text-indigo-500">Nuestro equipo</a>
           <a href="{{ route('blog.index') }}" class="text-gray-500 hover:text-indigo-500">Blog</a>
+          <a href="/" class="text-gray-500 hover:text-indigo-500">Blog</a>
         </nav>
       </div>
 
