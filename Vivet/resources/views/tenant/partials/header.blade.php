@@ -162,6 +162,15 @@
                     <span class="flex-1 ml-3 whitespace-nowrap">Facturación</span>
                   </a>
                 </li>
+                <li>
+                  <a href="{{ route('clinical_records.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Billing/Receipt Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M17.222 0H2.778A2.778 2.778 0 0 0 0 2.778v14.444A2.778 2.778 0 0 0 2.778 20h14.444A2.778 2.778 0 0 0 20 17.222V2.778A2.778 2.778 0 0 0 17.222 0ZM5.5 15.556a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9.5 9h-6a1 1 0 0 1 0-2h6a1 1 0 0 1 0 2Zm0-4.5h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Zm0-4.5h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Ficha Clínica</span>
+                  </a>
+                </li>
               </ul>
             </div>
           </aside>
