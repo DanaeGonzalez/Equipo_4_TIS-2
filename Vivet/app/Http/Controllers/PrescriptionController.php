@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class PrescriptionController extends Controller
 {
+    
     public function create($clinicalRecordId)
     {
         $clinicalRecord = ClinicalRecord::findOrFail($clinicalRecordId);
