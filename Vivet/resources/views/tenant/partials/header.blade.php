@@ -20,7 +20,7 @@
         <img src="{{ asset('images/clients/client1/logo.png') }}" alt="Logo Vivet" class="h-20 w-auto">
       </a>
       <!-- logo - end -->
-      
+
       <!-- nav - start -->
       <nav class="hidden gap-12 lg:flex">
         <a href="/" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Inicio</a>
@@ -33,9 +33,9 @@
           </svg>
         </a>
         <a href="{{ route('contact') }}"
-        class="text-lg font-semibold text-gray transition duration-100 hover:underline">Contacto</a>
+          class="text-lg font-semibold text-gray transition duration-100 hover:underline">Contacto</a>
         <a href="#" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Equipo</a>
-        
+
         @auth
         @if(Auth::user()->user_type == 'Administrador')
         <div>
@@ -49,7 +49,7 @@
             </svg>
             <span>Panel Admin</span>
           </button>
-  
+
           <!-- Admin Sidebar -->
           <aside id="admin-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full" aria-label="Admin Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-blue-50 border-r border-blue-200">
@@ -63,7 +63,7 @@
                   <span class="sr-only">Close menu</span>
                 </button>
               </div>
-  
+
               <!-- Sidebar Content -->
               <ul class="space-y-2 font-medium">
                 <li>
@@ -100,7 +100,7 @@
                 </li>
                 <li>
                   <a href="{{ route('users.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                     <!--Users Icon -->
+                    <!--Users Icon -->
                     <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                       <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                     </svg>
@@ -174,8 +174,9 @@
                 <li>
                   <a href="{{ route('clinical_records.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
                     <!-- Billing/Receipt Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M17.222 0H2.778A2.778 2.778 0 0 0 0 2.778v14.444A2.778 2.778 0 0 0 2.778 20h14.444A2.778 2.778 0 0 0 20 17.222V2.778A2.778 2.778 0 0 0 17.222 0ZM5.5 15.556a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9.5 9h-6a1 1 0 0 1 0-2h6a1 1 0 0 1 0 2Zm0-4.5h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Zm0-4.5h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z" />
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" fill="currentColor"
+                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.414A2 2 0 0 0 17.414 6L14 2.586A2 2 0 0 0 12.586 2H4zm5 4a1 1 0 0 1 2 0h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0V8H8a1 1 0 1 1 0-2h1zm-3 5h8a1 1 0 1 1 0 2H6a1 1 0 1 1 0-2zm0 3h5a1 1 0 1 1 0 2H6a1 1 0 1 1 0-2z" />
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Ficha Clínica</span>
                   </a>
@@ -184,7 +185,7 @@
                   <a href="{{ route('notes.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
                     <!-- notes/Receipt Icon -->
                     <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                      <path d="M6 2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H6Zm9 3H7v1h8V5Zm0 3H7v1h8V8Zm0 3H7v1h8v-1Z"/>
+                      <path d="M6 2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H6Zm9 3H7v1h8V5Zm0 3H7v1h8V8Zm0 3H7v1h8v-1Z" />
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Notas</span>
                   </a>
@@ -195,7 +196,7 @@
         </div>
         @endif
         @endauth
-      
+
       </nav>
       <!-- nav - end -->
 

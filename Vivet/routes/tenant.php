@@ -120,9 +120,11 @@ Route::post('/clinical-records', [ClinicalRecordController::class, 'store'])->na
 Route::get('/clinical-records/{clinicalRecord}/edit', [ClinicalRecordController::class, 'edit'])->name('clinical_records.edit');
 Route::put('/clinical-records/{clinicalRecord}', [ClinicalRecordController::class, 'update'])->name('clinical_records.update');
 Route::delete('/clinical-records/{clinicalRecord}', [ClinicalRecordController::class, 'destroy'])->name('clinical_records.destroy');
+Route::get('/clinical-records/{clinicalRecord}', [ClinicalRecordController::class, 'show'])->name('clinical_records.show');
 
 // Rutas Preescriptions
 
+Route::get('/prescriptions', [PrescriptionController::class, 'index'])->name('prescriptions.index');
 Route::get('/clinical-records/{clinicalRecord}/prescriptions/create', [PrescriptionController::class, 'create'])->name('prescriptions.create');
 Route::post('/clinical-records/{clinicalRecord}/prescriptions', [PrescriptionController::class, 'store'])->name('prescriptions.store');
 Route::get('/prescriptions/{prescription}/edit', [PrescriptionController::class, 'edit'])->name('prescriptions.edit');

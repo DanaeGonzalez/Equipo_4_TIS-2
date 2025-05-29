@@ -84,4 +84,11 @@ class ClinicalRecordController extends Controller
         $clinicalRecord->delete();
         return redirect()->route('clinical_records.index')->with('success', 'Ficha clínica eliminada correctamente.');
     }
+
+    public function show(ClinicalRecord $clinicalRecord)
+    {
+        // Carga relaciones necesarias para la vista
+        $clinicalRecord->load(['pet.client', 'vet']);
+        return view('tenant.clinical_records.show', compact('clinicalRecord'));
+    }
 }
