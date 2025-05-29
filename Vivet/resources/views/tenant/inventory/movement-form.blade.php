@@ -1,6 +1,6 @@
 <!-- resources/views/inventory/movement-form.blade.php -->
- @extends('layouts.app')
-@include('partials.colors')
+ @extends('tenant.layouts.app')
+@include('tenant.partials.colors')
 
 @section('content')
 <form method="POST" action="{{ route('inventory.store') }}" class="space-y-6">
