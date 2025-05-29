@@ -134,3 +134,44 @@ Route::post('/medications', [MedicationController::class, 'store'])->name('medic
 Route::get('/medications/{medication}/edit', [MedicationController::class, 'edit'])->name('medications.edit');
 Route::put('/medications/{medication}', [MedicationController::class, 'update'])->name('medications.update');
 Route::delete('/medications/{medication}', [MedicationController::class, 'destroy'])->name('medications.destroy');
+
+// Rutas Billing
+ Route::resource('billing', BillingController::class);
+    Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
+
+// Rutas Inventory
+Route::resource('inventory', InventoryController::class);
+// Rutas Supply
+
+Route::resource('supplies', SupplyController::class);
+Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock'); //agregar a permissions:sync
+Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
+Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
+
+
+
+
+//ordenar
+Route::resource('services', ServiceController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
+    Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
+    Route::resource('appointments', AppointmentController::class);
+    Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+    Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
+    Route::resource('schedules', ScheduleController::class);
+    Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
+    Route::resource('pets', PetController::class);
+    Route::resource('supplies', SupplyController::class);
+    Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock'); //agregar a permissions:sync
+    Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
+    Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
+    Route::resource('inventory', InventoryController::class);
+    Route::resource('billing', BillingController::class);
+    Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
+    Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
+    Route::resource('clients', ClientController::class);
+    Route::resource('inventory', InventoryController::class);
+    Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
