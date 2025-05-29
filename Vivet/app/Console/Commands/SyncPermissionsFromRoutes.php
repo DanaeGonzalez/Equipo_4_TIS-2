@@ -59,6 +59,8 @@ class SyncPermissionsFromRoutes extends Command
             'Cancelar Cita' => 'appointments.cancel',
             'Reactivar Citas' => 'appointments.reactivate',
             'Reactivar Cita' => 'appointments.reactivate',
+            'Actualizar Permisos' => 'roles.permissions.update',
+            'Crear Clientes Factura' => 'clients.store.from.billing'
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
@@ -73,7 +75,6 @@ class SyncPermissionsFromRoutes extends Command
             'eliminar' => 'destroy',
             'asignar' => 'edit',
             'actualizar' => 'update',
-            'actualiza' => 'update',
             'guardar' => 'store',
             'descargar' => 'download',
             'Cancelar' => 'cancel',
@@ -103,8 +104,8 @@ class SyncPermissionsFromRoutes extends Command
             'boletas' => 'billing',
             'venta' =>'billing',
             'inventario' => 'inventory',
-            'nota' => 'notes',
             'notas' => 'notes',
+            'venta' =>'billing'
         ];
 
         $permissionName = strtolower($permissionName);
