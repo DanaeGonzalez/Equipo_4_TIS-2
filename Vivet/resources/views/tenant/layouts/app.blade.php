@@ -7,20 +7,20 @@
     <title>@yield('title', 'Clínica Veterinaria')</title>
     <!-- Incluye tu archivo de Tailwind compilado o los links a CDN -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @include('partials.colors')
+    @include('tenant.partials.colors')
 
 </head>
 
 <body class="flex flex-col min-h-screen">
     {{-- Header --}}
-    @include('partials.header')
+    @include('tenant.partials.header')
 
     <main class="flex-grow container mx-auto p-4">
         @yield('content')
     </main>
 
     {{-- Footer --}}
-    @include('partials.footer')
+    @include('tenant.partials.footer')
 
 </body>
 </html>
