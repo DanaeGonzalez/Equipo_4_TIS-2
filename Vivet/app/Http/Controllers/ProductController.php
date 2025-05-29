@@ -68,7 +68,7 @@ class ProductController extends Controller
             ]);
         }
 
-        return redirect()->route('tenant.products.index')->with('success', 'Producto creado correctamente.');
+        return redirect()->route('products.index')->with('success', 'Producto creado correctamente.');
         /* return redirect()->route('products.index')->with([
             'new_product_id' => $product->id,
             'open_stock_modal' => true,
@@ -77,7 +77,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $vaccine = Vaccine::where('product_id', $product->id)->first();
-        return view('products.edit', compact('product', 'vaccine'));
+        return view('tenant.products.edit', compact('product', 'vaccine'));
     }
 
     public function update(Request $request, Product $product)
@@ -119,12 +119,12 @@ class ProductController extends Controller
         } else {
             Vaccine::where('product_id', $product->id)->delete();
         }
-        return redirect()->route('tenant.products.index')->with('success', 'Producto actualizado.');
+        return redirect()->route('products.index')->with('success', 'Producto actualizado.');
     }
 
     public function destroy(Product $product)
     {
         $product->update(['is_active' => false]);
-        return redirect()->route('tenant.products.index')->with('success', 'Producto desactivado.');
+        return redirect()->route('products.index')->with('success', 'Producto desactivado.');
     }
 }

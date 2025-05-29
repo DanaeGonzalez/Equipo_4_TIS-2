@@ -32,7 +32,7 @@ class PetController extends Controller
 
         Pet::create($request->all());
 
-        return redirect()->route('tenant.pets.index')->with('success', 'Mascota creada exitosamente.');
+        return redirect()->route('pets.index')->with('success', 'Mascota creada exitosamente.');
     }
 
     public function show(Pet $pet)
@@ -58,13 +58,13 @@ class PetController extends Controller
 
         $pet->update($request->all());
 
-        return redirect()->route('tenant.pets.index')->with('success', 'Mascota actualizada correctamente.');
+        return redirect()->route('pets.index')->with('success', 'Mascota actualizada correctamente.');
     }
 
     public function destroy(Pet $pet)
     {
         if ($pet->status === 'Fallecido') {
-            return redirect()->route('tenant.pets.index')->with('info', 'Esta mascota ya está marcada como fallecida.');
+            return redirect()->route('pets.index')->with('info', 'Esta mascota ya está marcada como fallecida.');
         }
 
         $pet->update(['status' => 'Fallecido']);

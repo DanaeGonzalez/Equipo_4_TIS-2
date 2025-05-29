@@ -82,7 +82,7 @@ class PermissionController extends Controller
 
         Artisan::call('permissions:sync');
 
-        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso creado.');
+        return redirect()->route('permissions.index')->with('success', 'Permiso creado.');
     }
 
     public function editPermissions(Role $role)
@@ -107,7 +107,7 @@ class PermissionController extends Controller
     public function updatePermissions(Request $request, Role $role)
     {
         $role->permissions()->sync($request->permissions);
-        return redirect()->route('tenant.roles.index')->with('success', 'Permisos actualizados.');
+        return redirect()->route('roles.index')->with('success', 'Permisos actualizados.');
     }
 
     public function edit(Permission $permission)
@@ -129,12 +129,12 @@ class PermissionController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso actualizado.');
+        return redirect()->route('permissions.index')->with('success', 'Permiso actualizado.');
     }
 
     public function destroy(Permission $permission)
     {
         $permission->delete();
-        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso eliminado.');
+        return redirect()->route('permissions.index')->with('success', 'Permiso eliminado.');
     }
 }
