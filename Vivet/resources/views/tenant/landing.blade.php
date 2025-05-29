@@ -1,11 +1,11 @@
 <!-- resources/views/landing.blade.php -->
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 @section('title', 'Inicio - Clínica Veterinaria')
 
 @section('content')
 
-@include('partials.colors')
+@include('tenant.partials.colors')
 
 <!-- CAROUSEL -->
 
