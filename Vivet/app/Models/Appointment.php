@@ -29,12 +29,12 @@ class Appointment extends Model
 
     public function pet()
     {
-        return $this->belongsTo(Pet::class);
+        return $this->belongsTo(Pet::class,'pet_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'vet_id');
+        return $this->belongsTo(User::class, 'vet_id' );
     }
 
     public function service()

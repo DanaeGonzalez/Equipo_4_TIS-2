@@ -21,7 +21,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('products.create');
+        return view('tenant.products.create');
     }
 
     public function store(Request $request)
@@ -125,6 +125,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->update(['is_active' => false]);
-        return redirect()->route('products.index')->with('success', 'Producto desactivado.');
+        return redirect()->route('tenant.products.index')->with('success', 'Producto desactivado.');
     }
 }

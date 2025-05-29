@@ -24,7 +24,7 @@ class CreatePetsTable extends Migration
             $table->enum('status', ['Vivo','Fallecido','Hospitalizado'])->nullable()->default('Vivo');
             $table->date('date_of_birth')->nullable();
             $table->string('microchip_number')->nullable();
-            $table->text('notes');
+            $table->text('notes')->nullable();
             
             $table->timestamps();
         });

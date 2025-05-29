@@ -86,6 +86,16 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Editar Boleta', 'route_name' => 'billing.edit'],
             ['name' => 'Actualizar Boleta', 'route_name' => 'billing.update'],
             ['name' => 'Eliminar Boleta', 'route_name' => 'billing.destroy'],
+            ['name' => 'Cancelar Agenda', 'route_name' => 'appointments.cancel'],
+            ['name' => 'Reactivar Agenda', 'route_name' => 'appointments.reactivate'],
+
+            // Notas
+            ['name' => 'Ver Notas', 'route_name' => 'notes.index'],
+            ['name' => 'Crear Notas', 'route_name' => 'notes.create'],
+            ['name' => 'Guardar Notas', 'route_name' => 'notes.store'],
+            ['name' => 'Editar Notas', 'route_name' => 'notes.edit'],
+            ['name' => 'Actualizar Notas', 'route_name' => 'notes.update'],
+            ['name' => 'Eliminar Notas', 'route_name' => 'notes.destroy'],
 
         ];
 

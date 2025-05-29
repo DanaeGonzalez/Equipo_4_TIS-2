@@ -75,7 +75,9 @@ class SyncPermissionsFromRoutes extends Command
             'actualizar' => 'update',
             'actualiza' => 'update',
             'guardar' => 'store',
-            'descargar' => 'download'
+            'descargar' => 'download',
+            'Cancelar' => 'cancel',
+            'Reactivar' => 'reactivate'
         ];
 
         $dictionary = [ //modelos
@@ -100,7 +102,9 @@ class SyncPermissionsFromRoutes extends Command
             'boleta' => 'billing',
             'boletas' => 'billing',
             'venta' =>'billing',
-            'inventario' => 'inventory'
+            'inventario' => 'inventory',
+            'nota' => 'notes',
+            'notas' => 'notes',
         ];
 
         $permissionName = strtolower($permissionName);

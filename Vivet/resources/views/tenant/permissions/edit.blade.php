@@ -1,5 +1,5 @@
-@extends('layouts.app')
 @include('partials.colors')
+@extends('tenant.layouts.app')
 
 @section('title', 'Editar permiso')
 

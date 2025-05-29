@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 @section('title', 'Contacto - Clínica Veterinaria')
 
