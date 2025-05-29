@@ -21,7 +21,10 @@ class ClinicalRecord extends Model
         'notes',
     ];
 
-    protected $dates = ['date'];
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
 
     public function pet()
     {

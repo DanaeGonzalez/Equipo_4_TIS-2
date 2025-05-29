@@ -13,14 +13,14 @@ class BillingController extends Controller
     public function index()
     {
         $billings = Billing::with(['client', 'appointment'])->latest()->paginate(10);
-        return view('billing.index', compact('billings'));
+        return view('tenant.billing.index', compact('billings'));
     }
 
     public function create()
     {
         $clients = Client::all();
-        $appointments = Appointment::all();
-        return view('billing.create', compact('clients', 'appointments'));
+        $appointments = Appointment::where('status', 'realizada')->get();
+        return view('tenant.billing.create', compact('products', 'clients', 'appointments'));
     }
 
     public function store(Request $request)
@@ -37,19 +37,19 @@ class BillingController extends Controller
 
         Billing::create($validated);
 
-        return redirect()->route('billing.index')->with('success', 'Factura registrada correctamente.');
+        return redirect()->route('tenant.billing.index')->with('success', 'Factura registrada correctamente.');
     }
 
     public function show(Billing $billing)
     {
         $billing->load(['client', 'appointment', 'products']);
-        return view('billing.show', compact('billing'));
+        return view('tenant.billing.show', compact('billing'));
     }
 
     public function edit(Billing $billing)
     {
         $billing->load(['client', 'appointment', 'products']);
-        return view('billing.edit', compact('billing'));
+        return view('tenant.billing.edit', compact('billing'));
     }
 
 
@@ -62,14 +62,14 @@ class BillingController extends Controller
 
         $billing->update($validated);
 
-        return redirect()->route('billing.index')->with('success', 'Factura actualizada correctamente.');
+        return redirect()->route('tenant.billing.index')->with('success', 'Factura actualizada correctamente.');
     }
 
 
     public function destroy(Billing $billing)
     {
         $billing->update(['status' => 'Cancelado']);
-        return redirect()->route('billing.index')->with('success', 'Factura Cancelada.');
+        return redirect()->route('tenant.billing.index')->with('success', 'Factura Cancelada.');
     }
 
     public function download(Billing $billing)
