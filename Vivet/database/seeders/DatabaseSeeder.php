@@ -18,10 +18,6 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             ServicesTableSeeder::class,
             VeterinarioSeeder::class,
-            UsersTableSeeder::class,
-            PetsTableSeeder::class,
-            ScheduleSeeder::class,
-            ClientSeeder::class,
         ]);
         
     }
