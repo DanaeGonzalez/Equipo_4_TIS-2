@@ -48,7 +48,9 @@ Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
 Route::middleware(['check.permission'])->group(function () { //Aquí van todas las rutas que necesitan tener permisos para poder ingresar
-    Route::resource('products', ProductController::class);
+    
+});
+Route::resource('products', ProductController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
@@ -72,4 +74,3 @@ Route::middleware(['check.permission'])->group(function () { //Aquí van todas l
     Route::resource('clients', ClientController::class);
     Route::resource('inventory', InventoryController::class);
     Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
-});
