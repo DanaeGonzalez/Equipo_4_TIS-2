@@ -124,6 +124,7 @@ Route::get('/clinical-records/{clinicalRecord}', [ClinicalRecordController::clas
 
 // Rutas Preescriptions
 
+Route::get('/prescriptions', [PrescriptionController::class, 'index'])->name('prescriptions.index');
 Route::get('/clinical-records/{clinicalRecord}/prescriptions/create', [PrescriptionController::class, 'create'])->name('prescriptions.create');
 Route::post('/clinical-records/{clinicalRecord}/prescriptions', [PrescriptionController::class, 'store'])->name('prescriptions.store');
 Route::get('/prescriptions/{prescription}/edit', [PrescriptionController::class, 'edit'])->name('prescriptions.edit');

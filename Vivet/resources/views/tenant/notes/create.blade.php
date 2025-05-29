@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 @section('content')
     <div class="max-w-2xl mx-auto p-4">
