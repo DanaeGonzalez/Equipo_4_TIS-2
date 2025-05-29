@@ -13,12 +13,12 @@ class ServiceController extends Controller
     {
         $services = Service::all();
         $role = Auth::user()->user_type;
-        return view('services.index', compact('services','role'));
+        return view('tenant.services.index', compact('services','role'));
     }
 
     public function create()
     {
-        return view('services.create');
+        return view('tenant.services.create');
     }
 
     public function store(Request $request)
