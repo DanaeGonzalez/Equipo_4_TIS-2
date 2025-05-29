@@ -50,21 +50,59 @@ class SyncPermissionsFromRoutes extends Command
 
     protected function mapPermissionToRoute(string $permissionName): ?string
     {
-        $customPermissions = [ //rutas más rebuscadas que no cumplen el estandar de map
+        $customPermissions = [ // rutas más rebuscadas o con nombres inconsistentes
             'Enviar Examenes' => 'exams.send',
             'Ver Historial de Examenes' => 'exams.history',
             'Asignar Permisos' => 'roles.permissions.edit',
             'Actualizar Permisos del Rol' => 'roles.permissions.update',
-            'Crear Clientes Factura' => 'clients.store.from.billing',
-            'Guardar Inventario' => 'inventory.storeForProduct',
+            'Actualizar Permisos' => 'roles.permissions.update',
             'Cancelar Citas' => 'appointments.cancel',
             'Cancelar Cita' => 'appointments.cancel',
             'Reactivar Citas' => 'appointments.reactivate',
             'Reactivar Cita' => 'appointments.reactivate',
-            'Actualizar Permisos' => 'roles.permissions.update',
+            'Crear Clientes Factura' => 'clients.store.from.billing',
+            'Guardar Inventario' => 'inventory.storeForProduct',
+            'Guardar Cliente desde Boleta' => 'clients.store.from.billing',
+
+            // Historias clínicas
+            'Ver Historias Clínicas' => 'clinical_records.index',
+            'Crear Historia Clínica' => 'clinical_records.create',
+            'Guardar Historia Clínica' => 'clinical_records.store',
+            'Editar Historia Clínica' => 'clinical_records.edit',
+            'Actualizar Historia Clínica' => 'clinical_records.update',
+            'Eliminar Historia Clínica' => 'clinical_records.destroy',
+
+            // Recetas
+            'Crear Receta' => 'prescriptions.create',
+            'Guardar Receta' => 'prescriptions.store',
+            'Editar Receta' => 'prescriptions.edit',
+            'Actualizar Receta' => 'prescriptions.update',
+            'Eliminar Receta' => 'prescriptions.destroy',
+
+            // Medicamentos
+            'Ver Medicamentos' => 'medications.index',
+            'Crear Medicamento' => 'medications.create',
+            'Guardar Medicamento' => 'medications.store',
+            'Editar Medicamento' => 'medications.edit',
+            'Actualizar Medicamento' => 'medications.update',
+            'Eliminar Medicamento' => 'medications.destroy',
+
+            // Insumos
+            'Ver Insumos' => 'supplies.index',
+            'Crear Insumo' => 'supplies.create',
+            'Guardar Insumo' => 'supplies.store',
+            'Editar Insumo' => 'supplies.edit',
+            'Actualizar Insumo' => 'supplies.update',
+            'Eliminar Insumo' => 'supplies.destroy',
+            'Ajustar Stock de Insumo' => 'supplies.adjustStock',
+            'Ver Movimientos de Insumo' => 'supplies.movements',
+            'Formulario de Ajuste de Insumo' => 'supplies.adjustStockForm',
+
+            // Otros posibles
+            'Guardar Inventario para Producto' => 'inventory.storeForProduct',
         ];
         if (isset($customPermissions[$permissionName])) {
-             return $customPermissions[$permissionName];
+            return $customPermissions[$permissionName];
         }
 
         $map = [ //acciones
@@ -77,8 +115,8 @@ class SyncPermissionsFromRoutes extends Command
             'actualizar' => 'update',
             'guardar' => 'store',
             'descargar' => 'download',
-            'Cancelar' => 'cancel',
-            'Reactivar' => 'reactivate'
+            'cancelar' => 'cancel',
+            'reactivar' => 'reactivate'
         ];
 
         $dictionary = [ //modelos
@@ -96,13 +134,13 @@ class SyncPermissionsFromRoutes extends Command
             'agendas' => 'appointments',
             'cita' => 'schedules',
             'citas' => 'schedules',
-            'mascota'=>'pets',
-            'mascotas'=>'pets',
-            'cliente' =>'client',
-            'clientes' =>'client',
+            'mascota' => 'pets',
+            'mascotas' => 'pets',
+            'cliente' => 'client',
+            'clientes' => 'client',
             'boleta' => 'billing',
             'boletas' => 'billing',
-            'venta' =>'billing',
+            'venta' => 'billing',
             'examenes' => 'exams',
             'examen' => 'exams',
             'nota' => 'notes',
@@ -117,15 +155,13 @@ class SyncPermissionsFromRoutes extends Command
                 $entity = trim(str_replace($action, '', $permissionName));
                 $entity = Str::lower($entity);
                 $entity = trim($entity);
-                $entity = str_replace(['á','é','í','ó','ú','ñ'], ['a','e','i','o','u','n'], $entity);
+                $entity = str_replace(['á', 'é', 'í', 'ó', 'ú', 'ñ'], ['a', 'e', 'i', 'o', 'u', 'n'], $entity);
                 $entity = $dictionary[$entity] ?? $entity;
-                if ($entity === 'billing' || $entity=== 'inventory'){ //es billing.action; no billings.action, inventory.action, no inventories(?)
+                if ($entity === 'billing' || $entity === 'inventory') { //es billing.action; no billings.action, inventory.action, no inventories(?)
                     return "$entity.$routeSuffix";
-
                 }
                 $entity = Str::plural($entity);
                 return "$entity.$routeSuffix";
-
             }
         }
         return null;
