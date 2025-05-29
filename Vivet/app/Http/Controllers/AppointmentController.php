@@ -177,7 +177,7 @@ class AppointmentController extends Controller
                     ]);
                 }
 
-                Appointment::create([
+                $appointment = Appointment::create([
                     'schedule_id' => $schedule->id,
                     'pet_id' => $pet->id,
                     'vet_id' => $veterinarian->id,
@@ -188,6 +188,9 @@ class AppointmentController extends Controller
                 ]);
 
                 $schedule->update(['is_reserved' => 1]);
+
+                Mail::to($client->email)->send(new AppointmentCreated($veterinarian,$appointment));
+
 
                 return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
             }
