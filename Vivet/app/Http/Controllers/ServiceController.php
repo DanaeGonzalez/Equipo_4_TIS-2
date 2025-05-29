@@ -47,7 +47,7 @@ class ServiceController extends Controller
 
         Service::create(array_merge($validated, ['is_active' => true]));
 
-        return redirect()->route('tenant.services.index')->with('success', 'Servicio creado correctamente.');
+        return redirect()->route('services.index')->with('success', 'Servicio creado correctamente.');
     }
 
     public function edit(Service $service)
@@ -91,12 +91,12 @@ class ServiceController extends Controller
         }
         //$validated['is_active'] = $request->has('is_active');
         $service->update($validated);
-        return redirect()->route('tenant.services.index')->with('success', 'Servicio actualizado.');
+        return redirect()->route('services.index')->with('success', 'Servicio actualizado.');
     }
 
     public function destroy(Service $service)
     {
         $service->update(['is_active' => false]);
-        return redirect()->route('tenant.services.index')->with('success', 'Servicio desactivado.');
+        return redirect()->route('services.index')->with('success', 'Servicio desactivado.');
     }
 }
