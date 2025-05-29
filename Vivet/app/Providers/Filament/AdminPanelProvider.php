@@ -17,21 +17,29 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Resources\TenantResource\Widgets\StatsOverview;
+
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         //dd('Panel loaded'); // 👈 esto detendrá la app si se ejecuta
-        
+
         return $panel
+            ->brandName('VetCodex')
+            //->brandLogo(fn() => asset('images/logo.png'))
+            //->favicon(asset('images/favicon.ico'))
             ->default()
             ->id('admin')
             ->path('admin')
             ->domain(env('CENTRAL_DOMAIN', 'vetcodex.test'))
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#5fab92',
+                'danger' => '#e3342f',
+                'success' => '#38c172',
+                'warning' => '#f6993f',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->resources([ // 👈 REGISTRA EXPLÍCITAMENTE EL CRUD
@@ -44,7 +52,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                StatsOverview::class,
+                //Widgets\BienvenidaWidget::class,
+                //Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

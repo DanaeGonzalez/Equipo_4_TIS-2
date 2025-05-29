@@ -105,4 +105,12 @@ class TenantResource extends Resource
     {
         return true;
     }
+
+    public static function getWidgets(): array
+    {
+        return [
+            \App\Filament\Resources\TenantResource\Widgets\StatsOverview::class,
+            //\App\Filament\Resources\TenantResource\Widgets\BienvenidaWidget::class,
+        ];
+    }
 }
