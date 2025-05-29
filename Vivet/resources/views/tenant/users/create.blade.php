@@ -2,16 +2,16 @@
 
 @section('title', 'Crear Usuario')
 
-{{--@if ($errors->any())
+@if ($errors->any())
     <div class="bg-red-100 text-red-800 p-4 rounded">
         <strong>¡Ups! Algo salió mal:</strong>
         <ul class="list-disc pl-5 mt-2">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif--}}
+@endforeach
+</ul>
+</div>
+@endif
 
 
 @section('content')
@@ -56,16 +56,17 @@
             <select name="role_id" id="role_id" class="w-full border rounded p-2" required>
                 <option value="">Seleccione un rol</option>
                 @foreach ($roles as $role)
-                    <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
-                        {{ $role->name }}
-                    </option>
+                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                    {{ $role->name }}
+                </option>
                 @endforeach
             </select>
         </div>
 
         <div>
             <label for="is_active" class="inline-flex items-center">
-                <input type="checkbox" name="is_active" id="is_active" class="mr-2" {{ old('is_active') ? 'checked' : '' }}>
+                <input type="hidden" name="is_active" value="0">
+                <input type="checkbox" name="is_active" id="is_active" class="mr-2" value="0" {{ old('is_active') ? 'checked' : '' }}>
                 ¿Activo?
             </label>
         </div>
