@@ -15,7 +15,7 @@ class ExamController extends Controller
     public function showExams()
     {
         $users = User::where('user_type', 'Tutor')->get();
-        return view('exams.index', compact('users'));
+        return view('tenant.exams.index', compact('users'));
     }
 
     // Enviar examen, registrar en DB y mandar correo
@@ -54,6 +54,6 @@ class ExamController extends Controller
     public function history(User $user)
     {
         $exams = Exam::where('recipient_id', $user->id)->with('sender')->latest()->get();
-        return view('exams.history', compact('exams', 'user'));
+        return view('tenant.exams.history', compact('exams', 'user'));
     }
 }

@@ -72,6 +72,9 @@ Route::resource('schedules', ScheduleController::class);
 Route::resource('pets', PetController::class);
 Route::resource('clients', ClientController::class);
 Route::resource('billing', BillingController::class);
+Route::get('/exams', [ExamController::class, 'showExams'])->name('exams.index');
+Route::post('/exams/send', [ExamController::class, 'send'])->name('exams.send');
+Route::get('/exams/history/{user}', [ExamController::class, 'history'])->name('exams.history');
 Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
 
 
