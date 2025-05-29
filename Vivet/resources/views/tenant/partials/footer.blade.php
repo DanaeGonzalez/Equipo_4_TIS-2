@@ -58,9 +58,9 @@
       <div>
         <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Nosotros</div>
         <nav class="flex flex-col gap-4">
-          <a href="{{ route('tenant.about') }}" class="text-gray-500 hover:text-indigo-500">Quiénes somos</a>
+          <a href="{{ route('about') }}" class="text-gray-500 hover:text-indigo-500">Quiénes somos</a>
           <a href="#" class="text-gray-500 hover:text-indigo-500">Nuestro equipo</a>
-          <a href="{{ route('blog') }}" class="text-gray-500 hover:text-indigo-500">Blog</a>
+          <a href="/" class="text-gray-500 hover:text-indigo-500">Blog</a>
         </nav>
       </div>
 
@@ -78,8 +78,8 @@
       <div>
         <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Legal</div>
         <nav class="flex flex-col gap-4">
-          <a href="{{ route('tenant.terms-of-service') }}" class="text-gray-500 hover:text-indigo-500">Términos de servicio</a>
-          <a href="{{ route('tenant.privacy-policy') }}" class="text-gray-500 hover:text-indigo-500">Política de privacidad</a>
+          <a href="{{ route('terms-of-service') }}" class="text-gray-500 hover:text-indigo-500">Términos de servicio</a>
+          <a href="{{ route('privacy-policy') }}" class="text-gray-500 hover:text-indigo-500">Política de privacidad</a>
         </nav>
       </div>
     </div>
