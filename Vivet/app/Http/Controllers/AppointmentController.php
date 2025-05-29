@@ -195,7 +195,7 @@ class AppointmentController extends Controller
 
 
                 return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
-            }
+            }else{
 
             // Para admin y veterinaria dejamos tu código intacto
             $request->validate([
@@ -235,17 +235,18 @@ class AppointmentController extends Controller
                 return back()->withErrors(['user_id' => 'El veterinario seleccionado no es válido.']);
             }
 
-            $client = Client::where('user_id', $user->id)->first();
+           // Validar existencia y posible conflicto de cliente por RUT y correo
+            $existingClient = Client::where('client_run', $request->client_run)->first();
 
-            if ($client) {
-                if ($client->email !== $request->email) {
-                    return back()->withErrors([
-                        'email' => 'Ya existe un cliente con este RUT pero con otro correo.',
-                    ]);
-                }
-            } else {
+            if ($existingClient && $existingClient->email !== $request->email) {
+                return back()->withErrors([
+                    'email' => 'Ya existe un cliente con este RUT pero con otro correo.',
+                ]);
+            }
+
+            if (!$existingClient) {
                 $client = Client::create([
-                    'user_id' => $user->id,
+                    'user_id' => null, // No vinculado a un usuario específico
                     'name' => $request->name,
                     'lastname' => $request->lastname,
                     'client_run' => $request->client_run,
@@ -253,6 +254,8 @@ class AppointmentController extends Controller
                     'phone' => $request->phone,
                     'address' => $request->address,
                 ]);
+            } else {
+                $client = $existingClient;
             }
 
             $pet = Pet::create([
@@ -263,8 +266,8 @@ class AppointmentController extends Controller
                 'color' => $request->color,
                 'sex' => $request->sex,
                 'date_of_birth' => $request->date_of_birth,
-                'microchip_number' => $request->microchip_number,
-                'notes' => $request->notes,
+                'microchip_number' => $request->microchip_number ?? null,
+                'notes' => $request->notes ?? null,
             ]);
 
             $appointment = Appointment::create([
@@ -279,9 +282,10 @@ class AppointmentController extends Controller
 
             $schedule->update(['is_reserved' => 1]);
 
-            Mail::to($client->email)->send(new AppointmentCreated($veterinarian, $appointment));
+            // Mail::to($client->email)->send(new AppointmentCreated($veterinarian, $appointment));
 
-            return redirect()->route('tenant.appointments.create')->with('success', 'Cita registrada correctamente.');
+            return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
+        }
         } catch (Exception $e) {
             Log::error('Error al registrar cita: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
