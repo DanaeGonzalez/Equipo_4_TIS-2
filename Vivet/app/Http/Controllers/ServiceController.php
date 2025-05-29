@@ -13,12 +13,12 @@ class ServiceController extends Controller
     {
         $services = Service::all();
         $role = Auth::user()->user_type;
-        return view('tenant.services.index', compact('services','role'));
+        return view('services.index', compact('services','role'));
     }
 
     public function create()
     {
-        return view('tenant.services.create');
+        return view('services.create');
     }
 
     public function store(Request $request)
@@ -51,7 +51,7 @@ class ServiceController extends Controller
 
     public function edit(Service $service)
     {
-        return view('tenant.services.edit', compact('service'));
+        return view('services.edit', compact('service'));
     }
 
     public function update(Request $request, Service $service)

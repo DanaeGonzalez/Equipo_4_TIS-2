@@ -17,6 +17,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BillingController;
+use App\Http\Controllers\ExamController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,7 @@ use App\Http\Controllers\BillingController;
 |
 */
 
-Route::get('/check', fn () => 'TENANT: ' . tenant('id'));
+Route::get('/check', fn() => 'TENANT: ' . tenant('id'));
 
 Route::get('/', function () {
     return view('tenant.landing');
@@ -71,4 +73,7 @@ Route::middleware(['check.permission'])->group(function () {
     Route::resource('clients', ClientController::class);
     Route::resource('billing', BillingController::class);
     Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
+    Route::get('/exams', [ExamController::class, 'showExams'])->name('exams.index');
+    Route::post('/exams/send', [ExamController::class, 'send'])->name('exams.send');
+    Route::get('/exams/history/{user}', [ExamController::class, 'history'])->name('exams.history');
 });

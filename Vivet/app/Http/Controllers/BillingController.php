@@ -14,7 +14,7 @@ class BillingController extends Controller
     public function index()
     {
         $billings = Billing::with(['client', 'appointment'])->latest()->paginate(10);
-        return view('tenant.billing.index', compact('billings'));
+        return view('billing.index', compact('billings'));
     }
 
     public function create()
@@ -22,7 +22,7 @@ class BillingController extends Controller
         $products = Product::all();
         $clients = Client::all();
         $appointments = Appointment::where('status', 'realizada')->get();
-        return view('tenant.billing.create', compact('products', 'clients', 'appointments'));
+        return view('billing.create', compact('products', 'clients', 'appointments'));
     }
 
     public function store(Request $request)
@@ -121,14 +121,14 @@ class BillingController extends Controller
     public function show(Billing $billing)
     {
         $billing->load(['client', 'appointment']);
-        return view('tenant.billing.show', compact('billing'));
+        return view('billing.show', compact('billing'));
     }
 
     public function edit(Billing $billing)
     {
         $clients = Client::all();
         $appointments = Appointment::all();
-        return view('tenant.billing.edit', compact('billing', 'clients', 'appointments'));
+        return view('billing.edit', compact('billing', 'clients', 'appointments'));
     }
 
     public function update(Request $request, Billing $billing)

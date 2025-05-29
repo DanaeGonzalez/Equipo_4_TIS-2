@@ -53,6 +53,13 @@ class SyncPermissionsFromRoutes extends Command
         $customPermissions = [
             'Asignar Permisos' => 'roles.permissions.edit',
             'Actualizar Permisos' => 'roles.permissions.update',
+            'Cancelar Cita' => 'appointments.cancel',
+            'Cancelar Citas' => 'appointments.cancel',
+            'Reactivar Cita' => 'appointments.reactivate',
+            'Reactivar Citas' => 'appointments.reactivate',
+            'Enviar Examenes' => 'exams.send',
+            'Ver Historial de Examenes' => 'exams.history',
+
             'Crear Clientes Factura' => 'clients.store.from.billing'
         ];
         if (isset($customPermissions[$permissionName])) {
@@ -68,7 +75,9 @@ class SyncPermissionsFromRoutes extends Command
             'eliminar' => 'destroy',
             'asignar' => 'edit',
             'actualizar' => 'update',
-            'guardar' => 'store'
+            'guardar' => 'store',
+            'Cancelar' => 'cancel',
+            'Reactivar' => 'reactivate'
         ];
 
         $dictionary = [
@@ -86,13 +95,17 @@ class SyncPermissionsFromRoutes extends Command
             'agendas' => 'appointments',
             'cita' => 'schedules',
             'citas' => 'schedules',
-            'mascota'=>'pets',
-            'mascotas'=>'pets',
-            'cliente' =>'client',
-            'clientes' =>'client',
+            'mascota' => 'pets',
+            'mascotas' => 'pets',
+            'cliente' => 'client',
+            'clientes' => 'client',
             'boleta' => 'billing',
             'boletas' => 'billing',
-            'venta' =>'billing'
+            'nota' => 'notes',
+            'notas' => 'notes',
+            'venta' => 'billing',
+            'examenes' => 'exams',
+            'examen' => 'exams',
         ];
 
         $permissionName = strtolower($permissionName);
@@ -103,7 +116,7 @@ class SyncPermissionsFromRoutes extends Command
                 $entity = Str::lower($entity);
                 $entity = trim($entity);
                 $entity = $dictionary[$entity] ?? $entity;
-                if ($entity === 'billing'){ //es billing.action; no billings.action
+                if ($entity === 'billing') { //es billing.action; no billings.action
                     return "$entity.$routeSuffix";
                 }
                 $entity = Str::plural($entity);
