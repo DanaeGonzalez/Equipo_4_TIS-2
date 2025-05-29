@@ -68,7 +68,7 @@ class TenantResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('go')
                     ->label('Ir')
-                    ->url(fn($record) => 'http://' . $record->subdomain . '.vetcodex.test')
+                    ->url(fn($record) => 'http://' . $record->subdomain . '.vetcodex.cl')
                     ->openUrlInNewTab()
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->color('primary'),
