@@ -180,15 +180,6 @@
                     <span class="flex-1 ml-3 whitespace-nowrap">Ficha Clínica</span>
                   </a>
                 </li>
-                <li>
-                  <a href="{{ route('notes.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Nuevo Icono Notebook -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                      <path d="M6 2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H6Zm9 3H7v1h8V5Zm0 3H7v1h8V8Zm0 3H7v1h8v-1Z"/>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Notas</span>
-                  </a>
-                </li>
               </ul>
             </div>
           </aside>
