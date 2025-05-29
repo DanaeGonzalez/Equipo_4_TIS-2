@@ -20,7 +20,7 @@ class CreateBillingTable extends Migration
             $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('set null');
             $table->integer('total_amount');
             $table->enum('payment_method',['Débito','Crédito','Efectivo']);
-            $table->date('payment_date');
+            $table->datetime('payment_date');
             $table->enum('status',['Pendiente', 'Pagado','Cancelado']);
             $table->timestamps();
         });

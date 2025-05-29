@@ -29,6 +29,7 @@ class ServiceController extends Controller
             'price' => 'required|numeric|min:0',
             'estimated_duration' => 'required|integer|max:255',
             'icon' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
+            'is_active' => 'boolean',
         ]);
 
         if ($request->hasFile('icon')) {
@@ -44,7 +45,7 @@ class ServiceController extends Controller
             $validated['icon'] = 'images/clients/client1/services/' . $filename;
         }
 
-        Service::create($validated);
+        Service::create(array_merge($validated, ['is_active' => true]));
 
         return redirect()->route('tenant.services.index')->with('success', 'Servicio creado correctamente.');
     }
@@ -88,7 +89,7 @@ class ServiceController extends Controller
             $file->move($destinationPath, $filename);
             $validated['icon'] = 'images/clients/client1/services/' . $filename;
         }
-        $validated['is_active'] = $request->has('is_active');
+        //$validated['is_active'] = $request->has('is_active');
         $service->update($validated);
         return redirect()->route('tenant.services.index')->with('success', 'Servicio actualizado.');
     }

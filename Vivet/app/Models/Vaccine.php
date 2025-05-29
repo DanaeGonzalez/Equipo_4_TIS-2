@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Vaccine extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
+        'product_id',
         'name',
         'description',
-        'estimated_duration',
-        'price',
-        'icon',
-        'is_active',
+        'species',
+        'validity_period',
     ];
 
-    public function appointments()
+    public function product()
     {
-        return $this->hasMany(Appointment::class);
+        return $this->belongsTo(Product::class);
     }
 }

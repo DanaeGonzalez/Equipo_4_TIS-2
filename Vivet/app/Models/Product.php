@@ -13,7 +13,8 @@ class Product extends Model
         'description',
         'price',
         'stock',
-        'is_active'
+        'is_active',
+        'is_vaccine'
     ];
 
     public function billingProducts()
@@ -21,8 +22,8 @@ class Product extends Model
         return $this->hasMany(BillingProducts::class);
     }
 
-    /*public function vaccines()
+    public function vaccine()
     {
-        return $this->hasMany(Vaccine::class);
-    }*/
+        return $this->hasOne(Vaccine::class);
+    }
 }

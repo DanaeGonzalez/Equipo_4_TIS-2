@@ -1,3 +1,4 @@
+@include('partials.colors')
 @extends('tenant.layouts.app')
 
 @section('title', 'Editar permiso')
@@ -13,7 +14,7 @@
         <input type="text" name="name" value="{{ $permission->name }}" class="w-full border px-3 py-2 mb-4" required>
         <label class="block mb-2">Descripción</label>
         <input type="text" name="description" value="{{ $permission->description}}" class="w-full border px-3 py-2 mb-4" required>
-        <button class="bg-blue-600 text-white px-4 py-2 rounded">Actualizar</button>
+        <button style=" " class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Actualizar</button>
     </form>
 </div>
 @endsection
