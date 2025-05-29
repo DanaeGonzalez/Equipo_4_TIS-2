@@ -101,7 +101,7 @@ class PermissionController extends Controller
 
         ksort($grouped); // Ordena alfabéticamente por grupo
 
-        return view('roles.edit-permissions', compact('role', 'grouped'));
+        return view('tenant.roles.edit-permissions', compact('role', 'grouped'));
     }
 
     public function updatePermissions(Request $request, Role $role)

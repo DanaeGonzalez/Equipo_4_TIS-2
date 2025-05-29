@@ -64,7 +64,7 @@ class SyncPermissionsFromRoutes extends Command
             'Actualizar Permisos' => 'roles.permissions.update',
         ];
         if (isset($customPermissions[$permissionName])) {
-            return $customPermissions[$permissionName];
+             return $customPermissions[$permissionName];
         }
 
         $map = [ //acciones
@@ -121,9 +121,11 @@ class SyncPermissionsFromRoutes extends Command
                 $entity = $dictionary[$entity] ?? $entity;
                 if ($entity === 'billing' || $entity=== 'inventory'){ //es billing.action; no billings.action, inventory.action, no inventories(?)
                     return "$entity.$routeSuffix";
+
                 }
                 $entity = Str::plural($entity);
                 return "$entity.$routeSuffix";
+
             }
         }
         return null;
