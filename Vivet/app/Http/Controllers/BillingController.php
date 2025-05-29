@@ -37,7 +37,7 @@ class BillingController extends Controller
 
         Billing::create($validated);
 
-        return redirect()->route('tenant.billing.index')->with('success', 'Factura registrada correctamente.');
+        return redirect()->route('billing.index')->with('success', 'Factura registrada correctamente.');
     }
 
     public function show(Billing $billing)
@@ -62,14 +62,14 @@ class BillingController extends Controller
 
         $billing->update($validated);
 
-        return redirect()->route('tenant.billing.index')->with('success', 'Factura actualizada correctamente.');
+        return redirect()->route('billing.index')->with('success', 'Factura actualizada correctamente.');
     }
 
 
     public function destroy(Billing $billing)
     {
         $billing->update(['status' => 'Cancelado']);
-        return redirect()->route('tenant.billing.index')->with('success', 'Factura Cancelada.');
+        return redirect()->route('billing.index')->with('success', 'Factura Cancelada.');
     }
 
     public function download(Billing $billing)

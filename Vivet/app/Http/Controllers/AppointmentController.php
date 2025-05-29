@@ -189,7 +189,7 @@ class AppointmentController extends Controller
 
                 $schedule->update(['is_reserved' => 1]);
 
-                return redirect()->route('tenant.appointments.create')->with('success', 'Cita registrada correctamente.');
+                return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
             }
 
             // Para admin y veterinaria dejamos tu código intacto
@@ -349,7 +349,7 @@ class AppointmentController extends Controller
             'reason' => $request->reason,
         ]);
 
-        return redirect()->route('tenant.appointments.index')->with('success', 'Cita actualizada correctamente.');
+        return redirect()->route('appointments.index')->with('success', 'Cita actualizada correctamente.');
     }
 
     public function destroy(Appointment $appointment)
