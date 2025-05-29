@@ -29,13 +29,13 @@ class ScheduleController extends Controller
                 return $day->sortBy('event_time'); //ordena horario x dia
             });
 
-        return view('schedules.index', compact('schedules'));
+        return view('tenant.schedules.index', compact('schedules'));
     }
 
 
     public function create()
     {
-        return view('schedules.create');
+        return view('tenant.schedules.create');
     }
 
     public function store(Request $request)
@@ -56,7 +56,7 @@ class ScheduleController extends Controller
 
     public function edit(Schedule $schedule)
     {
-        return view('schedules.edit', compact('schedule'));
+        return view('tenant.schedules.edit', compact('schedule'));
     }
 
     public function update(Request $request, Schedule $schedule)

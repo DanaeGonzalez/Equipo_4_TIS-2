@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('tenant.layouts.app')
 
 @section('content')
     <div class="container mx-auto max-w-3xl p-8 bg-gradient-to-br from-white to-gray-100 shadow-xl rounded-2xl mt-10">

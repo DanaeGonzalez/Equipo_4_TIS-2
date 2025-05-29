@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@include('partials.colors')
+@extends('tenant.layouts.app')
+@include('tenant.partials.colors')
 
 @section('content')
     <div class="container mx-auto px-4 py-6">

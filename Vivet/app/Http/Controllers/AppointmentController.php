@@ -39,7 +39,7 @@ class AppointmentController extends Controller
         $services = Service::all();
         $veterinarians = User::where('role_id', 3)->where('is_active', 1)->get();
 
-        return view('appointments.create', compact('schedules', 'services', 'veterinarians'));
+        return view('tenant.appointments.create', compact('schedules', 'services', 'veterinarians'));
     }
 
     public function index()
@@ -48,7 +48,7 @@ class AppointmentController extends Controller
             ->where('status', '!=', 'Finalizada')
             ->orderBy('appointment_date')
             ->get();
-        return view('appointments.index', compact('appointments'));
+        return view('tenant.appointments.index', compact('appointments'));
     }
 
     public function store(Request $request)
@@ -167,7 +167,7 @@ class AppointmentController extends Controller
         $schedules = Schedule::where('is_reserved', false)->get();
 
 
-        return view('appointments.edit', compact('appointment', 'services', 'veterinarians', 'schedules'));
+        return view('tenant.appointments.edit', compact('appointment', 'services', 'veterinarians', 'schedules'));
     }
 
     public function update(Request $request, Appointment $appointment)

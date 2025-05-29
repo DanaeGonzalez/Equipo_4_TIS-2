@@ -10,13 +10,13 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::latest()->paginate(10);
-        return view('clients.index', compact('clients'));
+        return view('tenant.clients.index', compact('clients'));
     }
 
     public function create()
     {
         //$this->authorize('create', Client::class);
-        return view('clients.create');
+        return view('tenant.clients.create');
     }
 
     public function store(Request $request)

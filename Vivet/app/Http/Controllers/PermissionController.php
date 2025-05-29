@@ -13,12 +13,12 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
-        return view('permissions.index', compact('permissions'));
+        return view('tenant.permissions.index', compact('permissions'));
     }
 
     public function create()
     {
-        return view('permissions.create');
+        return view('tenant.permissions.create');
     }
 
     public function store(Request $request)
@@ -41,7 +41,7 @@ class PermissionController extends Controller
     public function editPermissions(Role $role) 
     {
         $permissions = Permission::all();
-        return view('roles.edit-permissions', compact('role', 'permissions'));
+        return view('tenant.roles.edit-permissions', compact('role', 'permissions'));
     }
 
     public function updatePermissions(Request $request, Role $role) 
@@ -52,7 +52,7 @@ class PermissionController extends Controller
 
     public function edit(Permission $permission)
     {
-        return view('permissions.edit', compact('permission'));
+        return view('tenant.permissions.edit', compact('permission'));
     }
 
     public function update(Request $request, Permission $permission)

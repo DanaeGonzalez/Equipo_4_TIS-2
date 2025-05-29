@@ -13,12 +13,12 @@ class ProductController extends Controller
     {
         $products = Product::all();
          $role = Auth::user()->user_type;
-        return view('products.index', compact('products','role'));
+        return view('tenant.products.index', compact('products','role'));
     }
 
     public function create()
     {
-        return view('products.create');
+        return view('tenant.products.create');
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class ProductController extends Controller
     }
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        return view('tenant.products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
