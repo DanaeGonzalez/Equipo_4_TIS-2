@@ -74,7 +74,7 @@ class AppointmentController extends Controller
             $pets = collect();
         }
 
-        return view('appointments.create', compact('schedules', 'services', 'veterinarians', 'pets'));
+        return view('tenant.appointments.create', compact('schedules', 'services', 'veterinarians', 'pets'));
     }
     //cambios
     public function index()
@@ -99,7 +99,7 @@ class AppointmentController extends Controller
                 }
                 return $appointment;
             });
-        return view('appointments.index', compact('appointments'));
+        return view('tenant.appointments.index', compact('appointments'));
     }
 
     public function store(Request $request)
@@ -187,7 +187,7 @@ class AppointmentController extends Controller
 
                 $schedule->update(['is_reserved' => 1]);
 
-                return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
+                return redirect()->route('tenant.appointments.create')->with('success', 'Cita registrada correctamente.');
             }
 
             // Para admin y veterinaria dejamos tu código intacto
@@ -272,7 +272,7 @@ class AppointmentController extends Controller
 
             $schedule->update(['is_reserved' => 1]);
 
-            return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
+            return redirect()->route('tenant.appointments.create')->with('success', 'Cita registrada correctamente.');
         } catch (Exception $e) {
             Log::error('Error al registrar cita: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
@@ -346,7 +346,7 @@ class AppointmentController extends Controller
             'reason' => $request->reason,
         ]);
 
-        return redirect()->route('appointments.index')->with('success', 'Cita actualizada correctamente.');
+        return redirect()->route('tenant.appointments.index')->with('success', 'Cita actualizada correctamente.');
     }
 
 
@@ -362,7 +362,7 @@ class AppointmentController extends Controller
         }
         // Eliminar realmente la cita
         $appointment->delete();
-        return redirect()->route('appointments.index')->with('success', 'Cita eliminada correctamente.');
+        return redirect()->route('tenant.appointments.index')->with('success', 'Cita eliminada correctamente.');
     }
     public function cancel(Appointment $appointment)
     {
