@@ -18,6 +18,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\ClinicalRecordController;
+use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\MedicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,9 +78,9 @@ Route::resource('billing', BillingController::class);
 Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
 
 
-//                        Rutas appointments
+// Rutas appointments
 
-Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('tenant.appointments.create');
+Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
 Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
 Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
 Route::get('/appointments/{appointment}/edit', [AppointmentController::class, 'edit'])->name('appointments.edit');
@@ -105,3 +108,70 @@ Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
 Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
 Route::put('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
 Route::delete('/notes/{note}', [NoteController::class, 'destroy'])->name('notes.destroy');
+
+// Rutas clinical_records
+
+Route::get('/clinical-records', [ClinicalRecordController::class, 'index'])->name('clinical_records.index');
+Route::get('/clinical-records/create', [ClinicalRecordController::class, 'create'])->name('clinical_records.create');
+Route::post('/clinical-records', [ClinicalRecordController::class, 'store'])->name('clinical_records.store');
+Route::get('/clinical-records/{clinicalRecord}/edit', [ClinicalRecordController::class, 'edit'])->name('clinical_records.edit');
+Route::put('/clinical-records/{clinicalRecord}', [ClinicalRecordController::class, 'update'])->name('clinical_records.update');
+Route::delete('/clinical-records/{clinicalRecord}', [ClinicalRecordController::class, 'destroy'])->name('clinical_records.destroy');
+
+// Rutas Preescriptions
+
+Route::get('/clinical-records/{clinicalRecord}/prescriptions/create', [PrescriptionController::class, 'create'])->name('prescriptions.create');
+Route::post('/clinical-records/{clinicalRecord}/prescriptions', [PrescriptionController::class, 'store'])->name('prescriptions.store');
+Route::get('/prescriptions/{prescription}/edit', [PrescriptionController::class, 'edit'])->name('prescriptions.edit');
+Route::put('/prescriptions/{prescription}', [PrescriptionController::class, 'update'])->name('prescriptions.update');
+Route::delete('/prescriptions/{prescription}', [PrescriptionController::class, 'destroy'])->name('prescriptions.destroy');
+
+// Rutas Medication
+
+Route::get('/medications', [MedicationController::class, 'index'])->name('medications.index');
+Route::get('/medications/create', [MedicationController::class, 'create'])->name('medications.create');
+Route::post('/medications', [MedicationController::class, 'store'])->name('medications.store');
+Route::get('/medications/{medication}/edit', [MedicationController::class, 'edit'])->name('medications.edit');
+Route::put('/medications/{medication}', [MedicationController::class, 'update'])->name('medications.update');
+Route::delete('/medications/{medication}', [MedicationController::class, 'destroy'])->name('medications.destroy');
+
+// Rutas Billing
+ Route::resource('billing', BillingController::class);
+    Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
+
+// Rutas Inventory
+Route::resource('inventory', InventoryController::class);
+// Rutas Supply
+
+Route::resource('supplies', SupplyController::class);
+Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock'); //agregar a permissions:sync
+Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
+Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
+
+
+
+
+//ordenar
+Route::resource('services', ServiceController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
+    Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
+    Route::resource('appointments', AppointmentController::class);
+    Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+    Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
+    Route::resource('schedules', ScheduleController::class);
+    Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
+    Route::resource('pets', PetController::class);
+    Route::resource('supplies', SupplyController::class);
+    Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock'); //agregar a permissions:sync
+    Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
+    Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
+    Route::resource('inventory', InventoryController::class);
+    Route::resource('billing', BillingController::class);
+    Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
+    Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
+    Route::resource('clients', ClientController::class);
+    Route::resource('inventory', InventoryController::class);
+    Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');

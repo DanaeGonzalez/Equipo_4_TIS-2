@@ -1,5 +1,5 @@
 {{-- resources/views/roles/edit.blade.php --}}
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 @section('title', 'Editar Rol')
 

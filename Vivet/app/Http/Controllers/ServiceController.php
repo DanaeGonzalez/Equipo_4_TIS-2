@@ -29,6 +29,7 @@ class ServiceController extends Controller
             'price' => 'required|numeric|min:0',
             'estimated_duration' => 'required|integer|max:255',
             'icon' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
+            'is_active' => 'boolean',
         ]);
 
         if ($request->hasFile('icon')) {
@@ -44,14 +45,14 @@ class ServiceController extends Controller
             $validated['icon'] = 'images/clients/client1/services/' . $filename;
         }
 
-        Service::create($validated);
+        Service::create(array_merge($validated, ['is_active' => true]));
 
-        return redirect()->route('services.index')->with('success', 'Servicio creado correctamente.');
+        return redirect()->route('tenant.services.index')->with('success', 'Servicio creado correctamente.');
     }
 
     public function edit(Service $service)
     {
-        return view('services.edit', compact('service'));
+        return view('tenant.services.edit', compact('service'));
     }
 
     public function update(Request $request, Service $service)
@@ -88,14 +89,14 @@ class ServiceController extends Controller
             $file->move($destinationPath, $filename);
             $validated['icon'] = 'images/clients/client1/services/' . $filename;
         }
-        $validated['is_active'] = $request->has('is_active');
+        //$validated['is_active'] = $request->has('is_active');
         $service->update($validated);
-        return redirect()->route('services.index')->with('success', 'Servicio actualizado.');
+        return redirect()->route('tenant.services.index')->with('success', 'Servicio actualizado.');
     }
 
     public function destroy(Service $service)
     {
         $service->update(['is_active' => false]);
-        return redirect()->route('services.index')->with('success', 'Servicio desactivado.');
+        return redirect()->route('tenant.services.index')->with('success', 'Servicio desactivado.');
     }
 }

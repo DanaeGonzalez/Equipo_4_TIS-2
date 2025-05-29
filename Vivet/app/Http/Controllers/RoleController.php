@@ -29,12 +29,12 @@ class RoleController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('roles.index')->with('success', 'Rol creado.');
+        return redirect()->route('tenant.roles.index')->with('success', 'Rol creado.');
     }
 
     public function edit(Role $role)
     {
-        return view('roles.edit', compact('role'));
+        return view('tenant.roles.edit', compact('role'));
     }
 
     public function update(Request $request, Role $role)
@@ -49,16 +49,16 @@ class RoleController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('roles.index')->with('success', 'Rol actualizado.');
+        return redirect()->route('tenant.roles.index')->with('success', 'Rol actualizado.');
     }
 
     public function destroy(Role $role)
     {
         if ($role->name === 'Administrador') {
-            return redirect()->route('roles.index')->with('error', 'No se puede eliminar este rol.');
+            return redirect()->route('tenant.roles.index')->with('error', 'No se puede eliminar este rol.');
         }
 
         $role->delete();
-        return redirect()->route('roles.index')->with('success', 'Rol eliminado.');
+        return redirect()->route('tenant.roles.index')->with('success', 'Rol eliminado.');
     }
 }
