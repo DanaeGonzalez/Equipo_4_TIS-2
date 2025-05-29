@@ -13,12 +13,12 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
-        return view('permissions.index', compact('permissions'));
+        return view('tenant.permissions.index', compact('permissions'));
     }
 
     public function create()
     {
-        return view('permissions.create');
+        return view('tenant.permissions.create');
     }
 
     public function store(Request $request)

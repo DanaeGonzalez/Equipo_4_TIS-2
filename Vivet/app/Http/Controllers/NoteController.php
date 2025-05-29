@@ -14,7 +14,7 @@ class NoteController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('notes.index', compact('notes'));
+        return view('tenant.notes.index', compact('notes'));
     }
 
     public function create()
