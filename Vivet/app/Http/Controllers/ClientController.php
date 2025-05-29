@@ -50,4 +50,25 @@ class ClientController extends Controller
 
         return redirect()->route('billing.create')->with('new_client_id', $client->id);
     }
+
+    public function edit(Client $client)
+    {
+        return view('tenant.clients.edit', compact('client'));
+    }
+
+    public function update(Request $request, Client $client)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'client_run' => 'required|string|unique:clients,client_run,' . $client->id,
+            'email' => 'required|email|unique:clients,email,' . $client->id,
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string',
+        ]);
+
+        $client->update($request->all());
+
+        return redirect()->route('clients.index')->with('success', 'Cliente actualizado correctamente.');
+    }
 }
