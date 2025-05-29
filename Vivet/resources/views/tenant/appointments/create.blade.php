@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 
 @section('content')
     <div class="container mx-auto max-w-3xl p-8 bg-gradient-to-br from-white to-gray-100 shadow-xl rounded-2xl mt-10">
         <div class="mb-4">
-            <a href="{{ route('appointments.index') }}"
+            <a href="{{ route('tenant.appointments.index') }}"
                 class="inline-flex items-center px-4 py-2 rounded-lg text-white hover:opacity-90"
                 style="background-color: var(--color-button-secondary);">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"

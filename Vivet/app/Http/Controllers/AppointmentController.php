@@ -83,7 +83,7 @@ class AppointmentController extends Controller
         $client = Client::where('user_id', $user->id)->first();
 
         if (!$client) {
-            return view('appointments.index', ['appointments' => collect()]);
+            return view('tenant.appointments.index', ['appointments' => collect()]);
         }
         $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
             ->where('status', '!=', 'Finalizada')

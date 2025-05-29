@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 @section('content')
 
@@ -15,7 +15,7 @@
                 </a>
             </div>
 
-            <a href="{{ route('appointments.create') }}"
+            <a href="{{ route('tenant.appointments.create') }}"
                 style="background-color: var(--color-button-secondary);"
                 class="flex items-center px-4 py-2 text-white rounded hover:opacity-90">
                     <!-- Ícono más SVG -->

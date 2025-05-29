@@ -38,7 +38,7 @@ class ScheduleController extends Controller
                 return $day->sortBy('event_time');
             });
 
-        return view('schedules.index', compact('schedules'));
+        return view('tenant.schedules.index', compact('schedules'));
     }
 
 
