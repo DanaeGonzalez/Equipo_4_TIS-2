@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             VeterinarioSeeder::class,
             UsersTableSeeder::class,
             PetsTableSeeder::class,
+            ScheduleSeeder::class,
+            ClientSeeder::class,
         ]);
         
     }
