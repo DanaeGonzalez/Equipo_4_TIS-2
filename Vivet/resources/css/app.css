@@ -3,3 +3,4 @@
 @tailwind utilities;
 
 @plugin "daisyui";
+@import "flowbite/src/themes/default";
