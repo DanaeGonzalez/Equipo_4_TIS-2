@@ -74,7 +74,7 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Appointment::class, 'vet_id');
     }
 
-    public function canAccessPanel(Panel $panel): bool
+    /*public function canAccessPanel(Panel $panel): bool
     {
         \Log::info('Verificando acceso al panel', [
             'user' => $this->email,
@@ -82,6 +82,22 @@ class User extends Authenticatable implements FilamentUser
         ]);
 
         return true; // o usar alguna lógica como email o rol (Implementar sprint 3)
+    }*/
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // SUPERADMIN: acceso al panel central
+        if ($panel->getId() === 'admin') {
+            return $this->email === 'dgonzalezv@ing.ucsc.cl'; // 👈 pon tu correo real aquí
+        }
+
+        // TENANT: acceso al panel de clínicas (si aplica)
+        if ($panel->getId() === 'tenant') {
+            return true; // o algún control por rol, por ejemplo:
+            // return $this->hasRole('admin');
+        }
+
+        return false;
     }
 
     /* Descomentar a medida que vayan haciendo los modelos
