@@ -50,23 +50,24 @@ class SyncPermissionsFromRoutes extends Command
 
     protected function mapPermissionToRoute(string $permissionName): ?string
     {
-        $customPermissions = [
+        $customPermissions = [ //rutas más rebuscadas que no cumplen el estandar de map
             'Enviar Examenes' => 'exams.send',
             'Ver Historial de Examenes' => 'exams.history',
             'Asignar Permisos' => 'roles.permissions.edit',
-            'Actualizar Permisos' => 'roles.permissions.update',
-            'Cancelar Cita' => 'appointments.cancel',
+            'Actualizar Permisos del Rol' => 'roles.permissions.update',
+            'Crear Clientes Factura' => 'clients.store.from.billing',
+            'Guardar Inventario' => 'inventory.storeForProduct',
             'Cancelar Citas' => 'appointments.cancel',
-            'Reactivar Cita' => 'appointments.reactivate',
+            'Cancelar Cita' => 'appointments.cancel',
             'Reactivar Citas' => 'appointments.reactivate',
-
-            'Crear Clientes Factura' => 'clients.store.from.billing'
+            'Reactivar Cita' => 'appointments.reactivate',
+            'Actualizar Permisos' => 'roles.permissions.update',
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
         }
 
-        $map = [
+        $map = [ //acciones
             'ver detalle de' => 'show',
             'ver' => 'index',
             'crear' => 'create',
@@ -75,11 +76,12 @@ class SyncPermissionsFromRoutes extends Command
             'asignar' => 'edit',
             'actualizar' => 'update',
             'guardar' => 'store',
+            'descargar' => 'download',
             'Cancelar' => 'cancel',
             'Reactivar' => 'reactivate'
         ];
 
-        $dictionary = [
+        $dictionary = [ //modelos
             'servicio' => 'services',
             'servicios' => 'services',
             'producto' => 'products',
@@ -104,7 +106,8 @@ class SyncPermissionsFromRoutes extends Command
             'examenes' => 'exams',
             'examen' => 'exams',
             'nota' => 'notes',
-            'notas' => 'notes'
+            'notas' => 'notes',
+            'inventario' => 'inventory',
         ];
 
         $permissionName = strtolower($permissionName);
@@ -113,7 +116,12 @@ class SyncPermissionsFromRoutes extends Command
             if (str_starts_with($permissionName, $action)) {
                 $entity = trim(str_replace($action, '', $permissionName));
                 $entity = Str::lower($entity);
+                $entity = trim($entity);
+                $entity = str_replace(['á','é','í','ó','ú','ñ'], ['a','e','i','o','u','n'], $entity);
                 $entity = $dictionary[$entity] ?? $entity;
+                if ($entity === 'billing' || $entity=== 'inventory'){ //es billing.action; no billings.action, inventory.action, no inventories(?)
+                    return "$entity.$routeSuffix";
+                }
                 $entity = Str::plural($entity);
                 return "$entity.$routeSuffix";
             }

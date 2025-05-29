@@ -1,5 +1,5 @@
 {{-- resources/views/roles/create.blade.php --}}
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 @section('title', 'Crear Rol')
 

@@ -6,6 +6,7 @@ use App\Models\Billing;
 use App\Models\Client;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BillingController extends Controller
 {
@@ -41,26 +42,21 @@ class BillingController extends Controller
 
     public function show(Billing $billing)
     {
-        $billing->load(['client', 'appointment']);
+        $billing->load(['client', 'appointment', 'products']);
         return view('billing.show', compact('billing'));
     }
 
     public function edit(Billing $billing)
     {
-        $clients = Client::all();
-        $appointments = Appointment::all();
-        return view('billing.edit', compact('billing', 'clients', 'appointments'));
+        $billing->load(['client', 'appointment', 'products']);
+        return view('billing.edit', compact('billing'));
     }
+
 
     public function update(Request $request, Billing $billing)
     {
         $validated = $request->validate([
-            'client_id' => 'nullable|exists:clients,id',
-            'sale_type' => 'required|in:Servicio,Producto',
-            'appointment_id' => 'nullable|exists:appointments,id',
-            'total_amount' => 'required|integer|min:0',
             'payment_method' => 'required|in:Débito,Crédito,Efectivo',
-            'payment_date' => 'required|date',
             'status' => 'required|in:Pendiente,Pagado,Cancelado',
         ]);
 
@@ -69,9 +65,19 @@ class BillingController extends Controller
         return redirect()->route('billing.index')->with('success', 'Factura actualizada correctamente.');
     }
 
+
     public function destroy(Billing $billing)
     {
-        $billing->delete();
-        return redirect()->route('billing.index')->with('success', 'Factura eliminada.');
+        $billing->update(['status' => 'Cancelado']);
+        return redirect()->route('billing.index')->with('success', 'Factura Cancelada.');
+    }
+
+    public function download(Billing $billing)
+    {
+        $billing->load(['client', 'appointment', 'products']);
+
+        $pdf = PDF::loadView('billing.pdf', compact('billing'));
+
+        return $pdf->download('boleta_' . $billing->id . '.pdf');
     }
 }

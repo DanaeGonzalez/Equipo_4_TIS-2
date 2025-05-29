@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Billing extends Model
 {
     use HasFactory;
+    protected $table = 'billing';
+
     protected $fillable = [
         'client_id',
         'sale_type',
@@ -19,8 +21,9 @@ class Billing extends Model
     ];
 
     protected $casts = [
-        'payment_date' => 'date',
+        'payment_date' => 'datetime',
     ];
+
 
     public function client()
     {
@@ -36,5 +39,10 @@ class Billing extends Model
     {
         return $this->hasMany(BillingProducts::class);
     }
-}
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'billing_products')
+            ->withPivot('quantity', 'unit_price', 'total_price');
+    }
+}

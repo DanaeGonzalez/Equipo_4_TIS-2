@@ -1,7 +1,7 @@
 @extends('tenant.layouts.app')
 
 @section('content')
-<!--@can('pets.create')-->
+{{-- @can('pets.create')--}}
 <div class="container mx-auto px-4 py-6 max-w-3xl">
     <h2 class="text-2xl font-bold mb-6">Registrar Nueva Mascota</h2>
 
@@ -19,7 +19,7 @@
         @csrf
 
         <div>
-            <label for="client_id" class="block font-semibold">Dueño</label>
+            <label for="client_id" class="block font-semibold">DueÃ±o</label>
             <select name="client_id" id="client_id" required class="w-full border rounded px-3 py-2">
                 <option value="">-- Selecciona un cliente --</option>
                 @foreach($clients as $client)
@@ -99,9 +99,6 @@
         </div>
     </form>
 </div>
-@else
-    <div class="text-center mt-10 text-red-500 font-bold">
-        No tienes permiso para crear mascotas.
-    </div>
-<!--@endcan-->
+
+{{-- @endcan --}}
 @endsection

@@ -10,6 +10,7 @@ class PermissionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * Aquí se deben ir colocando los permisos predeterminados que se desea que tengan todos los clientes
      */
     public function run(): void
     {
@@ -56,7 +57,9 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Crear Permisos', 'route_name' => 'permissions.create'],
             ['name' => 'Guardar Permisos', 'route_name' => 'permissions.store'],
             ['name' => 'Asignar Permisos', 'route_name' => 'roles.permissions.edit'],
-            ['name' => 'Actualizar Permisos', 'route_name' => 'roles.permissions.update'],
+            ['name' => 'Editar Permisos', 'route_name' => 'permissions.edit'],
+            ['name' => 'Actualizar Permisos', 'route_name' => 'permissions.update'],
+            ['name' => 'Actualizar Permisos del Rol', 'route_name' => 'roles.permissions.update'],
 
             // Schedules
             ['name' => 'Ver Citas', 'route_name' => 'schedules.index'],
@@ -64,6 +67,8 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Guardar Citas', 'route_name' => 'schedules.store'],
             ['name' => 'Asignar Citas', 'route_name' => 'schedules.edit'],
             ['name' => 'Actualizar Citas', 'route_name' => 'schedules.update'],
+            ['name' => 'Cancelar Citas', 'route_name' => 'appointments.cancel'],
+            ['name' => 'Reactivar Citas', 'route_name' => 'appointments.reactivate'],
 
             // Appointments
             ['name' => 'Ver Agenda', 'route_name' => 'appointments.index'],
@@ -82,6 +87,15 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Editar Notas', 'route_name' => 'notes.edit'],
             ['name' => 'Actualizar Notas', 'route_name' => 'notes.update'],
             ['name' => 'Eliminar Notas', 'route_name' => 'notes.destroy'],
+
+            //Billings
+            ['name' => 'Ver Boleta', 'route_name' => 'billing.index'],
+            ['name' => 'Ver detalle de Boleta', 'route_name' => 'billing.index'],
+            ['name' => 'Crear Boleta', 'route_name' => 'billing.create'],
+            ['name' => 'Guardar Boleta', 'route_name' => 'billing.store'],
+            ['name' => 'Editar Boleta', 'route_name' => 'billing.edit'],
+            ['name' => 'Actualizar Boleta', 'route_name' => 'billing.update'],
+            ['name' => 'Eliminar Boleta', 'route_name' => 'billing.destroy'],
 
         ];
 

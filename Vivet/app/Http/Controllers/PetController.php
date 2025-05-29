@@ -69,6 +69,6 @@ class PetController extends Controller
 
         $pet->update(['status' => 'Fallecido']);
 
-        return redirect()->route('tenant.pets.index')->with('success', 'La mascota ha sido marcada como fallecida.');
+        return redirect()->route('pets.index')->with('success', 'La mascota ha sido marcada como fallecida.');
     }
 }
