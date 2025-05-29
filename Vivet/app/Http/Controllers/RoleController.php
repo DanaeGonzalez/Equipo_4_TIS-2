@@ -10,12 +10,12 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('roles.index', compact('roles'));
+        return view('tenant.roles.index', compact('roles'));
     }
 
     public function create()
     {
-        return view('roles.create');
+        return view('tenant.roles.create');
     }
 
     public function store(Request $request)

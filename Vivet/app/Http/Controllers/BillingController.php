@@ -14,7 +14,7 @@ class BillingController extends Controller
     public function index()
     {
         $billings = Billing::with(['client', 'appointment'])->latest()->paginate(10);
-        return view('billing.index', compact('billings'));
+        return view('tenant.billing.index', compact('billings'));
     }
 
     public function create()
