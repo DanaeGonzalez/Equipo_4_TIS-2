@@ -58,7 +58,7 @@ class ProductController extends Controller
             ]);
         }
 
-        if ($request->has('is_vaccine')) {
+        if ($request->input('is_vaccine') == '1') {
             Vaccine::create([
                 'product_id' => $product->id,
                 'name' => $product->name,

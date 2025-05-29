@@ -37,6 +37,8 @@ class PermissionController extends Controller
             $grouped[$entity][] = $permission;
         }
 
+        ksort($grouped); // Ordena el array por clave (alfabéticamente por entidad)
+
         // Lista de entidades únicas (para filtro)
         $entities = array_keys($grouped);
 
@@ -129,12 +131,12 @@ class PermissionController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso actualizado.');
+        return redirect()->route('permissions.index')->with('success', 'Permiso actualizado.');
     }
 
     public function destroy(Permission $permission)
     {
         $permission->delete();
-        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso eliminado.');
+        return redirect()->route('permissions.index')->with('success', 'Permiso eliminado.');
     }
 }

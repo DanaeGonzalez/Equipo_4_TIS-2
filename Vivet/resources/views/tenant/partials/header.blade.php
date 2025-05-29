@@ -86,6 +86,15 @@
                   </a>
                 </li>
                 <li>
+                  <a href="{{ route('exams.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Product/Box Icon -->
+                    <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
+                    </svg>
+                    <span class="ml-3">Examenes Médicos</span>
+                  </a>
+                </li>
+                <li>
                   <a href="{{ route('roles.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
                     <!-- Roles/Shield Icon -->
                     <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

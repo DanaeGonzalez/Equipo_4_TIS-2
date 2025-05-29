@@ -115,7 +115,7 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Actualizar Mascota', 'route_name' => 'pets.update'],
             ['name' => 'Eliminar Mascota', 'route_name' => 'pets.destroy'],
 
-            // Historia Clínica
+            // Historial Clínica
             ['name' => 'Ver Historias Clínicas', 'route_name' => 'clinical_records.index'],
             ['name' => 'Crear Historia Clínica', 'route_name' => 'clinical_records.create'],
             ['name' => 'Guardar Historia Clínica', 'route_name' => 'clinical_records.store'],
@@ -159,13 +159,13 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Formulario de Ajuste de Insumo', 'route_name' => 'supplies.adjustStockForm'],
 
             // Exámenes
-            ['name' => 'Ver Exámenes', 'route_name' => 'exams.index'],
-            ['name' => 'Enviar Exámenes', 'route_name' => 'exams.send'],
-            ['name' => 'Ver Historial de Exámenes', 'route_name' => 'exams.history'],
+            ['name' => 'Ver Examenes', 'route_name' => 'exams.index'],
+            ['name' => 'Enviar Examenes', 'route_name' => 'exams.send'],
+            ['name' => 'Ver Historial de Examenes', 'route_name' => 'exams.history'],
         ];
 
         foreach ($permissions as $perm) {
-            Permission::firstOrCreate([
+            Permission::updateOrCreate([
                 'name' => $perm['name'],
                 'route_name' => $perm['route_name'] ?? null,
             ]);

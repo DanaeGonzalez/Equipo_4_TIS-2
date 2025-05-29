@@ -37,7 +37,7 @@ class InventoryController extends Controller
 
         $movements = $query->latest()->paginate(20);
 
-        return view('inventory.index', compact('movements'));
+        return view('tenant.inventory.index', compact('movements'));
     }
 
     /**
@@ -50,7 +50,7 @@ class InventoryController extends Controller
 
         $items = $products->merge($supplies);
 
-        return view('inventory.movement-form', compact('items'));
+        return view('tenant.inventory.movement-form', compact('items'));
     }
 
     /**

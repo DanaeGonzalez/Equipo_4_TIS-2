@@ -29,10 +29,12 @@
         </div>
 
         {{-- Botón Nueva Ficha --}}
+        @can('clinical_records.create')
         <a href="{{ route('clinical_records.create') }}"
             class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
             + Nueva Ficha Clínica
         </a>
+        @endcan
     </div>
 
 
@@ -78,8 +80,10 @@
                     <td class="px-6 py-4 text-center space-x-2">
                         <a href="{{ route('clinical_records.show', $record->id) }}"
                             class="font-medium text-blue-600 hover:underline">Ver</a>
+                        @can('clinical_records.edit')
                         <a href="{{ route('clinical_records.edit', $record->id) }}"
                             class="font-medium text-yellow-600 hover:underline">Editar</a>
+                        @endcan
                     </td>
                 </tr>
                 @empty

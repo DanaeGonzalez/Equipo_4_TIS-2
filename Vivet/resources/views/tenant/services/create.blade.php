@@ -2,7 +2,7 @@
 
 @section('title', 'Crear Servicio')
 
-{{-- @if ($errors->any())
+@if ($errors->any())
 <div class="bg-red-100 text-red-800 p-4 rounded">
     <strong>¡Ups! Algo salió mal:</strong>
     <ul class="list-disc pl-5 mt-2">
@@ -11,7 +11,7 @@
         @endforeach
     </ul>
 </div>
-@endif --}}
+@endif
 
 @section('content')
     <div class="max-w-lg mx-auto">
@@ -47,7 +47,8 @@
 
             <div>
                 <label for="is_active" class="inline-flex items-center">
-                    <input type="checkbox" name="is_active" id="is_active" class="mr-2" {{ old('is_active') ? 'checked' : '' }}>
+                    <input type="hidden" name="is_active" value="0">
+                    <input type="checkbox" name="is_active" id="is_active" class="mr-2" value="0" {{ old('is_active') ? 'checked' : '' }}>
                     ¿Activo?
                 </label>
             </div>
