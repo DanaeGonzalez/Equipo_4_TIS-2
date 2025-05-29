@@ -1,5 +1,5 @@
 
-@include('partials.colors')
+@include('tenant.partials.colors')
 @section('title', 'Permisos')
 
 @extends('tenant.layouts.app')

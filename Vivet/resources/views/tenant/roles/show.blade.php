@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('tenant.layouts.app')
 
 @section('content')
     <h1>Detalle del Rol</h1>

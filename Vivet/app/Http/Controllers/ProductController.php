@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $role = Auth::user()->user_type;
-        return view('products.index', compact('products', 'role'));
+        return view('tenant.products.index', compact('products', 'role'));
     }
 
     public function create()
@@ -68,7 +68,7 @@ class ProductController extends Controller
             ]);
         }
 
-        return redirect()->route('products.index')->with('success', 'Producto creado correctamente.');
+        return redirect()->route('tenant.products.index')->with('success', 'Producto creado correctamente.');
         /* return redirect()->route('products.index')->with([
             'new_product_id' => $product->id,
             'open_stock_modal' => true,
@@ -119,7 +119,7 @@ class ProductController extends Controller
         } else {
             Vaccine::where('product_id', $product->id)->delete();
         }
-        return redirect()->route('products.index')->with('success', 'Producto actualizado.');
+        return redirect()->route('tenant.products.index')->with('success', 'Producto actualizado.');
     }
 
     public function destroy(Product $product)

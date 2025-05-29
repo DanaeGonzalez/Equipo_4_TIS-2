@@ -20,7 +20,7 @@ class SupplyController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
         $supplies = $query->get();
-        return view('supplies.index', compact('supplies'));
+        return view('tenant.supplies.index', compact('supplies'));
     }
 
     /**
@@ -28,7 +28,7 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        return view('supplies.create');
+        return view('tenant.supplies.create');
     }
 
     /**
@@ -65,7 +65,7 @@ class SupplyController extends Controller
             ]);
         }
 
-        return redirect()->route('supplies.index')->with('success', 'Insumo creado correctamente.');
+        return redirect()->route('tenant.supplies.index')->with('success', 'Insumo creado correctamente.');
     }
 
     /**
@@ -81,7 +81,7 @@ class SupplyController extends Controller
      */
     public function edit(Supply $supply)
     {
-        return view('supplies.edit', compact('supply'));
+        return view('tenant.supplies.edit', compact('supply'));
     }
 
     /**
@@ -105,7 +105,7 @@ class SupplyController extends Controller
             'units_per_box' => $request->input('units_per_box'),*/
         ]);
 
-        return redirect()->route('supplies.index')->with('success', 'Insumo actualizado correctamente.');
+        return redirect()->route('tenant.supplies.index')->with('success', 'Insumo actualizado correctamente.');
     }
 
     /**
@@ -115,7 +115,7 @@ class SupplyController extends Controller
     {
         $supply->update(['is_active' => false]);
 
-        return redirect()->route('supplies.index')->with('success', 'Insumo no disponible.');
+        return redirect()->route('tenant.supplies.index')->with('success', 'Insumo no disponible.');
     }
 
     public function adjustStock(Request $request, Supply $supply)
@@ -160,7 +160,7 @@ class SupplyController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('supplies.index')->with('success', 'Movimiento de inventario registrado.');
+        return redirect()->route('tenant.supplies.index')->with('success', 'Movimiento de inventario registrado.');
     }
 
     public function movements(Supply $supply) //Sirve para ver cuantos movimientos ha tenido el insumo (inventario más a detalle)
@@ -170,11 +170,11 @@ class SupplyController extends Controller
             ->latest()
             ->get();
 
-        return view('supplies.movements', compact('supply', 'movements'));
+        return view('tenant.supplies.movements', compact('supply', 'movements'));
     }
 
     public function showAdjustForm(Supply $supply)
     {
-        return view('supplies.adjustStock', compact('supply'));
+        return view('tenant.supplies.adjustStock', compact('supply'));
     }
 }

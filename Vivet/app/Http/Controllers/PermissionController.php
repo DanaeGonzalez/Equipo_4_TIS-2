@@ -43,7 +43,7 @@ class PermissionController extends Controller
         // Acciones base (para filtro)
         $actions = ['ver', 'crear', 'editar', 'eliminar', 'actualizar', 'asignar', 'guardar', 'descargar', 'cancelar', 'generar'];
 
-        return view('permissions.index', [
+        return view('tenant.permissions.index', [
             'groupedPermissions' => $grouped,
             'entities' => $entities,
             'actions' => $actions
