@@ -76,6 +76,15 @@
                   </a>
                 </li>
                 <li>
+                  <a href="{{ route('inventory.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Product/Box Icon -->
+                    <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
+                    </svg>
+                    <span class="ml-3">Inventario</span>
+                  </a>
+                </li>
+                <li>
                   <a href="{{ route('services.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
                     <!-- Services/Tools Icon -->
                     <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -135,15 +144,6 @@
                   </a>
                 </li>
                 <li>
-                  <a href="{{ route('exams.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Schedules/Clock Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Examenes</span>
-                  </a>
-                </li>
-                <li>
                   <a href="{{ route('schedules.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
                     <!-- Schedules/Clock Icon -->
                     <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -197,6 +197,24 @@
                       <path d="M6 2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H6Zm9 3H7v1h8V5Zm0 3H7v1h8V8Zm0 3H7v1h8v-1Z" />
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Notas</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('supplies.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Product/Box Icon -->
+                    <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
+                    </svg>
+                    <span class="ml-3">Suministros</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('medications.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Product/Box Icon -->
+                    <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
+                    </svg>
+                    <span class="ml-3">Medicamentos</span>
                   </a>
                 </li>
               </ul>
