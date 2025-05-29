@@ -37,6 +37,8 @@ class PermissionController extends Controller
             $grouped[$entity][] = $permission;
         }
 
+        ksort($grouped); // Ordena el array por clave (alfabéticamente por entidad)
+
         // Lista de entidades únicas (para filtro)
         $entities = array_keys($grouped);
 
