@@ -14,7 +14,7 @@
         <input type="text" name="name" value="{{ $permission->name }}" class="w-full border px-3 py-2 mb-4" required>
         <label class="block mb-2">Descripción</label>
         <input type="text" name="description" value="{{ $permission->description}}" class="w-full border px-3 py-2 mb-4" required>
-        <button style=" " class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Actualizar</button>
+        <button style="background-color: var(--color-button-secondary);" class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Actualizar</button>
     </form>
 </div>
 @endsection
