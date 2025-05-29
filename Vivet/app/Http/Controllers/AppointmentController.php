@@ -189,7 +189,9 @@ class AppointmentController extends Controller
 
                 $schedule->update(['is_reserved' => 1]);
 
-                Mail::to($client->email)->send(new AppointmentCreated($veterinarian,$appointment));
+                
+                //Mail::to($client->email)->send(new AppointmentCreated($veterinarian, $appointment));
+                
 
 
                 return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
@@ -277,7 +279,7 @@ class AppointmentController extends Controller
 
             $schedule->update(['is_reserved' => 1]);
 
-            Mail::to($client->email)->send(new AppointmentCreated($veterinarian,$appointment));
+            Mail::to($client->email)->send(new AppointmentCreated($veterinarian, $appointment));
 
             return redirect()->route('tenant.appointments.create')->with('success', 'Cita registrada correctamente.');
         } catch (Exception $e) {
