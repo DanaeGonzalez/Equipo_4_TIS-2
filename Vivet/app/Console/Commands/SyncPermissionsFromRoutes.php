@@ -60,7 +60,6 @@ class SyncPermissionsFromRoutes extends Command
             'Reactivar Citas' => 'appointments.reactivate',
             'Reactivar Cita' => 'appointments.reactivate',
             'Actualizar Permisos' => 'roles.permissions.update',
-            'Crear Clientes Factura' => 'clients.store.from.billing'
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
@@ -105,7 +104,6 @@ class SyncPermissionsFromRoutes extends Command
             'venta' =>'billing',
             'inventario' => 'inventory',
             'notas' => 'notes',
-            'venta' =>'billing'
         ];
 
         $permissionName = strtolower($permissionName);
