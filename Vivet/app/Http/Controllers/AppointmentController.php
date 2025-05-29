@@ -364,7 +364,7 @@ class AppointmentController extends Controller
         }
         // Eliminar realmente la cita
         $appointment->delete();
-        return redirect()->route('tenant.appointments.index')->with('success', 'Cita eliminada correctamente.');
+        return redirect()->route('appointments.index')->with('success', 'Cita eliminada correctamente.');
     }
     public function cancel(Appointment $appointment)
     {
