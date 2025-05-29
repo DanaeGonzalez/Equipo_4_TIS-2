@@ -8,7 +8,7 @@
     <!-- Incluye tu archivo de Tailwind compilado o los links a CDN -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @include('tenant.partials.colors')
+    @include('partials.colors')
 </head>
 
 <body class="bg-gradient-to-br from-blue-50 to-teal-50">
@@ -62,7 +62,7 @@
                                             <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                         </svg>
                                     </div>
-                                    <input type="email" name="email" value="{{ old('email') }}" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" placeholder="tu@email.com" />
+                                    <input type="email" name="email" value="{{ old('email') }}" autocomplete="off" class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" placeholder="tu@email.com" />
                                 </div>
                             </div>
 

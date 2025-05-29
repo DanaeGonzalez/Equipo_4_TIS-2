@@ -1,6 +1,5 @@
 @extends('tenant.layouts.app')
 
-
 @section('content')
     <div class="container mx-auto max-w-3xl p-8 bg-gradient-to-br from-white to-gray-100 shadow-xl rounded-2xl mt-10">
         <div class="mb-4">
@@ -17,7 +16,6 @@
 
         <div class="text-center mb-8">
             <h2 class="text-4xl font-extrabold text-indigo-700" style="color: var(--color-title);">Reserva tu Cita</h2>
-
         </div>
 
         @if(session('success'))
@@ -38,6 +36,17 @@
 
         <form action="{{ route('appointments.store') }}" method="POST" class="space-y-6">
             @csrf
+            <!-- Cliente -->
+            <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
+                <h3 class="col-span-2 text-lg font-semibold text-indigo-700" style="color: var(--color-title);">Datos del
+                    Cliente</h3>
+                <input type="text" name="name" placeholder="Nombre" class="input" required>
+                <input type="text" name="lastname" placeholder="Apellido" class="input" required>
+                <input type="text" name="client_run" placeholder="RUT" class="input col-span-2" required>
+                <input type="email" name="email" placeholder="Correo Electrónico" class="input col-span-2" required>
+                <input type="text" name="phone" placeholder="Teléfono" class="input">
+                <input type="text" name="address" placeholder="Dirección" class="input">
+            </div>
 
             @if(auth()->user()->role->name === 'Tutor')
                 <div class="bg-white p-6 rounded-xl shadow grid grid-cols-1 gap-4">

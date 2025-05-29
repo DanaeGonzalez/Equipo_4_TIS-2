@@ -24,7 +24,7 @@
       <!-- nav - start -->
       <nav class="hidden gap-12 lg:flex">
         <a href="/" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Inicio</a>
-        <a href="#" class="inline-flex items-center gap-1 text-lg font-semibold text-black hover:underline">
+        <a href="#" class="inline-flex items-center mb-2 gap-1 text-lg font-semibold text-black hover:underline">
           Servicios
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"
@@ -123,6 +123,15 @@
                       <path d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Citas</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('exams.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Schedules/Clock Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Examenes</span>
                   </a>
                 </li>
                 <li>

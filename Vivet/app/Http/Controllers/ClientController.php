@@ -26,21 +26,10 @@ class ClientController extends Controller
             'lastname' => 'required|string|max:255',
             'client_run' => 'required|string|unique:clients',
             'email' => 'required|email|unique:clients',
-            'phone' => 'nullable|string|max:9',
+            'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
         ]);
 
-        $existingClient = Client::where('client_run', $request['client_run'])
-            ->orWhere('email', $request['email'])
-            ->first();
-
-        if ($existingClient) {
-            return response()->json([
-                'id' => $existingClient->id,
-                'name' => $existingClient->name,
-                'lastname' => $existingClient->lastname,
-            ]);
-        }
         Client::create($request->all());
 
         return redirect()->route('tenant.clients.index')->with('success', 'Cliente creado correctamente.');

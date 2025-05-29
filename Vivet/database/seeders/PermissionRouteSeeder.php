@@ -30,13 +30,23 @@ class PermissionRouteSeeder extends Seeder
             'Editar Citas' => 'schedules.edit',
             'Eliminar Citas' => 'schedules.destroy',
             'Actualizar Citas' => 'schedules.update',
-            
+
             'Ver Agenda' => 'appointments.index',
             'Crear Agenda' => 'appointments.create',
             'Guardar Agenda' => 'appointments.store',
             'Editar Agenda' => 'appointments.edit',
             'Eliminar Agenda' => 'appointments.destroy',
             'Actualizar Agenda' => 'appointments.update',
+            'Cancelar Citas' => 'appointments.cancel',
+            'Reactivar Citas' => 'appointments.reactivate',
+
+            'Ver Notas' => 'notes.index',
+            'Crear Notas' => 'notes.create',
+            'Guardar Notas' => 'notes.store',
+            'Editar Notas' => 'notes.edit',
+            'Actualizar Notas' => 'notes.update',
+            'Eliminar Notas' => 'notes.destroy',
+
         ];
 
         foreach ($map as $permissionName => $routeName) {
