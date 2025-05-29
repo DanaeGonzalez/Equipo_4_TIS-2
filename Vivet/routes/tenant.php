@@ -78,7 +78,7 @@ Route::resource('billing', BillingController::class);
 Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
 
 
-//                        Rutas appointments
+// Rutas appointments
 
 Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
 Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');

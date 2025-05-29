@@ -13,12 +13,12 @@ class ServiceController extends Controller
     {
         $services = Service::all();
         $role = Auth::user()->user_type;
-        return view('services.index', compact('services','role'));
+        return view('tenant.services.index', compact('services','role'));
     }
 
     public function create()
     {
-        return view('services.create');
+        return view('tenant.services.create');
     }
 
     public function store(Request $request)
@@ -46,12 +46,12 @@ class ServiceController extends Controller
 
         Service::create($validated);
 
-        return redirect()->route('services.index')->with('success', 'Servicio creado correctamente.');
+        return redirect()->route('tenant.services.index')->with('success', 'Servicio creado correctamente.');
     }
 
     public function edit(Service $service)
     {
-        return view('services.edit', compact('service'));
+        return view('tenant.services.edit', compact('service'));
     }
 
     public function update(Request $request, Service $service)
@@ -90,12 +90,12 @@ class ServiceController extends Controller
         }
         $validated['is_active'] = $request->has('is_active');
         $service->update($validated);
-        return redirect()->route('services.index')->with('success', 'Servicio actualizado.');
+        return redirect()->route('tenant.services.index')->with('success', 'Servicio actualizado.');
     }
 
     public function destroy(Service $service)
     {
         $service->update(['is_active' => false]);
-        return redirect()->route('services.index')->with('success', 'Servicio desactivado.');
+        return redirect()->route('tenant.services.index')->with('success', 'Servicio desactivado.');
     }
 }
