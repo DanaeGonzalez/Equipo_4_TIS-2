@@ -51,16 +51,10 @@ class SyncPermissionsFromRoutes extends Command
     protected function mapPermissionToRoute(string $permissionName): ?string
     {
         $customPermissions = [
-            'Asignar Permisos' => 'roles.permissions.edit',
-            'Actualizar Permisos' => 'roles.permissions.update',
-            'Cancelar Cita' => 'appointments.cancel',
-            'Cancelar Citas' => 'appointments.cancel',
-            'Reactivar Cita' => 'appointments.reactivate',
-            'Reactivar Citas' => 'appointments.reactivate',
             'Enviar Examenes' => 'exams.send',
             'Ver Historial de Examenes' => 'exams.history',
-
-            'Crear Clientes Factura' => 'clients.store.from.billing'
+            'Asignar Permisos' => 'roles.permissions.edit',
+            'Actualizar Permisos' => 'roles.permissions.update'
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
@@ -70,14 +64,11 @@ class SyncPermissionsFromRoutes extends Command
             'ver detalle de' => 'show',
             'ver' => 'index',
             'crear' => 'create',
-            'generar' => 'create',
             'editar' => 'edit',
             'eliminar' => 'destroy',
             'asignar' => 'edit',
             'actualizar' => 'update',
-            'guardar' => 'store',
-            'Cancelar' => 'cancel',
-            'Reactivar' => 'reactivate'
+            'guardar' => 'store'
         ];
 
         $dictionary = [
@@ -95,15 +86,13 @@ class SyncPermissionsFromRoutes extends Command
             'agendas' => 'appointments',
             'cita' => 'schedules',
             'citas' => 'schedules',
-            'mascota' => 'pets',
-            'mascotas' => 'pets',
-            'cliente' => 'client',
-            'clientes' => 'client',
+            'mascota'=>'pets',
+            'mascotas'=>'pets',
+            'cliente' =>'client',
+            'clientes' =>'client',
             'boleta' => 'billing',
             'boletas' => 'billing',
-            'nota' => 'notes',
-            'notas' => 'notes',
-            'venta' => 'billing',
+            'venta' =>'billing',
             'examenes' => 'exams',
             'examen' => 'exams',
         ];
@@ -114,11 +103,7 @@ class SyncPermissionsFromRoutes extends Command
             if (str_starts_with($permissionName, $action)) {
                 $entity = trim(str_replace($action, '', $permissionName));
                 $entity = Str::lower($entity);
-                $entity = trim($entity);
                 $entity = $dictionary[$entity] ?? $entity;
-                if ($entity === 'billing') { //es billing.action; no billings.action
-                    return "$entity.$routeSuffix";
-                }
                 $entity = Str::plural($entity);
                 return "$entity.$routeSuffix";
             }

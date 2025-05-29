@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Mail\AppointmentCreated;
 use App\Models\Schedule;
 use App\Models\Pet;
 use App\Models\Service;
@@ -10,6 +11,7 @@ use App\Models\User;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Exception;
 
 class AppointmentController extends Controller
@@ -32,165 +34,28 @@ class AppointmentController extends Controller
                 $query->where('event_date', '>', $now->format('Y-m-d'))
                     ->orWhere(function ($q) use ($now) {
                         $q->where('event_date', '=', $now->format('Y-m-d'))
-                            ->where('event_time', '>', $now->format('H:i'));
+                            ->where('event_time', '>', $now->format('H:i:s'));
                     });
-            })
-            ->get()
-            ->map(function ($schedule) {
-                $schedule->event_time = \Carbon\Carbon::parse($schedule->event_time)->format('H:i');
-                return $schedule;
-            });
+            })->get();
 
         $services = Service::all();
         $veterinarians = User::where('role_id', 3)->where('is_active', 1)->get();
 
-        $user = auth()->user();
-
-        if ($user->role->name === 'Tutor') {
-            $client = Client::where('user_id', $user->id)->first();
-            // Agrega esta validación antes de acceder a client->pets
-            /*if (!$client) {
-                $client = Client::create([
-                    'user_id' => $user->id,
-                    'name' => $user->name,
-                    'lastname' => $user->lastname,
-                    'email' => $user->email,
-                    'client_run' => $user->run,
-                ]);
-            }*/
-
-            // Cargar la relación para que esté disponible en el usuario
-            if ($client) {
-                $client->load('pets');
-                $pets = $client->pets;
-            } else {
-                // Si no existe cliente, no hay mascotas
-                $pets = collect();
-            }
-
-            /*$client->load('pets');
-            $pets = $client->pets;  */
-        } else {
-            $pets = collect();
-        }
-
-        return view('appointments.create', compact('schedules', 'services', 'veterinarians', 'pets'));
+        return view('appointments.create', compact('schedules', 'services', 'veterinarians'));
     }
-    //cambios
+
     public function index()
     {
-        $user = auth()->user();
-        $client = Client::where('user_id', $user->id)->first();
-
-        if (!$client) {
-            return view('tenant.appointments.index', ['appointments' => collect()]);
-        }
         $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
             ->where('status', '!=', 'Finalizada')
-            ->where('appointment_date', '>', now())
-            ->whereHas('pet', function ($query) use ($client) {
-                $query->where('client_id', $client->id);
-            })
             ->orderBy('appointment_date')
-            ->get()
-            ->map(function ($appointment) {
-                if ($appointment->schedule) {
-                    $appointment->schedule->event_time = \Carbon\Carbon::parse($appointment->schedule->event_time)->format('H:i');
-                }
-                return $appointment;
-            });
+            ->get();
         return view('appointments.index', compact('appointments'));
     }
 
     public function store(Request $request)
     {
         try {
-            $user = auth()->user();
-
-            if ($user->role->name === 'Tutor') {
-                $request->validate([
-                    'schedule_id' => 'required|exists:schedules,id',
-                    'service_id' => 'required|exists:services,id',
-                    'vet_id' => 'required|exists:users,id',
-                    'reason' => 'required|string',
-
-                    // Ahora pet_id es obligatorio (porque viene del select)
-                    'pet_id' => 'required|string',
-
-                    // Datos de mascota requeridos solo si pet_id es 'new'
-                    'pet_name' => 'required_if:pet_id,new|string|max:255',
-                    'species' => 'required_if:pet_id,new|string|max:255',
-                    'breed' => 'nullable|string|max:255',
-                    'color' => 'nullable|string|max:255',
-                    'sex' => 'required_if:pet_id,new|in:Macho,Hembra',
-                    'date_of_birth' => 'nullable|date',
-                    //'microchip_number' => 'nullable|string|max:255',
-                    //'notes' => 'nullable|string',
-                ]);
-
-                $schedule = Schedule::findOrFail($request->schedule_id);
-                if ($schedule->is_reserved) {
-                    return back()->withErrors(['schedule_id' => 'Este horario ya fue reservado.']);
-                }
-                // Validar que no haya cita activa para ese horario
-                if (Appointment::where('schedule_id', $schedule->id)->where('status', 'pendiente')->exists()) {
-                    return back()->withErrors(['schedule_id' => 'Este horario ya está reservado.']);
-                }
-
-                $veterinarian = User::where('id', $request->vet_id)
-                    ->where('role_id', 3)
-                    ->where('is_active', 1)
-                    ->first();
-
-                if (!$veterinarian) {
-                    return back()->withErrors(['user_id' => 'El veterinario seleccionado no es válido.']);
-                }
-
-                $client = Client::where('user_id', $user->id)->first();
-
-
-                if (!$client) {
-                    $client = Client::create([
-                        'user_id' => $user->id,
-                        'name' => $user->name,
-                        'lastname' => $user->lastname,
-                        'email' => $user->email,
-                        'client_run' => $user->run,
-                    ]);
-                }
-
-                if ($request->pet_id !== 'new') {
-                    $pet = Pet::findOrFail($request->pet_id);
-                } else {
-                    $pet = Pet::create([
-                        'client_id' => $client->id,
-                        'pet_name' => $request->pet_name,
-                        'species' => $request->species,
-                        'breed' => $request->breed,
-                        'color' => $request->color,
-                        'sex' => $request->sex,
-                        'date_of_birth' => $request->date_of_birth,
-                        //'microchip_number' => $request->microchip_number,
-                        //'notes' => $request->notes,
-                    ]);
-                }
-
-                Appointment::create([
-                    'schedule_id' => $schedule->id,
-                    'pet_id' => $pet->id,
-                    'vet_id' => $veterinarian->id,
-                    'service_id' => $request->service_id,
-                    'appointment_date' => $schedule->event_date . ' ' . $schedule->event_time,
-                    'reason' => $request->reason,
-                    'status' => 'pendiente',
-                ]);
-
-                $schedule->update(['is_reserved' => 1]);
-
-                return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
-            }
-
-            // Para admin y veterinaria dejamos tu código intacto
             $request->validate([
                 'name' => 'required|string|max:255',
                 'lastname' => 'required|string|max:255',
@@ -205,8 +70,8 @@ class AppointmentController extends Controller
                 'color' => 'nullable|string|max:255',
                 'sex' => 'required|in:Macho,Hembra',
                 'date_of_birth' => 'nullable|date',
-                //'microchip_number' => 'nullable|string|max:255',
-                //'notes' => 'nullable|string',
+                'microchip_number' => 'nullable|string|max:255',
+                'notes' => 'nullable|string',
 
                 'schedule_id' => 'required|exists:schedules,id',
                 'service_id' => 'required|exists:services,id',
@@ -228,17 +93,28 @@ class AppointmentController extends Controller
                 return back()->withErrors(['user_id' => 'El veterinario seleccionado no es válido.']);
             }
 
-            $client = Client::where('user_id', $user->id)->first();
+            /*$client = Client::create([
+                'user_id' => auth()->id(), // guardad quien registro al client
+                'name' => $request->name,
+                'lastname' => $request->lastname,
+                'client_run' => $request->client_run,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+            ]);*/
+            $client = Client::where('client_run', $request->client_run)->first();
 
             if ($client) {
+                // Validar que el correo coincida con el RUT
                 if ($client->email !== $request->email) {
                     return back()->withErrors([
                         'email' => 'Ya existe un cliente con este RUT pero con otro correo.',
                     ]);
                 }
             } else {
+                // Crear nuevo cliente si no existe por RUT
                 $client = Client::create([
-                    'user_id' => $user->id,
+                    'user_id' => auth()->id(),
                     'name' => $request->name,
                     'lastname' => $request->lastname,
                     'client_run' => $request->client_run,
@@ -260,23 +136,26 @@ class AppointmentController extends Controller
                 'notes' => $request->notes,
             ]);
 
-            Appointment::create([
+            $appointment = Appointment::create([
                 'schedule_id' => $schedule->id,
                 'pet_id' => $pet->id,
                 'vet_id' => $veterinarian->id,
                 'service_id' => $request->service_id,
                 'appointment_date' => $schedule->event_date . ' ' . $schedule->event_time,
                 'reason' => $request->reason,
-                'status' => 'Pendiente',
+                'status' => 'pendiente',
             ]);
 
             $schedule->update(['is_reserved' => 1]);
+
+            Mail::to($client->email)->send(new AppointmentCreated($veterinarian,$appointment));
 
             return redirect()->route('appointments.create')->with('success', 'Cita registrada correctamente.');
         } catch (Exception $e) {
             Log::error('Error al registrar cita: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
                 'request' => $request->all()
+
             ]);
             return back()->withErrors(['general' => 'Ocurrió un error al registrar la cita. Intenta nuevamente.']);
         }
@@ -288,7 +167,6 @@ class AppointmentController extends Controller
         $services = Service::all();
         $veterinarians = User::where('role_id', 3)->where('is_active', 1)->get();
         $schedules = Schedule::where('is_reserved', false)->get();
-
 
         return view('appointments.edit', compact('appointment', 'services', 'veterinarians', 'schedules'));
     }
@@ -334,8 +212,8 @@ class AppointmentController extends Controller
             'color' => $request->color,
             'sex' => $request->sex,
             'date_of_birth' => $request->date_of_birth,
-            //'microchip_number' => $request->microchip_number,
-            //'notes' => $request->notes,
+            'microchip_number' => $request->microchip_number,
+            'notes' => $request->notes,
         ]);
 
         // Actualiza cita
@@ -348,7 +226,6 @@ class AppointmentController extends Controller
 
         return redirect()->route('appointments.index')->with('success', 'Cita actualizada correctamente.');
     }
-
 
     public function destroy(Appointment $appointment)
     {
@@ -379,7 +256,7 @@ class AppointmentController extends Controller
         if ($appointment->schedule->is_reserved) {
             return redirect()->back()->withErrors(['error' => 'No se puede reactivar la cita. El horario ya fue reservado por otra persona.']);
         }
-        $appointment->status = 'Pendiente'; //  estados activos
+        $appointment->status = 'Activar'; //  estados activos
         $appointment->save();
 
         $appointment->schedule->is_reserved = true;
@@ -387,6 +264,4 @@ class AppointmentController extends Controller
 
         return redirect()->back()->with('success', 'La cita ha sido reactivada exitosamente.');
     }
-
-
 }

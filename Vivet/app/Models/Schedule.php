@@ -27,7 +27,6 @@ class Schedule extends Model
     // App\Models\Schedule.php
     public function appointment()
     {
-        return $this->hasOne(Appointment::class, 'schedule_id')
-                    ->where('status', 'pendiente'); // solo citas activas
+        return $this->hasOne(Appointment::class, 'schedule_id');
     }
 }

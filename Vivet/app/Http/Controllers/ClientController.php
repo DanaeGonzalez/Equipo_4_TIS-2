@@ -26,39 +26,12 @@ class ClientController extends Controller
             'lastname' => 'required|string|max:255',
             'client_run' => 'required|string|unique:clients',
             'email' => 'required|email|unique:clients',
-            'phone' => 'nullable|string|max:9',
+            'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
         ]);
 
-        $existingClient = Client::where('client_run', $request['client_run'])
-            ->orWhere('email', $request['email'])
-            ->first();
-
-        if ($existingClient) {
-            return response()->json([
-                'id' => $existingClient->id,
-                'name' => $existingClient->name,
-                'lastname' => $existingClient->lastname,
-            ]);
-        }
         Client::create($request->all());
 
         return redirect()->route('clients.index')->with('success', 'Cliente creado correctamente.');
-    }
-
-    public function storeFromBilling(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'client_run' => 'required|string|unique:clients,client_run',
-            'email' => 'required|email|unique:clients,email',
-            'phone' => 'nullable|string|max:9',
-            'address' => 'nullable|string',
-        ]);
-
-        $client = Client::create($validated);
-
-        return redirect()->route('billing.create')->with('new_client_id', $client->id);
     }
 }

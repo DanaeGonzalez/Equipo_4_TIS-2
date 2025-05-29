@@ -32,7 +32,7 @@ class ExamSent extends Mailable
     public function build()
     {
         return $this->subject('Has recibido un nuevo examen')
-            ->view('tenant.emails.exams.sent')
+            ->view('emails.exams.sent')
             ->attach(storage_path('app/' . $this->filePath));
     }
 }

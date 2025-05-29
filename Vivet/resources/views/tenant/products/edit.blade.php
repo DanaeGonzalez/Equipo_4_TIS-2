@@ -1,4 +1,4 @@
-@extends('tenant.layouts.app')
+@extends('layouts.app')
 
 {{-- @section('title', 'Editar Producto')
 <div class="bg-red-100 text-red-800 p-4 rounded">

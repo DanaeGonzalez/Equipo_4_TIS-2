@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -54,14 +52,11 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->belongsTo(Role::class);
     }
+
+
     public function client()
     {
-        return $this->hasOne(Client::class, 'user_id', 'id');
-    }
-
-    public function pets()
-    {
-        return $this->hasMany(Pet::class);
+        return $this->hasOne(Client::class);
     }
 
     public function schedules()
@@ -72,16 +67,6 @@ class User extends Authenticatable implements FilamentUser
     public function appointments()
     {
         return $this->hasMany(Appointment::class, 'vet_id');
-    }
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        \Log::info('Verificando acceso al panel', [
-            'user' => $this->email,
-            'panel' => $panel->getId(),
-        ]);
-
-        return true; // o usar alguna lógica como email o rol (Implementar sprint 3)
     }
 
     /* Descomentar a medida que vayan haciendo los modelos
@@ -104,4 +89,18 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Post::class);
     }*/
+    public function exams()
+    {
+        return $this->hasMany(Exam::class, 'id');
+    }
+    
+    public function examsSent()
+    {
+        return $this->hasMany(Exam::class, 'sender_id');
+    }
+
+    public function examsReceived()
+    {
+        return $this->hasMany(Exam::class, 'recipient_id');
+    }
 }

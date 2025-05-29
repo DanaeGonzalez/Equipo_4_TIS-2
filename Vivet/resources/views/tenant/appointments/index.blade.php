@@ -1,4 +1,4 @@
-@extends('tenant.layouts.app')
+@extends('layouts.app')
 
 @section('content')
 
@@ -15,7 +15,7 @@
                 </a>
             </div>
 
-            <a href="{{ route('tenant.appointments.create') }}"
+            <a href="{{ route('appointments.create') }}"
                 style="background-color: var(--color-button-secondary);"
                 class="flex items-center px-4 py-2 text-white rounded hover:opacity-90">
                     <!-- Ícono más SVG -->
@@ -37,10 +37,7 @@
 
         @foreach($grouped as $date => $dayAppointments)
             <div class="mb-6">
-                <h3 class="text-xl font-semibold mb-2 border-b pb-1">
-                    @php \Carbon\Carbon::setLocale('es'); @endphp
-                    {{ \Carbon\Carbon::parse($date)->isoFormat('dddd D MMMM YYYY') }}
-                </h3>
+                <h3 class="text-xl font-semibold mb-2 border-b pb-1">{{ \Carbon\Carbon::parse($date)->format('l d M Y') }}</h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach($dayAppointments as $appointment)

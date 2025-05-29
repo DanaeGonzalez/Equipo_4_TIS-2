@@ -30,10 +30,6 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            //No funcionan estos dos aunque son los oficiales
-            // \Stancl\Tenancy\Middleware\InitializeTenancyByDomain::class,
-            // \App\Http\Middleware\BlockTenancyOnCentralDomains::class,
-            \App\Http\Middleware\CustomTenancyMiddleware::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -44,7 +40,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -77,6 +73,6 @@ class Kernel extends HttpKernel
         'is_active' => \App\Http\Middleware\CheckUserIsActive::class,
         //'admin_or_vet' => \App\Http\Middleware\CheckAdminOrVet::class,
         'check.permission' => \App\Http\Middleware\CheckPermissionByRoute::class,
-
+        
     ];
 }

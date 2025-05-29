@@ -29,7 +29,7 @@ class AppointmentCreated extends Mailable
     {
         return $this->from($this->veterinarian->email, $this->veterinarian->name)
                     ->subject('Confirmación de tu cita veterinaria')
-                    ->view('tenant.emails.appointment.created');
+                    ->view('emails.appointment.created');
     }
 
     // /**
