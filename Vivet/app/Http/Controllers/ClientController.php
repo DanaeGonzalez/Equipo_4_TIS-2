@@ -32,7 +32,7 @@ class ClientController extends Controller
 
         Client::create($request->all());
 
-        return redirect()->route('tenant.clients.index')->with('success', 'Cliente creado correctamente.');
+        return redirect()->route('clients.index')->with('success', 'Cliente creado correctamente.');
     }
 
     public function storeFromBilling(Request $request)
@@ -48,6 +48,6 @@ class ClientController extends Controller
 
         $client = Client::create($validated);
 
-        return redirect()->route('tenant.billing.create')->with('new_client_id', $client->id);
+        return redirect()->route('billing.create')->with('new_client_id', $client->id);
     }
 }

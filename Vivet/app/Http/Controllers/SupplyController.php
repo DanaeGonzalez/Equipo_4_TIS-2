@@ -65,7 +65,7 @@ class SupplyController extends Controller
             ]);
         }
 
-        return redirect()->route('tenant.supplies.index')->with('success', 'Insumo creado correctamente.');
+        return redirect()->route('supplies.index')->with('success', 'Insumo creado correctamente.');
     }
 
     /**
@@ -105,7 +105,7 @@ class SupplyController extends Controller
             'units_per_box' => $request->input('units_per_box'),*/
         ]);
 
-        return redirect()->route('tenant.supplies.index')->with('success', 'Insumo actualizado correctamente.');
+        return redirect()->route('supplies.index')->with('success', 'Insumo actualizado correctamente.');
     }
 
     /**
@@ -115,7 +115,7 @@ class SupplyController extends Controller
     {
         $supply->update(['is_active' => false]);
 
-        return redirect()->route('tenant.supplies.index')->with('success', 'Insumo no disponible.');
+        return redirect()->route('supplies.index')->with('success', 'Insumo no disponible.');
     }
 
     public function adjustStock(Request $request, Supply $supply)
@@ -160,7 +160,7 @@ class SupplyController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('tenant.supplies.index')->with('success', 'Movimiento de inventario registrado.');
+        return redirect()->route('supplies.index')->with('success', 'Movimiento de inventario registrado.');
     }
 
     public function movements(Supply $supply) //Sirve para ver cuantos movimientos ha tenido el insumo (inventario más a detalle)

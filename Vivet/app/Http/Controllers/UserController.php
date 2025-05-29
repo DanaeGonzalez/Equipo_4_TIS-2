@@ -72,7 +72,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $roles = Role::all();
-        return view('users.edit', compact('user', 'roles'));
+        return view('tenant.users.edit', compact('user', 'roles'));
     }
 
     /**

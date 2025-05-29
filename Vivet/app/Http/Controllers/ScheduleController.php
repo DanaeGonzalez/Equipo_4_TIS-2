@@ -61,7 +61,7 @@ class ScheduleController extends Controller
             'is_reserved' => 0,
         ]);
 
-        return redirect()->route('tenant.schedules.index')->with('success', 'Horario creado correctamente.');
+        return redirect()->route('schedules.index')->with('success', 'Horario creado correctamente.');
     }
 
     public function edit(Schedule $schedule)
@@ -78,13 +78,13 @@ class ScheduleController extends Controller
 
         $schedule->update($request->only('event_date', 'event_time'));
 
-        return redirect()->route('tenant.schedules.index')->with('success', 'Horario actualizado correctamente.');
+        return redirect()->route('schedules.index')->with('success', 'Horario actualizado correctamente.');
     }
 
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();
 
-        return redirect()->route('tenant.schedules.index')->with('success', 'Horario eliminado correctamente.');
+        return redirect()->route('schedules.index')->with('success', 'Horario eliminado correctamente.');
     }
 }

@@ -82,7 +82,7 @@ class PermissionController extends Controller
 
         Artisan::call('permissions:sync');
 
-        return redirect()->route('tenant.permissions.index')->with('success', 'Permiso creado.');
+        return redirect()->route('permissions.index')->with('success', 'Permiso creado.');
     }
 
     public function editPermissions(Role $role)
