@@ -16,7 +16,8 @@ class CreateTenant extends CreateRecord
     {
         // Creamos el tenant con los datos dentro del JSON `data`
         $tenant = Tenant::create([
-            //'id' => $data['id'], 
+            //'id' => $data['id'],
+            'id' => $data['subdomain'], 
             'name' => $data['name'],
             'email' => $data['email'],
             'subdomain' => $data['subdomain'],
@@ -27,9 +28,13 @@ class CreateTenant extends CreateRecord
             'domain' => $data['subdomain'] . '.' . config('tenancy.central_domains')[0],
         ]);
 
-        // Crear la base de datos y correr las migraciones, descomentar si quiero manejar aca el flujo
-        //$tenant->createDatabase();
-        //$tenant->runMigrations();
+        //depuracion
+        $tenant = \App\Models\Tenant::find($tenant->id); // Forzar re-resolución
+
+        // Crear la base de datos y correr las migraciones del tenant
+        $tenant->database()->create();
+        $tenant->database()->migrate();
+
 
         return $tenant;
     }

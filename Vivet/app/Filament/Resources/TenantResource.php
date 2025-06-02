@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
-use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+//use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
 
 class TenantResource extends Resource
@@ -68,7 +68,7 @@ class TenantResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('go')
                     ->label('Ir')
-                    ->url(fn($record) => 'http://' . $record->subdomain . '.vetcodex.test')
+                    ->url(fn($record) => 'http://' . $record->subdomain . config('tenancy.central_domains')[0],)
                     ->openUrlInNewTab()
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->color('primary'),
