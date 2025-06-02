@@ -68,7 +68,7 @@ class TenantResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('go')
                     ->label('Ir')
-                    ->url(fn($record) => 'http://' . $record->subdomain . config('tenancy.central_domains')[0],)
+                    ->url(fn($record) => 'http://' . $record->subdomain . '.' . config('tenancy.central_domains')[0],)
                     ->openUrlInNewTab()
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->color('primary'),

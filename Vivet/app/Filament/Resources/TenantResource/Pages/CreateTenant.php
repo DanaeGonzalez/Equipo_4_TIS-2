@@ -7,6 +7,8 @@ use App\Filament\Resources\TenantResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use App\Models\Tenant;
+use Stancl\Tenancy\TenantManager;
+//use Stancl\Tenancy\Tenant;
 
 class CreateTenant extends CreateRecord
 {
@@ -15,8 +17,7 @@ class CreateTenant extends CreateRecord
     protected function handleRecordCreation(array $data): Tenant
     {
         // Creamos el tenant con los datos dentro del JSON `data`
-        $tenant = Tenant::create([
-            //'id' => $data['id'],
+        $tenant = \App\Models\Tenant::create([
             'id' => $data['subdomain'], 
             'name' => $data['name'],
             'email' => $data['email'],
@@ -28,13 +29,12 @@ class CreateTenant extends CreateRecord
             'domain' => $data['subdomain'] . '.' . config('tenancy.central_domains')[0],
         ]);
 
-        //depuracion
-        $tenant = \App\Models\Tenant::find($tenant->id); // Forzar re-resolución
+        //forzar
+        //tenancy()->setTenant($tenant);
 
         // Crear la base de datos y correr las migraciones del tenant
-        $tenant->database()->create();
-        $tenant->database()->migrate();
-
+        //$tenant->database()->create();
+        //$tenant->database()->migrate();
 
         return $tenant;
     }
