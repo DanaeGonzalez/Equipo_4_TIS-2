@@ -30,6 +30,7 @@ class AppointmentController extends Controller
         $now = \Carbon\Carbon::now();
 
         $schedules = Schedule::where('is_reserved', 0)
+            ->where('is_active', 1)
             ->where(function ($query) use ($now) {
                 $query->where('event_date', '>', $now->format('Y-m-d'))
                     ->orWhere(function ($q) use ($now) {
@@ -93,6 +94,9 @@ class AppointmentController extends Controller
             $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
                 ->where('status', '!=', 'Finalizada')
                 ->where('appointment_date', '>', now())
+                ->whereHas('schedule', function ($q) {
+                    $q->where('is_active', true);
+                })
                 ->whereHas('pet', function ($query) use ($client) {
                     $query->where('client_id', $client->id);
                 })
@@ -110,6 +114,9 @@ class AppointmentController extends Controller
             $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
                 ->where('status', '!=', 'Finalizada')
                 ->where('appointment_date', '>', now())
+                ->whereHas('schedule', function ($q) {
+                    $q->where('is_active', true);
+                })
                 ->orderBy('appointment_date')
                 ->get()
                 ->map(function ($appointment) {

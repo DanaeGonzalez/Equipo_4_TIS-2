@@ -78,8 +78,11 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
 
     // Horarios
-    Route::resource('schedules', ScheduleController::class);
+    Route::resource('schedules', ScheduleController::class)->except(['show']);;
     Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
+    Route::get('/schedules/manage', [ScheduleController::class, 'manage'])->name('schedules.manage');
+    Route::post('/schedules/{schedule}/toggle', [ScheduleController::class, 'toggle'])->name('schedules.toggle');
+
 
     // Notas
     Route::resource('notes', NoteController::class);

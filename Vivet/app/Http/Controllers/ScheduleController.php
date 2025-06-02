@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 
@@ -87,4 +87,33 @@ class ScheduleController extends Controller
 
         return redirect()->route('schedules.index')->with('success', 'Horario eliminado correctamente.');
     }
+    public function manage(Request $request)
+    {
+        $query = Schedule::with('user')->orderBy('event_date')->orderBy('event_time');
+
+        if ($request->filled('date')) {
+            $query->where('event_date', $request->date);
+        }
+
+        if ($request->filled('veterinarian_id')) {
+            $query->where('user_id', $request->veterinarian_id);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('is_active', $request->status === 'active' ? true : false);
+        }
+
+        $schedules = $query->get();
+        $veterinarians = User::whereHas('role', fn($q) => $q->where('name', 'Veterinario'))->get();
+
+        return view('tenant.schedules.manage', compact('schedules', 'veterinarians'));
+    }
+    public function toggle(Schedule $schedule)
+    {
+        $schedule->is_active = !$schedule->is_active;
+        $schedule->save();
+
+        return redirect()->route('schedules.manage')->with('success', 'Horario actualizado exitosamente..');
+    }
+
 }

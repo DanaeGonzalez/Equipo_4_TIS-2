@@ -66,7 +66,7 @@
                     </select>
                     <input type="date" name="date_of_birth" class="input">
                     <!--<input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
-                    <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
+                                                            <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
                 </div>
 
                 <script>
@@ -118,7 +118,7 @@
                     </select>
                     <input type="date" name="date_of_birth" class="input">
                     <!--<input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
-                    <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
+                                                            <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
                 </div>
             @endif
 
@@ -133,7 +133,7 @@
                     @endforeach
                 </select>
 
-                <select name="vet_id" class="input col-span-2" required>
+                <select name="vet_id" id="vet_id" class="input col-span-2" required>
                     @foreach($veterinarians as $veterinarian)
                         <option value="{{ $veterinarian->id }}">{{ $veterinarian->name }}</option>
                     @endforeach
@@ -144,7 +144,9 @@
             <div class="bg-white p-6 rounded-2xl shadow-md grid grid-cols-2 gap-4">
                 <h3 class="col-span-2 text-lg font-semibold" style="color: var(--color-title);">Horario & Motivo</h3>
 
-                <select name="schedule_id" class="input-elegante col-span-2" required>
+                <select name="schedule_id" id="schedule_id" class="input-elegante col-span-2" required>
+                    <option value="">Seleccione un horario</option>
+
                     @php
                         $groupedSchedules = $schedules->groupBy('event_date');
                     @endphp
@@ -152,13 +154,18 @@
                     @foreach($groupedSchedules as $date => $daySchedules)
                         <optgroup label="{{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}">
                             @foreach($daySchedules as $schedule)
-                                <option value="{{ $schedule->id }}">
-                                    {{ $schedule->event_time }}
+                                <option value="{{ $schedule->id }}" data-user-id="{{ $schedule->user_id }}">
+                                    {{ \Carbon\Carbon::parse($schedule->event_time)->format('H:i') }} hrs
                                 </option>
                             @endforeach
                         </optgroup>
                     @endforeach
                 </select>
+
+                <p id="no-schedules-msg" class="mt-2 text-sm text-red-600 col-span-2" style="display: none;">
+                    No hay horarios disponibles para este veterinario.
+                </p>
+
 
                 <input type="text" name="reason" placeholder="Motivo" class="input-elegante col-span-2" required>
             </div>
@@ -177,4 +184,40 @@
             @apply w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500;
         }
     </style>
+    <!--para filtrar horaio segun veterinario-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const vetSelect = document.getElementById('vet_id');
+            const scheduleSelect = document.getElementById('schedule_id');
+            const noSchedulesMsg = document.getElementById('no-schedules-msg');
+
+            vetSelect.addEventListener('change', function () {
+                const selectedVet = this.value;
+                let visibleOptions = 0;
+
+                Array.from(scheduleSelect.options).forEach(option => {
+                    if (option.value === '') {
+                        option.hidden = false;
+                        return;
+                    }
+
+                    const userId = option.getAttribute('data-user-id');
+                    const isVisible = userId === selectedVet;
+
+                    option.hidden = !isVisible;
+
+                    if (isVisible) visibleOptions++;
+                });
+
+                scheduleSelect.value = '';
+
+                noSchedulesMsg.style.display = visibleOptions === 0 ? 'block' : 'none';
+            });
+
+            // Ejecutar al inicio por si ya hay un veterinario seleccionado
+            vetSelect.dispatchEvent(new Event('change'));
+        });
+    </script>
+
+
 @endsection
