@@ -23,6 +23,7 @@
                     <span class="ml-2 text-gray-700">Fijar nota</span>
                 </label>
             </div>
+            
 
             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded" style="background-color: var(--color-button-secondary);">Actualizar</button>
         </form>
