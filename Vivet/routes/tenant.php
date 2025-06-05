@@ -54,7 +54,7 @@ Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
 // Rutas protegidas
-Route::middleware(['auth', 'is_active'])->group(function () {
+Route::middleware(['check.permission'])->group(function () { //Necesita permisos para entrar a las rutas
 
     // Administración
     Route::resource('roles', RoleController::class);
