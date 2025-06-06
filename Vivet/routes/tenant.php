@@ -82,6 +82,7 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
     Route::get('/schedules/manage', [ScheduleController::class, 'manage'])->name('schedules.manage');
     Route::post('/schedules/{schedule}/toggle', [ScheduleController::class, 'toggle'])->name('schedules.toggle');
+    Route::get('/schedules/calendar/events', [ScheduleController::class, 'getCalendarEvents'])->name('calendar.events');
 
 
     // Notas

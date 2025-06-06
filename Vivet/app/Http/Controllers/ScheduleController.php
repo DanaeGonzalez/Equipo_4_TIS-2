@@ -116,4 +116,39 @@ class ScheduleController extends Controller
         return redirect()->route('schedules.manage')->with('success', 'Horario actualizado exitosamente..');
     }
 
+    public function getCalendarEvents()
+{
+    $schedules = Schedule::with(['appointment.pet.client'])
+        ->whereHas('appointment')
+        ->get();
+
+    $events = $schedules->map(function ($schedule) {
+        $appointment = optional($schedule->appointment);
+        $pet = optional($appointment->pet);
+        $client = optional($pet->client);
+        $status = $appointment->status ?? 'Sin estado';
+
+        return [
+            'title' => $pet->pet_name . ' (' . $status . ')',
+            'start' => "{$schedule->event_date}T{$schedule->event_time}",
+            'color' => match ($status) {
+                'Pendiente' => '#38bdf8',      // azul
+                'Finalizada' => '#10b981',     // verde
+                'Cancelado', 'Cancelada' => '#f87171', // rojo
+                default => '#d1d5db',          // gris
+            },
+            'extendedProps' => [
+                'appointment_id' => $appointment->id ?? null,
+                'pet_name' => $pet->pet_name ?? 'Sin mascota',
+                'client_name' => $client->name ?? 'Sin cliente',
+                'client_phone' => $client->phone ?? 'N/A',
+                'status' => $status,
+            ],
+        ];
+    });
+
+    return response()->json($events);
+}
+
+
 }
