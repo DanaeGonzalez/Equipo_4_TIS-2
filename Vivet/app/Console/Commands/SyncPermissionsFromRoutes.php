@@ -73,27 +73,27 @@ class SyncPermissionsFromRoutes extends Command
             'Eliminar Historia Clínica' => 'clinical_records.destroy',
 
             // Recetas
-            'Crear Receta' => 'prescriptions.create',
+            /*'Crear Receta' => 'prescriptions.create',
             'Guardar Receta' => 'prescriptions.store',
             'Editar Receta' => 'prescriptions.edit',
             'Actualizar Receta' => 'prescriptions.update',
-            'Eliminar Receta' => 'prescriptions.destroy',
+            'Eliminar Receta' => 'prescriptions.destroy',*/
 
             // Medicamentos
-            'Ver Medicamentos' => 'medications.index',
+            /*'Ver Medicamentos' => 'medications.index',
             'Crear Medicamento' => 'medications.create',
             'Guardar Medicamento' => 'medications.store',
             'Editar Medicamento' => 'medications.edit',
             'Actualizar Medicamento' => 'medications.update',
-            'Eliminar Medicamento' => 'medications.destroy',
+            'Eliminar Medicamento' => 'medications.destroy',*/
 
             // Insumos
-            'Ver Insumos' => 'supplies.index',
+            /*'Ver Insumos' => 'supplies.index',
             'Crear Insumo' => 'supplies.create',
             'Guardar Insumo' => 'supplies.store',
             'Editar Insumo' => 'supplies.edit',
             'Actualizar Insumo' => 'supplies.update',
-            'Eliminar Insumo' => 'supplies.destroy',
+            'Eliminar Insumo' => 'supplies.destroy',*/
             'Ajustar Stock de Insumo' => 'supplies.adjustStock',
             'Ver Movimientos de Insumo' => 'supplies.movements',
             'Formulario de Ajuste de Insumo' => 'supplies.adjustStockForm',
@@ -109,6 +109,7 @@ class SyncPermissionsFromRoutes extends Command
             'ver detalle de' => 'show',
             'ver' => 'index',
             'crear' => 'create',
+            'registrar' => 'create',
             'editar' => 'edit',
             'eliminar' => 'destroy',
             'asignar' => 'edit',
@@ -146,6 +147,12 @@ class SyncPermissionsFromRoutes extends Command
             'nota' => 'notes',
             'notas' => 'notes',
             'inventario' => 'inventory',
+            'medicamento' => 'medications',
+            'medicamentos' => 'medications',
+            'insumo'=> 'supplies',
+            'insumos'=> 'supplies',
+            'receta' => 'prescriptions',
+            'recetas' => 'prescriptions'
         ];
 
         $permissionName = strtolower($permissionName);
