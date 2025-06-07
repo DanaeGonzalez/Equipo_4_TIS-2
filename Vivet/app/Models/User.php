@@ -18,6 +18,7 @@ class User extends Authenticatable implements FilamentUser
         //'role_id',
         'password',
         'remember_token',
+        'password_token',
     ];
 
     protected $fillable = [

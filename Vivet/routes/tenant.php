@@ -25,6 +25,8 @@ use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\SupplyController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,13 @@ Route::post('/register', [RegisterController::class, 'registerUser'])->name('reg
 Route::get('/login-form', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
+
+// Reestablecimiento de contraseñas
+Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset.form');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
 // Rutas protegidas
 Route::middleware(['auth', 'is_active'])->group(function () {
