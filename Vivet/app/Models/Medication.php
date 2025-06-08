@@ -10,6 +10,7 @@ class Medication extends Model
     use HasFactory;
 
     protected $fillable = [
+        'product_id',
         'name',
         'description',
         'dosage_instructions',
@@ -18,5 +19,10 @@ class Medication extends Model
     public function prescriptions()
     {
         return $this->hasMany(Prescription::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

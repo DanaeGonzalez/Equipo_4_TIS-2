@@ -11,10 +11,10 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'category',
         'price',
         'stock',
         'is_active',
-        'is_vaccine'
     ];
 
     public function billingProducts()
@@ -25,5 +25,10 @@ class Product extends Model
     public function vaccine()
     {
         return $this->hasOne(Vaccine::class);
+    }
+
+    public function medication()
+    {
+        return $this->hasOne(Medication::class);
     }
 }
