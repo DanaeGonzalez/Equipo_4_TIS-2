@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Schedule;
 use Carbon\Carbon; // libreria que trabaja con fechas
+use App\Models\User;
 
 class GenerateWeeklySchedules extends Command
 {
@@ -63,31 +64,43 @@ class GenerateWeeklySchedules extends Command
 
     protected function generateSchedulesInRange(Carbon $startDate, Carbon $endDate)
     {
-        for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
-            $createdCount = 0;
+        // Obtener todos los usuarios con rol "Veterinario"
+        $veterinarios = User::whereHas('role', function ($q) {
+            $q->where('name', 'Veterinario');
+        })->get();
 
-            for ($hour = 10; $hour <= 19; $hour++) {
-                if ($hour === 13)
-                    continue;
+        if ($veterinarios->isEmpty()) {
+            $this->warn("⚠ No hay veterinarios registrados. No se generaron horarios.");
+            return;
+        }
 
-                $created = Schedule::firstOrCreate([
-                    'event_date' => $date->toDateString(),
-                    'event_time' => sprintf('%02d:00:00', $hour),
-                    'user_id' => 3,
-                ], [
-                    'is_reserved' => 0,
-                    'event_type' => 'general',
-                ]);
+        foreach ($veterinarios as $veterinario) {
+            for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
+                $createdCount = 0;
 
-                if ($created->wasRecentlyCreated) {
-                    $createdCount++;
+                for ($hour = 10; $hour <= 19; $hour++) {
+                    if ($hour === 13)
+                        continue;
+
+                    $created = Schedule::firstOrCreate([
+                        'event_date' => $date->toDateString(),
+                        'event_time' => sprintf('%02d:00:00', $hour),
+                        'user_id' => $veterinario->id,
+                    ], [
+                        'is_reserved' => 0,
+                        'event_type' => 'general',
+                    ]);
+
+                    if ($created->wasRecentlyCreated) {
+                        $createdCount++;
+                    }
                 }
-            }
 
-            if ($createdCount > 0) {
-                $this->line("✔ {$date->toDateString()}: $createdCount horarios creados.");
-            } else {
-                $this->line("✘ {$date->toDateString()}: ya existían todos los horarios.");
+                if ($createdCount > 0) {
+                    $this->line("✔ {$date->toDateString()} ({$veterinario->name}): $createdCount horarios creados.");
+                } else {
+                    $this->line("✘ {$date->toDateString()} ({$veterinario->name}): ya existían todos los horarios.");
+                }
             }
         }
     }

@@ -18,7 +18,8 @@ class CreateSchedulesTable extends Migration
             $table->date('event_date');
             $table->time('event_time');
             $table->text('event_type');
-            $table->boolean('is_reserved')->default(false);;
+            $table->boolean('is_reserved')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

@@ -1,5 +1,6 @@
 @extends('tenant.layouts.app')
 
+
 @section('content')
     <div class="container mx-auto max-w-3xl p-8 bg-gradient-to-br from-white to-gray-100 shadow-xl rounded-2xl mt-10">
         <div class="mb-4">
@@ -10,12 +11,13 @@
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
-                
+
             </a>
         </div>
 
         <div class="text-center mb-8">
             <h2 class="text-4xl font-extrabold text-indigo-700" style="color: var(--color-title);">Reserva tu Cita</h2>
+
         </div>
 
         @if(session('success'))
@@ -36,17 +38,6 @@
 
         <form action="{{ route('appointments.store') }}" method="POST" class="space-y-6">
             @csrf
-            <!-- Cliente -->
-            <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
-                <h3 class="col-span-2 text-lg font-semibold text-indigo-700" style="color: var(--color-title);">Datos del
-                    Cliente</h3>
-                <input type="text" name="name" placeholder="Nombre" class="input" required>
-                <input type="text" name="lastname" placeholder="Apellido" class="input" required>
-                <input type="text" name="client_run" placeholder="RUT" class="input col-span-2" required>
-                <input type="email" name="email" placeholder="Correo Electrónico" class="input col-span-2" required>
-                <input type="text" name="phone" placeholder="Teléfono" class="input">
-                <input type="text" name="address" placeholder="Dirección" class="input">
-            </div>
 
             @if(auth()->user()->role->name === 'Tutor')
                 <div class="bg-white p-6 rounded-xl shadow grid grid-cols-1 gap-4">
@@ -75,7 +66,7 @@
                     </select>
                     <input type="date" name="date_of_birth" class="input">
                     <!--<input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
-                    <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
+                                                            <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
                 </div>
 
                 <script>
@@ -103,7 +94,6 @@
 
             @else
                 <!-- Mostrar formulario completo para veterinaria/admin -->
-                <!-- Aquí pega todo el código que ya tienes de datos del cliente y mascota -->
                 <div class="bg-white p-6 rounded-xl shadow grid grid-cols-2 gap-4">
                     <h3 class="col-span-2 text-lg font-semibold text-indigo-700" style="color: var(--color-title);">Datos del
                         Cliente</h3>
@@ -128,7 +118,7 @@
                     </select>
                     <input type="date" name="date_of_birth" class="input">
                     <!--<input type="text" name="microchip_number" placeholder="Número de Microchip" class="input col-span-2">
-                    <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
+                                                            <textarea name="notes" placeholder="Notas" class="input col-span-2"></textarea>-->
                 </div>
             @endif
 
@@ -143,7 +133,7 @@
                     @endforeach
                 </select>
 
-                <select name="vet_id" class="input col-span-2" required>
+                <select name="vet_id" id="vet_id" class="input col-span-2" required>
                     @foreach($veterinarians as $veterinarian)
                         <option value="{{ $veterinarian->id }}">{{ $veterinarian->name }}</option>
                     @endforeach
@@ -154,7 +144,9 @@
             <div class="bg-white p-6 rounded-2xl shadow-md grid grid-cols-2 gap-4">
                 <h3 class="col-span-2 text-lg font-semibold" style="color: var(--color-title);">Horario & Motivo</h3>
 
-                <select name="schedule_id" class="input-elegante col-span-2" required>
+                <select name="schedule_id" id="schedule_id" class="input-elegante col-span-2" required>
+                    <option value="">Seleccione un horario</option>
+
                     @php
                         $groupedSchedules = $schedules->groupBy('event_date');
                     @endphp
@@ -162,13 +154,18 @@
                     @foreach($groupedSchedules as $date => $daySchedules)
                         <optgroup label="{{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}">
                             @foreach($daySchedules as $schedule)
-                                <option value="{{ $schedule->id }}">
-                                    {{ $schedule->event_time }}
+                                <option value="{{ $schedule->id }}" data-user-id="{{ $schedule->user_id }}">
+                                    {{ \Carbon\Carbon::parse($schedule->event_time)->format('H:i') }} hrs
                                 </option>
                             @endforeach
                         </optgroup>
                     @endforeach
                 </select>
+
+                <p id="no-schedules-msg" class="mt-2 text-sm text-red-600 col-span-2" style="display: none;">
+                    No hay horarios disponibles para este veterinario.
+                </p>
+
 
                 <input type="text" name="reason" placeholder="Motivo" class="input-elegante col-span-2" required>
             </div>
@@ -179,6 +176,7 @@
                 Guardar Cita
             </button>
         </form>
+
     </div>
 
     <style>
@@ -186,4 +184,40 @@
             @apply w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500;
         }
     </style>
+    <!--para filtrar horaio segun veterinario-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const vetSelect = document.getElementById('vet_id');
+            const scheduleSelect = document.getElementById('schedule_id');
+            const noSchedulesMsg = document.getElementById('no-schedules-msg');
+
+            vetSelect.addEventListener('change', function () {
+                const selectedVet = this.value;
+                let visibleOptions = 0;
+
+                Array.from(scheduleSelect.options).forEach(option => {
+                    if (option.value === '') {
+                        option.hidden = false;
+                        return;
+                    }
+
+                    const userId = option.getAttribute('data-user-id');
+                    const isVisible = userId === selectedVet;
+
+                    option.hidden = !isVisible;
+
+                    if (isVisible) visibleOptions++;
+                });
+
+                scheduleSelect.value = '';
+
+                noSchedulesMsg.style.display = visibleOptions === 0 ? 'block' : 'none';
+            });
+
+            // Ejecutar al inicio por si ya hay un veterinario seleccionado
+            vetSelect.dispatchEvent(new Event('change'));
+        });
+    </script>
+
+
 @endsection

@@ -20,8 +20,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @forelse($notes as $note)
                 <div class="bg-white border rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-5 min-h-[140px] flex flex-col justify-between
-                                        {{ $note->is_pinned ? '' : 'border-gray-100' }}"
-                                        style="{{ $note->is_pinned ? 'border-color: var(--color-button-secondary); border-width: 1px;' : '' }}">
+                                                {{ $note->is_pinned ? '' : 'border-gray-100' }}"
+                    style="{{ $note->is_pinned ? 'border-color: var(--color-button-secondary); border-width: 1px;' : '' }}">
                     <div>
                         <h2 class="font-semibold text-lg text-gray-800 mb-2 flex items-center gap-2">
                             {{ $note->title ?? 'Sin título' }}
@@ -32,8 +32,8 @@
                         <!-- Botón menú desplegable -->
                         <button id="dropdownMenuIconButton-{{ $note->id }}" data-dropdown-toggle="dropdownDots-{{ $note->id }}"
                             class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100
-                                                       focus:ring-4 focus:outline-none focus:ring-gray-50" type="button"
-                            aria-expanded="false" aria-haspopup="true">
+                                                               focus:ring-4 focus:outline-none focus:ring-gray-50"
+                            type="button" aria-expanded="false" aria-haspopup="true">
                             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 4 15">
                                 <path
@@ -65,10 +65,15 @@
                                         </button>
                                     </form>
                                 </li>
-                            </ul>
 
+
+                            </ul>
                         </div>
 
+
+                    </div>
+                    <div class="px-4 py-2 text-xs text-gray-500">
+                        {{ \Carbon\Carbon::parse($note->fecha)->format('d-m-Y') }}
                     </div>
                 </div>
             @empty
