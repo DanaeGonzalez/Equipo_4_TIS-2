@@ -118,3 +118,8 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
     Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
 });
+
+// Panel Dashboard principal
+Route::get('/dashboard', function () {
+    return view('tenant.dashboard.index');
+})->name('dashboard');
