@@ -118,7 +118,7 @@
                                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="password" name="password" id="password" minlength="8" maxlength="15" autocomplete="new-password" class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
+                                    <input type="password" name="password" id="password" minlength="8" maxlength="15" autocomplete="new-password" oninput="validatePassword()" class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 outline-none ring-teal-300 transition duration-200 focus:ring focus:border-teal-500" />
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                         <button type="button" id="togglePassword" class="text-gray-400 hover:text-gray-600 focus:outline-none">
                                             <!-- Eye icon (show password) -->
@@ -134,6 +134,12 @@
                                         </button>
                                     </div>
                                 </div>
+                                <!-- <ul id="password-rules">
+                                    <li id="length" class="text-danger">Mínimo 8 caracteres</li>
+                                    <li id="upper-lower" class="text-danger">Mayúsculas y minúsculas</li>
+                                    <li id="number" class="text-danger">Al menos un número</li>
+                                    <li id="symbol" class="text-danger">Al menos un símbolo</li>
+                                </ul> -->
                             </div>
 
                             <div class="sm:col-span-2">
@@ -222,9 +228,24 @@
                 }
             }
         });
+
+        function validatePassword() {
+            const password = document.getElementById("password").value;
+            const length = password.length >= 8 && password.length <= 15;
+            const upper = /[A-Z]/.test(password);
+            const lower = /[a-z]/.test(password);
+            const number = /\d/.test(password);
+            // const symbol = /[^A-Za-z0-9]/.test(password);
+
+            document.getElementById("length").className = length ? "text-success" : "text-danger";
+            document.getElementById("upper-lower").className = (upper && lower) ? "text-success" : "text-danger";
+            document.getElementById("number").className = number ? "text-success" : "text-danger";
+            // document.getElementById("symbol").className = symbol ? "text-success" : "text-danger";
+        }
     </script>
 
 </body>
+
 </html>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
