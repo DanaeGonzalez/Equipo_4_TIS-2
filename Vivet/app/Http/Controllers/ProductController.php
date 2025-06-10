@@ -8,13 +8,14 @@ use App\Models\InventoryMovement;
 use App\Models\Vaccine;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::all()->paginate(10); //revisar
         $role = Auth::user()->user_type;
         return view('tenant.products.index', compact('products', 'role'));
     }
@@ -32,7 +33,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
-            'is_vaccine' => 'nullable|boolean',
+            //'is_vaccine' => 'nullable|boolean',
             'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
             'validity_period' => 'nullable|integer|required_if:is_vaccine,1',
         ]);
@@ -43,7 +44,7 @@ class ProductController extends Controller
             'price' => $validated['price'],
             'stock' => $validated['stock'],
             'is_active' => $validated['is_active'],
-            'is_vaccine' => $request->input('is_vaccine') == '1',
+            //'is_vaccine' => $request->input('is_vaccine') == '1',
         ]);
         //dd($request->all());
 
@@ -57,7 +58,7 @@ class ProductController extends Controller
                 'user_id' => auth()->id(),
             ]);
         }
-
+        /* cambiar
         if ($request->input('is_vaccine') == '1') {
             Vaccine::create([
                 'product_id' => $product->id,
@@ -66,7 +67,7 @@ class ProductController extends Controller
                 'species' => $validated['vaccine_species'],
                 'validity_period' => $validated['validity_period'],
             ]);
-        }
+        }*/
 
         return redirect()->route('products.index')->with('success', 'Producto creado correctamente.');
         /* return redirect()->route('products.index')->with([
@@ -88,7 +89,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
-            'is_vaccine' => 'nullable|boolean',
+            //'is_vaccine' => 'nullable|boolean',
             'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
             'validity_period' => 'nullable|integer|required_if:is_vaccine,1',
         ]);
@@ -101,7 +102,7 @@ class ProductController extends Controller
             'price' => $validated['price'],
             'stock' => $validated['stock'],
             'is_active' => $request->boolean('is_active'),
-            'is_vaccine' => $request->boolean('is_vaccine'),
+            //'is_vaccine' => $request->boolean('is_vaccine'),
 
         ]);
 
@@ -121,10 +122,60 @@ class ProductController extends Controller
         }
         return redirect()->route('products.index')->with('success', 'Producto actualizado.');
     }
-
+    //Modificar desde aqui
     public function destroy(Product $product)
     {
         $product->update(['is_active' => false]);
         return redirect()->route('products.index')->with('success', 'Producto desactivado.');
+    }
+
+    public function showAdjustForm(Product $product)
+    {
+        return view('tenant.products.adjustStock', compact('product'));
+    }
+
+    public function adjustStock(Request $request, Product $product)
+    {
+        $request->validate([
+            'movement_type' => ['required', Rule::in(['entrada', 'salida'])],
+            'quantity' => 'required|integer|min:1',
+            'reason' => 'required|string|max:255',
+        ]);
+
+        $quantity = $request->quantity;
+
+        if ($request->movement_type === 'salida') {
+            $quantity = -$quantity;
+        }
+
+        $newStock = $product->stock + $quantity;
+
+        if ($newStock < 0) {
+            return back()->with('error', 'No hay suficiente stock para esta salida.');
+        }
+
+        $product->stock = $newStock;
+        $product->save();
+
+        InventoryMovement::create([
+            'item_type' => 'producto',
+            'item_id' => $product->id,
+            'movement_type' => $request->movement_type,
+            'quantity' => abs($request->quantity),
+            'reason' => $request->reason,
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Movimiento de stock registrado.');
+    }
+
+    public function movements(Product $product)
+    {
+        $movements = InventoryMovement::where('item_type', 'producto')
+            ->where('item_id', $product->id)
+            ->latest()
+            ->get();
+
+        return view('tenant.products.movements', compact('product', 'movements'));
     }
 }
