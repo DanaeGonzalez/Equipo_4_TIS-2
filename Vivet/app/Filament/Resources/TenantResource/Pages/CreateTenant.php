@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\TenantResource\Pages;
 
-use Stancl\Tenancy\Database\Models\Domain;
+//use Stancl\Tenancy\Database\Models\Domain;
 use App\Filament\Resources\TenantResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use App\Models\Tenant;
-use Stancl\Tenancy\TenantManager;
+//use Stancl\Tenancy\TenantManager;
 //use Stancl\Tenancy\Tenant;
 
 class CreateTenant extends CreateRecord
@@ -28,13 +28,6 @@ class CreateTenant extends CreateRecord
         $tenant->domains()->create([
             'domain' => $data['subdomain'] . '.' . config('tenancy.central_domains')[0],
         ]);
-
-        //forzar
-        //tenancy()->setTenant($tenant);
-
-        // Crear la base de datos y correr las migraciones del tenant
-        //$tenant->database()->create();
-        //$tenant->database()->migrate();
 
         return $tenant;
     }
