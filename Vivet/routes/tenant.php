@@ -121,4 +121,9 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock');
     Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
     Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
+
+    //clinicalhistory
+
+    Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
+
 });
