@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all()->paginate(10); //revisar
+        $products = Product::all();
         $role = Auth::user()->user_type;
         return view('tenant.products.index', compact('products', 'role'));
     }
@@ -33,9 +33,10 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
+            'category' => 'required|string|in:Comida,Vacunas,Medicamentos,Accesorios,Suplementos',
             //'is_vaccine' => 'nullable|boolean',
-            'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
-            'validity_period' => 'nullable|integer|required_if:is_vaccine,1',
+            /*'vaccine_species' => 'nullable|string|required_if:category===Comida',
+            'validity_period' => 'nullable|integer|required_if:is_vaccine,1',*/
         ]);
 
         $product = Product::create([
@@ -44,6 +45,7 @@ class ProductController extends Controller
             'price' => $validated['price'],
             'stock' => $validated['stock'],
             'is_active' => $validated['is_active'],
+            'category' => $validated['category'],
             //'is_vaccine' => $request->input('is_vaccine') == '1',
         ]);
         //dd($request->all());
@@ -89,12 +91,14 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
+            'category' => 'required|string|in:Comida,Vacunas,Medicamentos, Accesorios, Suplementos',
             //'is_vaccine' => 'nullable|boolean',
-            'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
-            'validity_period' => 'nullable|integer|required_if:is_vaccine,1',
+            /*'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
+            'validity_period' => 'nullable|integer|required_if:is_vaccine,1',*/
         ]);
 
-        $isVaccine = $request->boolean('is_vaccine');
+        /*$isVaccine = $request->boolean('is_vaccine');
+        $isVaccine = $validated->category==='Vacuna'*/
 
         $product->update([
             'name' => $validated['name'],
@@ -102,12 +106,13 @@ class ProductController extends Controller
             'price' => $validated['price'],
             'stock' => $validated['stock'],
             'is_active' => $request->boolean('is_active'),
+            'category' => $validated['category'],
             //'is_vaccine' => $request->boolean('is_vaccine'),
 
         ]);
 
 
-        if ($isVaccine) {
+        /*if ($isVaccine) {
             Vaccine::updateOrCreate(
                 ['product_id' => $product->id],
                 [
@@ -119,7 +124,7 @@ class ProductController extends Controller
             );
         } else {
             Vaccine::where('product_id', $product->id)->delete();
-        }
+        }*/
         return redirect()->route('products.index')->with('success', 'Producto actualizado.');
     }
     //Modificar desde aqui

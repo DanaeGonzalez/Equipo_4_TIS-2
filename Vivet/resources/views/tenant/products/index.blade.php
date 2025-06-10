@@ -25,6 +25,7 @@
                     @if ($role === 'Administrador')
                         <th class="p-2 border">Activo</th>
                     @endif
+                    <th class="p-2 border">Categoría</th>
                     @can('products.edit')
                         <th class="p-2 border">Acciones</th>
                     @endcan
@@ -46,6 +47,7 @@
                                 @endif
                             </td>
                         @endif
+                        <td class="p-2 border text-center">{{ $product->category}}</td>
                         @can('products.edit')
                             <td class="py-2 px-4 border-b space-x-2 flex justify-center items-center gap-4">
 
