@@ -60,6 +60,8 @@ class CreateTenant extends CreateRecord
             ['key' => 'landing.cta_text', 'value' => 'Reserva una cita', 'type' => 'string', 'group' => 'landing', 'is_demo' => true],
             ['key' => 'contact.email', 'value' => 'contacto@tuclinica.cl', 'type' => 'string', 'group' => 'contact', 'is_demo' => true],
             ['key' => 'images.logo', 'value' => 'images/tenants/demo/logo.png', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.logo1', 'value' => 'images/tenants/demo/logo1.PNG', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.logo2', 'value' => 'images/tenants/demo/logo2.png', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
         ];
 
         foreach ($demoSettings as $setting) {

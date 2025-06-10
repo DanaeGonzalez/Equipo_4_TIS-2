@@ -17,7 +17,7 @@
       <!-- Admin Sidebar - Only visible for Administrators -->
       <!-- logo - start -->
       <a href="/" class="inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl" aria-label="logo">
-        <img src="{{ asset('images/clients/client1/logo.png') }}" alt="Logo Vivet" class="h-20 w-auto">
+        <img src="{{ asset(tenant_setting('images.logo', 'images/tenants/demo/logo.png')) }}" alt="Logo" class="h-20 w-auto">
       </a>
       <!-- logo - end -->
 
