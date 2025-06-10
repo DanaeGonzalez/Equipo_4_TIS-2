@@ -32,11 +32,12 @@
       <!-- Hamburger Toggle BTN -->
 
       <a href="{{ route('dashboard') }}" class="lg:hidden">
-        <img class="dark:hidden h-8" src="{{ asset('images/tenants/vivet/dashboard/logo/logo.svg') }}"
+        <img class="dark:hidden h-8" src="{{ asset('images/tenants/' . tenant()->id . '/dashboard/logo/logo.svg') }}"
           alt="Logo" />
         <img class="hidden dark:block h-8"
-          src="{{ asset('images/tenants/vivet/dashboard/logo/logo-dark.svg') }}" alt="Logo Dark" />
+          src="{{ asset('images/tenants/' . tenant()->id . '/dashboard/logo/logo-dark.svg') }}" alt="Logo Dark" />
       </a>
+
 
 
       <!-- Application nav menu button -->
