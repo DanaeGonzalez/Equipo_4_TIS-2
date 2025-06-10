@@ -43,7 +43,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="sex" class="block text-gray-700">Sexo:</label>
+                <label for="sex" class="block font-semibold">Sexo:</label>
                 <select name="sex" id="sex" class="w-full border border-gray-300 rounded px-3 py-2">
                     <option value="">Seleccione</option>
                     <option value="Hombre" {{ $user->sex == 'Hombre' ? 'selected' : '' }}>Hombre</option>

@@ -14,7 +14,7 @@ class AddRunToUsersTable extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('run')->after('lastname');
+            $table->integer('run')->after('lastname')->unique();
         });
     }
 

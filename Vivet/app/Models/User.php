@@ -29,6 +29,7 @@ class User extends Authenticatable implements FilamentUser
         'sex',
         'role_id',
         'is_active',
+        'user_type',
     ];
 
     protected $casts = [
@@ -37,10 +38,9 @@ class User extends Authenticatable implements FilamentUser
 
     public function hasPermission($permissionName)
     {
-        foreach ($this->roles as $role) {
-            if ($role->permissions->contains('name', $permissionName)) {
-                return true;
-            }
+        $role = $this->role;
+        if ($role && $role->permissions->contains('name', $permissionName)) {
+            return true;
         }
         return false;
     }
@@ -100,13 +100,13 @@ class User extends Authenticatable implements FilamentUser
         return false;
     }
 
-    /* Descomentar a medida que vayan haciendo los modelos
-    public function clinicalRecords()
+    /* Descomentar a medida que vayan haciendo los modelos*/
+    public function clinicalRecord()
     {
-        return $this->hasMany(ClinicalRecord::class, 'vet_id');
+        return $this->hasMany(ClinicalRecord::class, 'vet_id'); //un veterinario puede tener varias fichas clinicas asociadas
     }
 
-    public function petVaccinations()
+    /*public function petVaccinations()
     {
         return $this->hasMany(PetVaccination::class, 'vet_id');
     }
@@ -124,7 +124,7 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Exam::class, 'id');
     }
-    
+
     public function examsSent()
     {
         return $this->hasMany(Exam::class, 'sender_id');

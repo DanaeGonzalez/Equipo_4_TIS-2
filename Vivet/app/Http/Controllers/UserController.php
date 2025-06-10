@@ -89,9 +89,10 @@ class UserController extends Controller
             'sex' => 'required|in:Hombre,Mujer,Otro',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
             'role_id' => 'required|exists:roles,id',
-            'password' => 'nullable|string|min:8|confirmed',
+            
+            //'password' => 'nullable|string|min:8|confirmed',
         ]);
-
+        $role= Role::findOrFail($request->role_id);
         $updateData = [
             'role_id' => $request->role_id,
             'name' => $request->name,
@@ -99,15 +100,16 @@ class UserController extends Controller
             'run' => $request->run,
             'sex' => $request->sex,
             'email' => $request->email,
-            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
+            'user_type' => $role->name,
+            //'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
         ];
 
         // Si el usuario no está editando su propio perfil
         if (auth()->id() != $user->id) {
             $updateData['is_active'] = $request->is_active ? 1 : 0;
         }
-
-        // Actualizamos los datos del usuario
+        /*$user->refresh();
+        dd($request->all());*/
         $user->update($updateData);
 
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
