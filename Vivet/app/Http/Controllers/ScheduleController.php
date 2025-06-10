@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class ScheduleController extends Controller
 {
@@ -20,10 +21,11 @@ class ScheduleController extends Controller
     public function index()
     {
         \Carbon\Carbon::setLocale('es');
-
-        $schedules = Schedule::whereHas('appointment', function ($query) {
-            $query->where('status', 'Pendiente');
-        })
+        $user = auth()->user();
+        $schedules = Schedule::where('user_id', $user->id)
+            ->whereHas('appointment', function ($query) {
+                $query->where('status', 'Pendiente');
+            })
             ->with(['appointment.pet.client'])
             ->get()
             ->map(function ($item) {
@@ -103,7 +105,7 @@ class ScheduleController extends Controller
             $query->where('is_active', $request->status === 'active' ? true : false);
         }
 
-        $schedules = $query->get();
+        $schedules = $query->paginate(20);
         $veterinarians = User::whereHas('role', fn($q) => $q->where('name', 'Veterinario'))->get();
 
         return view('tenant.schedules.manage', compact('schedules', 'veterinarians'));
@@ -117,38 +119,49 @@ class ScheduleController extends Controller
     }
 
     public function getCalendarEvents()
-{
-    $schedules = Schedule::with(['appointment.pet.client'])
-        ->whereHas('appointment')
-        ->get();
+    {
+        $user = auth()->user();
 
-    $events = $schedules->map(function ($schedule) {
-        $appointment = optional($schedule->appointment);
-        $pet = optional($appointment->pet);
-        $client = optional($pet->client);
-        $status = $appointment->status ?? 'Sin estado';
+        $schedules = Schedule::with(['appointment.pet.client'])
+            ->where('user_id', $user->id)
+            ->whereHas('appointment')
+            ->get();
 
-        return [
-            'title' => $pet->pet_name . ' (' . $status . ')',
-            'start' => "{$schedule->event_date}T{$schedule->event_time}",
-            'color' => match ($status) {
-                'Pendiente' => '#38bdf8',      // azul
-                'Finalizada' => '#10b981',     // verde
-                'Cancelado', 'Cancelada' => '#f87171', // rojo
-                default => '#d1d5db',          // gris
-            },
-            'extendedProps' => [
-                'appointment_id' => $appointment->id ?? null,
-                'pet_name' => $pet->pet_name ?? 'Sin mascota',
-                'client_name' => $client->name ?? 'Sin cliente',
-                'client_phone' => $client->phone ?? 'N/A',
-                'status' => $status,
-            ],
-        ];
-    });
+        $events = $schedules->map(function ($schedule) {
+            $appointment = optional($schedule->appointment);
+            $pet = optional($appointment->pet);
+            $client = optional($pet->client);
+            $status = $appointment->status ?? 'Sin estado';
 
-    return response()->json($events);
-}
+            return [
+                'title' => $pet->pet_name . ' (' . $status . ')',
+                'start' => "{$schedule->event_date}T{$schedule->event_time}",
+                'color' => match ($status) {
+                    'Pendiente' => '#38bdf8',      // azul
+                    'Finalizada' => '#10b981',     // verde
+                    'Cancelado', 'Cancelada' => '#f87171', // rojo
+                    default => '#d1d5db',          // gris
+                },
+                'extendedProps' => [
+                    'appointment_id' => $appointment->id ?? null,
+                    'pet_name' => $pet->pet_name ?? 'Sin mascota',
+                    'client_name' => $client->name ?? 'Sin cliente',
+                    'client_phone' => $client->phone ?? 'N/A',
+                    'status' => $status,
+                ],
+            ];
+        });
+
+        return response()->json($events);
+    }
+    
+
+    public function generateWeekly(Request $request)
+    {
+        Artisan::call('schedules:generate-weekly');
+
+        return redirect()->back()->with('success', 'Horarios generados correctamente.');
+    }
 
 
 }

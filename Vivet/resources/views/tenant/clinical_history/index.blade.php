@@ -6,17 +6,29 @@
     <!-- Filtro -->
     <form method="GET" action="{{ route('clinical_history.index') }}" class="mb-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mp-2">
-            <input type="text" name="client_name" placeholder="Nombre del cliente" value="{{ request('client_name') }}"
+            <div>
+                <label class="block text-sm font-semibold mb-1">Nombre del cliente:</label>
+                <input type="text" name="client_name" placeholder="Juan" value="{{ request('client_name') }}"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-
-            <input type="text" name="pet_name" placeholder="Nombre de la mascota" value="{{ request('pet_name') }}"
+            </div>
+            
+            <div>
+                <label class="block text-sm font-semibold mb-1">Nombre del paciente:</label>
+                <input type="text" name="pet_name" placeholder="Pepe" value="{{ request('pet_name') }}"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-
-            <input type="date" name="from_date" value="{{ request('from_date') }}"
+            </div>
+            
+            <div>
+                <label class="block text-sm font-semibold mb-1">Fecha inicio</label>
+                <input type="date" name="from_date" value="{{ request('from_date') }}"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
-
-            <input type="date" name="to_date" value="{{ request('to_date') }}"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-semibold mb-1">Fecha final</label>
+                <input type="date" name="to_date" value="{{ request('to_date') }}"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">   
+            </div>     
         </div>
 
         <div class="mt-4">
