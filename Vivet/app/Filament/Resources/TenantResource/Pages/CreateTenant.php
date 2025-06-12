@@ -58,10 +58,25 @@ class CreateTenant extends CreateRecord
             ['key' => 'landing.title', 'value' => 'Aquí puedes poner el título de tu página', 'type' => 'string', 'group' => 'landing', 'is_demo' => true],
             ['key' => 'landing.subtitle', 'value' => 'Un eslogan llamativo para tus clientes', 'type' => 'text', 'group' => 'landing', 'is_demo' => true],
             ['key' => 'landing.cta_text', 'value' => 'Reserva una cita', 'type' => 'string', 'group' => 'landing', 'is_demo' => true],
+            
+            //Info de contacto
+            ['key' => 'contact.number', 'value' => '+56912345678', 'type' => 'string', 'group' => 'contact', 'is_demo' => true],
             ['key' => 'contact.email', 'value' => 'contacto@tuclinica.cl', 'type' => 'string', 'group' => 'contact', 'is_demo' => true],
+            ['key' => 'contact.tiktok', 'value' => 'TuTiktok', 'type' => 'string', 'group' => 'contact', 'is_demo' => true],
+            ['key' => 'contact.facebook', 'value' => 'Tufacebook', 'type' => 'string', 'group' => 'contact', 'is_demo' => true],
+            ['key' => 'contact.instagram', 'value' => 'Tuinstagram', 'type' => 'string', 'group' => 'contact', 'is_demo' => true],
+            
+            // Imagenes
             ['key' => 'images.logo', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
-            ['key' => 'images.logo1', 'value' => 'images/tenants/demo/logo1.PNG', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
-            ['key' => 'images.logo2', 'value' => 'images/tenants/demo/logo2.png', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.logo1', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.logo2', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.carousel1', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.carousel2', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.carousel3', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.carousel4', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.carousel5', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+            ['key' => 'images.content', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
+
         ];
 
         foreach ($demoSettings as $setting) {

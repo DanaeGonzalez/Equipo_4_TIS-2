@@ -21,17 +21,20 @@ if (!function_exists('tenant_setting')) {
 
 if (!function_exists('tenant_image')) {
     /**
-     * Devuelve la URL de una imagen de tenant o una demo si no existe.
+     * Devuelve la URL de una imagen del tenant o una imagen demo si no hay valor.
+     *
+     * @param string $key Clave de settings, como 'images.logo' o 'images.carousel1'
+     * @param string $demoPath Ruta relativa en /public para imagen demo (ej: 'images/demo/logo.png')
+     * @return string URL completa de la imagen
      */
     function tenant_image(string $key, string $demoPath = 'images/demo/logo.png'): string
     {
         $filename = tenant_setting($key);
 
-        if (!$filename) {
-            return asset($demoPath); // imagen de demo en /public
-        }
-
-        return tenant_asset('images/' . $filename);
+        return $filename
+            ? tenant_asset('images/' . $filename)
+            : asset($demoPath);
     }
 }
+
 

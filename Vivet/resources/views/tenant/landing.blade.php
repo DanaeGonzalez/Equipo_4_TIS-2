@@ -16,7 +16,7 @@
         <!-- Item 1 -->
         <div class="hidden duration-700 ease-in-out relative h-full" data-carousel-item>
             <!-- Imagen de fondo -->
-            <img src="{{ asset('images/clients/client1/carousel-1.jpeg') }}"
+            <img src="{{ tenant_image('images.carousel1', 'images/demo/carousel1.jpg') }}" alt="Imagen carrusel 1">
                 class="w-full h-full object-cover" alt="...">
 
             <!-- Capa de superposición con texto y botón -->
@@ -41,7 +41,7 @@
 
         <!-- Item 2 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-2.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ tenant_image('images.carousel2', 'images/demo/carousel2.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Imagen carrusel 2">
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
                 <h2 class="text-white text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
@@ -63,7 +63,7 @@
         </div>
         <!-- Item 3 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-3.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ tenant_image('images.carousel3', 'images/demo/carousel3.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
                 <h2 class="text-white text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
@@ -85,7 +85,7 @@
         </div>
         <!-- Item 4 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-4.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ tenant_image('images.carousel4', 'images/demo/carousel4.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
                 <h2 class="text-white text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
@@ -107,7 +107,7 @@
         </div>
         <!-- Item 5 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-5.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ tenant_image('images.carousel5', 'images/demo/carousel5.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
                 <h2 class="text-white text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
@@ -162,9 +162,9 @@
         <div class="grid grid-cols-1 gap-4 md:grid-cols-4 md:items-center md:gap-8">
             <div class="md:col-span-3">
                 <img
-                    src="{{ asset('images/clients/client1/content.jpeg') }}"
+                    src="{{ tenant_image('images.content', 'images/demo/content.jpg') }}"
                     class="rounded"
-                    alt="" />
+                    alt="Imagen de contenido principal" />
             </div>
 
             <div class="md:col-span-1">
