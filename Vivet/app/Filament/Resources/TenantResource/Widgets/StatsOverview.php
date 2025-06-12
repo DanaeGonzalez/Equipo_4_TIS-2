@@ -30,8 +30,6 @@ class StatsOverview extends BaseWidget
             ])->count())
                 ->description('Desde el lunes')
                 ->color('info'),
-
-
         ];
     }
 }

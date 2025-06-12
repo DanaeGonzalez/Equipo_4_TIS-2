@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Stancl\Tenancy\TenancyServiceProvider::class,
+        App\Providers\TenancyServiceProvider::class,
 
     ],
 

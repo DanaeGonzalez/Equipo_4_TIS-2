@@ -34,16 +34,20 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php')); // Rutas centrales
 
-            Route::middleware('web')
-            ->group(base_path('routes/tenant.php')); //Rutas Tenant
+            Route::middleware([
+                'web',
+                \Stancl\Tenancy\Middleware\InitializeTenancyByDomain::class,
+                \Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains::class,
+            ])
+                ->group(base_path('routes/tenant.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/schedules.php'));
 
-                Route::middleware('web')
+            Route::middleware('web')
                 ->group(base_path('routes/appointments.php'));
-    
-           /* Route::middleware('web')
+
+            /* Route::middleware('web')
                 ->group(base_path('routes/billing.php'));
     
             Route::middleware('web')

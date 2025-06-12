@@ -12,6 +12,7 @@ use Stancl\Tenancy\Events;
 use Stancl\Tenancy\Jobs;
 use Stancl\Tenancy\Listeners;
 use Stancl\Tenancy\Middleware;
+use Illuminate\Support\Facades\Log;
 
 class TenancyServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,8 @@ class TenancyServiceProvider extends ServiceProvider
                     // Provision API keys, create S3 buckets, anything you want!
 
                 ])->send(function (Events\TenantCreated $event) {
+                    //Depuracion
+                    Log::info('TenantCreated pipeline triggered for: ' . $event->tenant->id);
                     return $event->tenant;
                 })->shouldBeQueued(false), // `false` by default, but you probably want to make this `true` for production.
             ],
