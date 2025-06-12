@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-dd(tenant())
 
 <head>
     <meta charset="UTF-8">

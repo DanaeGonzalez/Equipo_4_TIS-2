@@ -5,7 +5,7 @@
         <!-- logo - start -->
         <div class="mb-4 lg:-mt-2">
           <a href="/" class="inline-flex items-center gap-2 text-xl font-bold text-black md:text-2xl" aria-label="logo">
-            <img src="{{ asset('images/clients/client1/logo.png') }}" alt="Logo Vivet" class="h-20 w-auto">
+            <img src="{{ tenant_image('images.logo') }}" alt="Logo" class="h-20 w-auto">
           </a>
         </div>
         <!-- logo - end -->

@@ -7,6 +7,7 @@
 
 @include('tenant.partials.colors')
 
+
 <!-- CAROUSEL -->
 
 <div id="default-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="7000">
