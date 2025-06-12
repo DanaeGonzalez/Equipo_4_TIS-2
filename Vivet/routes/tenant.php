@@ -83,11 +83,23 @@ Route::middleware([
         Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
         Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
 
+        // Clientes y mascotas
+        Route::resource('clients', ClientController::class);
+        Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
+        Route::resource('pets', PetController::class);
+
+        // Citas
+        Route::resource('appointments', AppointmentController::class);
+        Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+        Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
+
         // Horarios
         Route::resource('schedules', ScheduleController::class)->except(['show']);;
         Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
         Route::get('/schedules/manage', [ScheduleController::class, 'manage'])->name('schedules.manage');
         Route::post('/schedules/{schedule}/toggle', [ScheduleController::class, 'toggle'])->name('schedules.toggle');
+        Route::get('/schedules/calendar/events', [ScheduleController::class, 'getCalendarEvents'])->name('calendar.events');
+        Route::post('/schedules/generate-weekly', [ScheduleController::class, 'generateWeekly'])->name('schedules.generate-weekly');
 
 
         // Notas
@@ -126,14 +138,16 @@ Route::middleware([
         Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock');
         Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
         Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
+
+        //clinicalhistory
+
+        Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
     });
 
     // Panel Dashboard principal
     Route::get('/dashboard', function () {
         return view('tenant.dashboard.index');
     })->name('dashboard');
+    
 });
 
-/*Route::get('/check', fn() => 'TENANT: ' . tenant('id'));
-
-Route::get('/', fn() => view('tenant.landing'));*/

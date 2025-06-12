@@ -2,48 +2,83 @@
 
 @section('content')
     <div class="container mx-auto px-4 py-6">
-        <h2 class="text-2xl  mb-6 text-center">Agenda Semanal de Horarios Reservados</h2>
+        <h2 class="text-2xl mb-6 text-center">Calendario de Horarios Reservados</h2>
 
-        <div class="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-6 gap-4 ">
-            @foreach(['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'] as $day)
-                <div class="bg-white shadow rounded p-3">
-                    <h3 class="font-semibold text-center capitalize mb-2">{{ ucfirst($day) }}</h3>
-                    @if($schedules->has($day))
-                        @foreach($schedules[$day] as $schedule)
-                            @if($schedule->appointment)
-                                @php
-                                    $isFinalizada = $schedule->appointment->status === 'Finalizada';
-                                @endphp
+        <div id="calendar" class="bg-white rounded shadow p-4"></div>
 
-                                <div class="block max-w-sm text-white p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 {{ $isFinalizada ? 'opacity-50' : '' }}"
-                                    style="background-color: var(--color-button-secondary);">
-                                    <strong>Hora:</strong> {{ $schedule->event_time }} <br>
-                                    <strong>Mascota:</strong> {{ $schedule->appointment->pet->pet_name }} <br>
-                                    <strong>Dueño:</strong> {{ $schedule->appointment->pet->client->name }} <br>
-                                    <strong>Teléfono:</strong> {{ $schedule->appointment->pet->client->phone }}
+        <style>
+            .fc-event.evento-finalizado {
+                opacity: 0.5 !important;
+            }
 
-                                    <div class="mt-3 flex justify-center">
-                                        <form action="{{ route('appointments.cancel', $schedule->appointment->id) }}" method="POST"
-                                            onsubmit="return confirm('¿Estás seguro de cancelar esta cita?');">
-                                            @csrf
-                                            <button type="submit"
-                                                class="mt-1 px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600">
-                                                Cancelar Cita
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="mb-2 p-2 bg-yellow-100 rounded text-sm">
-                                    {{ $schedule->event_time }} - Sin detalles
-                                </div>
-                            @endif
-                        @endforeach
-                    @else
-                        <p class="text-center text-gray-500 text-sm">Sin reservas</p>
-                    @endif
-                </div>
-            @endforeach
-        </div>
+            .fc-event.evento-cancelado {
+                opacity: 0.6 !important;
+                text-decoration: line-through;
+                font-style: italic;
+            }
+        </style>
+
     </div>
+@endsection
+
+@section('scripts')
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'es',
+                nowIndicator: true,
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                buttonText: {
+                    today: 'Hoy',     //cambie el texto para que no saliera en ingles
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Día'
+                },
+                events: '{{ route('calendar.events') }}',
+                eventClick: function (info) {
+                    const evento = info.event;
+                    const props = evento.extendedProps;
+
+                    const confirmar = confirm(
+                        '🐾 Mascota: ' + props.pet_name + '\n' +
+                        '👤 Dueño: ' + props.client_name + '\n' +
+                        '📞 Teléfono: ' + props.client_phone + '\n\n' +
+                        '¿Deseas cancelar esta cita?'
+                    );
+
+                    if (confirmar && props.appointment_id) {
+                        fetch(`/appointments/${props.appointment_id}/cancel`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    alert('✅ Cita cancelada exitosamente');
+                                    info.event.remove(); // Opcional: quitarlo del calendario sin recargar
+                                } else {
+                                    alert('❌ No se pudo cancelar la cita');
+                                }
+                            })
+                            .catch(() => alert('❌ Error al cancelar la cita'));
+                    }
+                }
+
+            });
+
+            calendar.render();
+        });
+    </script>
 @endsection
