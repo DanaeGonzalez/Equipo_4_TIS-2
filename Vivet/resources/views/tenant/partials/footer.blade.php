@@ -1,11 +1,11 @@
-<div class="bg-white pt-4 sm:pt-10 lg:pt-12">
+<div class="pt-4 sm:pt-10 lg:pt-12" style="background-color: {{ tenant_setting('colors.footer.bg') }}; color: {{ tenant_setting('colors.footer.text') }};">
   <footer class="mx-auto max-w-screen-2xl px-4 md:px-8">
     <div class="mb-16 grid grid-cols-2 gap-12 border-t pt-10 md:grid-cols-4 lg:grid-cols-6 lg:gap-8 lg:pt-12">
       <div class="col-span-full lg:col-span-2">
         <!-- logo - start -->
         <div class="mb-4 lg:-mt-2">
           <a href="/" class="inline-flex items-center gap-2 text-xl font-bold text-black md:text-2xl" aria-label="logo">
-            <img src="{{ asset('images/clients/client1/logo.png') }}" alt="Logo Vivet" class="h-20 w-auto">
+            <img src="{{ tenant_image('images.logo') }}" alt="Logo" class="h-20 w-auto">
           </a>
         </div>
         <!-- logo - end -->

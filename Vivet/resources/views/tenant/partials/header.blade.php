@@ -1,9 +1,11 @@
 <!-- Franja superior -->
-<div class="bg-[var(--color-accent-1)] text-white text-sm py-2">
+<div class="text-sm py-2"
+  style="background-color: {{ tenant_setting('colors.topbar.bg') }};
+            color: {{ tenant_setting('colors.topbar.text') }};">
   <div
     class="mx-auto max-w-screen-xl px-4 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 text-center sm:text-left">
     <span class="text-xs sm:text-sm">
-      📞 Contáctanos: +56 9 4251 3361
+      📞 Contáctanos: {{ tenant_setting('contact.number') }}
     </span>
     <span class="text-xs sm:text-sm">
       🐾 Clínica Veterinaria Vivet
@@ -11,20 +13,23 @@
   </div>
 </div>
 
-<div class="bg-[var(--color-bg-main)] shadow-md border-b border-gray-200 mb-8">
+<div class="shadow-md border-b border-gray-200 mb-8"
+  style="background-color: {{ tenant_setting('colors.header.bg') }};">
   <div class="mx-auto max-w-screen-xl px-4 md:px-8">
     <header class="flex items-center justify-between py-3 md:py-4">
       <!-- Admin Sidebar - Only visible for Administrators -->
       <!-- logo - start -->
       <a href="/" class="inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl" aria-label="logo">
-        <img src="{{ asset('images/clients/client1/logo.png') }}" alt="Logo Vivet" class="h-20 w-auto">
+        <img src="{{ tenant_image('images.logo') }}" alt="Logo" class="h-20 w-auto">
       </a>
       <!-- logo - end -->
 
       <!-- nav - start -->
       <nav class="hidden gap-12 lg:flex">
-        <a href="/" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Inicio</a>
-        <a href="#" class="inline-flex items-center mb-2 gap-1 text-lg font-semibold text-black hover:underline">
+        <a href="/" class="text-lg font-semibold transition duration-100 hover:underline"
+          style="color: {{ tenant_setting('colors.header.text') }};">Inicio</a>
+        <a href="#" class="inline-flex items-center mb-2 gap-1 text-lg font-semibold hover:underline"
+          style="color: {{ tenant_setting('colors.header.text') }};">
           Servicios
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"
@@ -33,8 +38,10 @@
           </svg>
         </a>
         <a href="{{ route('contact') }}"
-          class="text-lg font-semibold text-gray transition duration-100 hover:underline">Contacto</a>
-        <a href="#" class="text-lg font-semibold text-gray transition duration-100 hover:underline">Equipo</a>
+          class="text-lg font-semibold transition duration-100 hover:underline"
+          style="color: {{ tenant_setting('colors.header.text') }};">Contacto</a>
+        <a href="#" class="text-lg font-semibold transition duration-100 hover:underline"
+          style="color: {{ tenant_setting('colors.header.text') }};">Equipo</a>
 
         @auth
         @if(Auth::user()->user_type == 'Administrador')
@@ -284,14 +291,14 @@
       @else
       <div class="-ml-8 hidden flex-col gap-2.5 sm:flex-row sm:justify-center lg:flex lg:justify-start">
         <a href="{{ route('login') }}"
-          class="inline-block rounded-lg px-4 py-3 text-center text-sm font-semibold text-white transition duration-100 hover:opacity-80 md:text-base"
-          style="background-color: var(--color-button-secondary)">
+          class="inline-block rounded-lg px-4 py-3 text-center text-sm font-semibold transition duration-100 hover:opacity-80 md:text-base"
+          style="background-color: {{ tenant_setting('colors.btn_primary.bg') }}; color: {{ tenant_setting('colors.btn_secondary.text') }};">
           Iniciar Sesión
         </a>
 
         <a href="{{ route('register') }}"
-          class="inline-block rounded-lg px-8 py-3 text-center text-sm font-semibold text-white transition duration-100 hover:opacity-80 md:text-base"
-          style="background-color: var(--color-button-primary)">
+          class="inline-block rounded-lg px-8 py-3 text-center text-sm font-semibold transition duration-100 hover:opacity-80 md:text-base"
+          style="background-color: {{ tenant_setting('colors.btn_secondary.bg') }}; color: {{ tenant_setting('colors.btn_primary.text') }};">
           Registrarse
         </a>
       </div>

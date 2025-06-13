@@ -46,7 +46,7 @@
   <!-- Hero -->
   <section class="bg-yellow-50 py-20">
     <div class="max-w-5xl mx-auto px-4 text-center">
-      <img src="/images/logo.png" alt="Logo VetCodex" class="mx-auto mb-6 w-80">
+      <img src="/images/logo1.png" alt="Logo VetCodex" class="mx-auto mb-6 w-80">
       <h1 class="text-5xl font-bold mb-4">Bienvenido a VetCodex</h1>
       <p class="text-lg text-gray-700 mb-8">La plataforma multicliente más completa para clínicas veterinarias.</p>
       <!-- Botones del Hero -->

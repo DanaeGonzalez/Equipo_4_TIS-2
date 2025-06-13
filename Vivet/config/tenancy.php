@@ -41,7 +41,7 @@ return [
      * Database tenancy config. Used by DatabaseTenancyBootstrapper.
      */
     'database' => [
-        'central_connection' => 'mysql',
+        'central_connection' => env('DB_CONNECTION', 'central'),
         //'central_connection' => env('DB_CONNECTION', 'central'),
 
         /**
@@ -138,7 +138,7 @@ return [
          * disable asset() helper tenancy and explicitly use tenant_asset() calls in places
          * where you want to use tenant-specific assets (product images, avatars, etc).
          */
-        'asset_helper_tenancy' => true,
+        'asset_helper_tenancy' => false,
     ],
 
     /**

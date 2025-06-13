@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import tailwindcss from 'tailwindcss'; // Importa Tailwind
-
+import tailwindcss from 'tailwindcss';
 import flowbite from 'flowbite/plugin';
 
 export default defineConfig({
   plugins: [
-    [flowbite],
     laravel({
       input: ['resources/css/app.css', 'resources/js/app.js'],
       refresh: true,
@@ -15,7 +13,8 @@ export default defineConfig({
   css: {
     postcss: {
       plugins: [
-        tailwindcss(), // Añade Tailwind como plugin de PostCSS
+        tailwindcss(),
+        flowbite, // ✅ aquí va como plugin, no como array [flowbite]
       ],
     },
   },

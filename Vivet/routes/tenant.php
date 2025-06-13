@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 // Controllers
 use App\Http\Controllers\LoginController;
@@ -34,99 +36,118 @@ use App\Http\Controllers\PDFTestController;
 | y ya tienen tenancy activado (InitializeTenancyByDomain).
 */
 
-Route::get('/check', fn() => 'TENANT: ' . tenant('id'));
+Route::middleware([
+    'web',
+    InitializeTenancyByDomain::class,
+    PreventAccessFromCentralDomains::class,
+])->group(function () {
+    // Todas tus rutas actuales de tenant.php aquí dentro
+    Route::get('/check', fn() => 'TENANT: ' . tenant('id'));
+    Route::get('/', fn() => view('tenant.landing'));
+    // Páginas públicas
+    Route::view('/privacy-policy', 'tenant.pages.privacy-policy')->name('privacy-policy');
+    Route::view('/terms-of-service', 'tenant.pages.terms-of-service')->name('terms-of-service');
+    Route::view('/contact', 'tenant.pages.contact')->name('contact');
+    Route::view('/blog', 'tenant.blog.index')->name('blog');
+    Route::view('/about-us', 'tenant.pages.about-us')->name('about');
+    Route::view('/faq', 'tenant.pages.faq')->name('faq');
 
-Route::get('/', fn() => view('tenant.landing'));
+    // Autenticación
+    Route::get('/register-form', [RegisterController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
+    Route::get('/login-form', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
+    Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
-// Páginas públicas
-Route::view('/privacy-policy', 'tenant.pages.privacy-policy')->name('privacy-policy');
-Route::view('/terms-of-service', 'tenant.pages.terms-of-service')->name('terms-of-service');
-Route::view('/contact', 'tenant.pages.contact')->name('contact');
-Route::view('/blog', 'tenant.blog.index')->name('blog');
-Route::view('/about-us', 'tenant.pages.about-us')->name('about');
-Route::view('/faq', 'tenant.pages.faq')->name('faq');
+    // Rutas protegidas
+    Route::middleware(['check.permission'])->group(function () { //Necesita permisos para entrar a las rutas
+
+        // Administración
+        Route::resource('roles', RoleController::class);
+        Route::resource('users', UserController::class);
+        Route::resource('permissions', PermissionController::class);
+        Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
+        Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
+
+        // Servicios y productos
+        Route::resource('services', ServiceController::class);
+        Route::resource('products', ProductController::class);
+
+        // Clientes y mascotas
+        Route::resource('clients', ClientController::class);
+        Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
+        Route::resource('pets', PetController::class);
+
+        // Citas
+        Route::resource('appointments', AppointmentController::class);
+        Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+        Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
+
+        // Clientes y mascotas
+        Route::resource('clients', ClientController::class);
+        Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
+        Route::resource('pets', PetController::class);
+
+        // Citas
+        Route::resource('appointments', AppointmentController::class);
+        Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
+        Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
+
+        // Horarios
+        Route::resource('schedules', ScheduleController::class)->except(['show']);;
+        Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
+        Route::get('/schedules/manage', [ScheduleController::class, 'manage'])->name('schedules.manage');
+        Route::post('/schedules/{schedule}/toggle', [ScheduleController::class, 'toggle'])->name('schedules.toggle');
+        Route::get('/schedules/calendar/events', [ScheduleController::class, 'getCalendarEvents'])->name('calendar.events');
+        Route::post('/schedules/generate-weekly', [ScheduleController::class, 'generateWeekly'])->name('schedules.generate-weekly');
 
 
-// Autenticación
-Route::get('/register-form', [RegisterController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
-Route::get('/login-form', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
-Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
+        // Notas
+        Route::resource('notes', NoteController::class);
 
-// Rutas protegidas
-//Route::middleware(['check.permission'])->group(function () { //Necesita permisos para entrar a las rutas
+        // Registros clínicos
+        Route::resource('clinical_records', ClinicalRecordController::class);
 
-    // Administración
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('permissions', PermissionController::class);
-    Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
-    Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
+        // Prescripciones
+        Route::get('/prescriptions', [PrescriptionController::class, 'index'])->name('prescriptions.index');
+        Route::get('/clinical-records/{clinicalRecord}/prescriptions/create', [PrescriptionController::class, 'create'])->name('prescriptions.create');
+        Route::post('/clinical-records/{clinicalRecord}/prescriptions', [PrescriptionController::class, 'store'])->name('prescriptions.store');
+        Route::get('/prescriptions/{prescription}/edit', [PrescriptionController::class, 'edit'])->name('prescriptions.edit');
+        Route::put('/prescriptions/{prescription}', [PrescriptionController::class, 'update'])->name('prescriptions.update');
+        Route::delete('/prescriptions/{prescription}', [PrescriptionController::class, 'destroy'])->name('prescriptions.destroy');
 
-    // Servicios y productos
-    Route::resource('services', ServiceController::class);
-    Route::resource('products', ProductController::class);
+        // Medicamentos
+        Route::resource('medications', MedicationController::class);
 
-    // Clientes y mascotas
-    Route::resource('clients', ClientController::class);
-    Route::post('/clients/store-from-billing', [ClientController::class, 'storeFromBilling'])->name('clients.store.from.billing');
-    Route::resource('pets', PetController::class);
+        // Facturación
+        Route::resource('billing', BillingController::class);
+        Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
 
-    // Citas
-    Route::resource('appointments', AppointmentController::class);
-    Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
-    Route::post('/appointments/{appointment}/reactivate', [AppointmentController::class, 'reactivate'])->name('appointments.reactivate');
-
-    // Horarios
-    Route::resource('schedules', ScheduleController::class)->except(['show']);;
-    Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
-    Route::get('/schedules/manage', [ScheduleController::class, 'manage'])->name('schedules.manage');
-    Route::post('/schedules/{schedule}/toggle', [ScheduleController::class, 'toggle'])->name('schedules.toggle');
-    Route::get('/schedules/calendar/events', [ScheduleController::class, 'getCalendarEvents'])->name('calendar.events');
-    Route::post('/schedules/generate-weekly', [ScheduleController::class, 'generateWeekly'])->name('schedules.generate-weekly');
+        // Exámenes
+        Route::get('/exams', [ExamController::class, 'showExams'])->name('exams.index');
+        Route::post('/exams/send', [ExamController::class, 'send'])->name('exams.send');
+        Route::get('/exams/history/{user}', [ExamController::class, 'history'])->name('exams.history');
 
 
-    // Notas
-    Route::resource('notes', NoteController::class);
+        // Inventario
+        Route::resource('inventory', InventoryController::class);
+        Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
 
-    // Registros clínicos
-    Route::resource('clinical_records', ClinicalRecordController::class);
+        // Insumos
+        Route::resource('supplies', SupplyController::class);
+        Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock');
+        Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
+        Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
 
-    // Prescripciones
-    Route::get('/prescriptions', [PrescriptionController::class, 'index'])->name('prescriptions.index');
-    Route::get('/clinical-records/{clinicalRecord}/prescriptions/create', [PrescriptionController::class, 'create'])->name('prescriptions.create');
-    Route::post('/clinical-records/{clinicalRecord}/prescriptions', [PrescriptionController::class, 'store'])->name('prescriptions.store');
-    Route::get('/prescriptions/{prescription}/edit', [PrescriptionController::class, 'edit'])->name('prescriptions.edit');
-    Route::put('/prescriptions/{prescription}', [PrescriptionController::class, 'update'])->name('prescriptions.update');
-    Route::delete('/prescriptions/{prescription}', [PrescriptionController::class, 'destroy'])->name('prescriptions.destroy');
+        //clinicalhistory
 
-    // Medicamentos
-    Route::resource('medications', MedicationController::class);
+        Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
+    });
 
-    // Facturación
-    Route::resource('billing', BillingController::class);
-    Route::post('/billing/{billing}/download', [BillingController::class, 'download'])->name('billing.download');
-
-    // Exámenes
-    Route::get('/exams', [ExamController::class, 'showExams'])->name('exams.index');
-    Route::post('/exams/send', [ExamController::class, 'send'])->name('exams.send');
-    Route::get('/exams/history/{user}', [ExamController::class, 'history'])->name('exams.history');
+    // Panel Dashboard principal
+    Route::get('/dashboard', function () {
+        return view('tenant.dashboard.index');
+    })->name('dashboard');
     
+});
 
-    // Inventario
-    Route::resource('inventory', InventoryController::class);
-    Route::post('/inventory/product', [InventoryController::class, 'storeForProduct'])->name('inventory.storeForProduct');
-
-    // Insumos
-    Route::resource('supplies', SupplyController::class);
-    Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock');
-    Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
-    Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
-
-    //clinicalhistory
-
-    Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
-
-    Route::get('/test-pdf', [PDFTestController::class, 'testPDF']);
-//});
