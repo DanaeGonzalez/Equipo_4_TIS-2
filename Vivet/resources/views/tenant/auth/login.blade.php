@@ -29,7 +29,7 @@
             <!-- Logo and Title -->
             <div class="text-center mb-6">
                 <div class="inline-block p-4 bg-white rounded-full shadow-md mb-4">
-                    <img src="{{ asset('images/clients/client1/logo1.png') }}" alt="Logo Vivet" class="h-20 w-auto">
+                    <img src="{{ tenant_image('images.logo1, images/demo/logo2.png')}}" alt="Logo Vivet" class="h-20 w-auto">
                 </div>
                 <h1 class="text-3xl font-bold text-teal-800 md:text-4xl lg:text-5xl">Vivet</h1>
                 <p class="mt-2 text-gray-600">Cuidamos de tus mascotas como si fueran nuestras</p>
@@ -105,7 +105,7 @@
                                 </div>
                             </div> -->
 
-                            <button style="background-color: var(--color-button-secondary);" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg">
+                            <button style="background-color: {{ tenant_setting('colors.btn_primary.bg') }};" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
                                 </svg>

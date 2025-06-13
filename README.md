@@ -41,7 +41,7 @@ php artisan tenant:list
 # Ejecutar seeders en todos los tenants
 php artisan tenant:seed
 
-# Ejecutar seeders solo en un tenant específico
+# Ejecutar seeders solo en un tenant específico //check
 php artisan tenant:seed --tenants=vivet
 
 # Crear un usuario superadmin para el panel central
@@ -71,3 +71,6 @@ tambien para generar los horarios
 
 - y por ultimo un comando para finalizar las horas que expirararon o ya no deberian estar disponibles
 php artisan appointments:mark-expired
+
+
+--

@@ -63,7 +63,7 @@ class CreateTenant extends CreateRecord
             ['key' => 'colors.text_primary',    'value' => '#1f2937', 'type' => 'color', 'group' => 'colors', 'is_demo' => true], // Texto principal
             ['key' => 'colors.text_heading',    'value' => '#3B6D8C', 'type' => 'color', 'group' => 'colors', 'is_demo' => true], // Títulos
             ['key' => 'colors.text_subtitle',   'value' => '#6F85E3', 'type' => 'color', 'group' => 'colors', 'is_demo' => true], // Subtítulos
-            // Botones
+            // Botones setting
             ['key' => 'colors.btn_primary.bg',   'value' => '#24887d', 'type' => 'color', 'group' => 'colors', 'is_demo' => true],
             ['key' => 'colors.btn_primary.text', 'value' => '#ffffff', 'type' => 'color', 'group' => 'colors', 'is_demo' => true],
             ['key' => 'colors.btn_secondary.bg',   'value' => '#0e4f4d', 'type' => 'color', 'group' => 'colors', 'is_demo' => true],
@@ -96,7 +96,7 @@ class CreateTenant extends CreateRecord
             ['key' => 'contact.facebook', 'value' => 'Tufacebook', 'type' => 'string', 'group' => 'contact', 'is_demo' => true],
             ['key' => 'contact.instagram', 'value' => 'Tuinstagram', 'type' => 'string', 'group' => 'contact', 'is_demo' => true],
 
-            // Imagenes
+            // Imagenes {{ tenant_image('key') }} -ruta imagen demo
             ['key' => 'images.logo', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
             ['key' => 'images.logo1', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
             ['key' => 'images.logo2', 'value' => '', 'type' => 'image', 'group' => 'images', 'is_demo' => true],
