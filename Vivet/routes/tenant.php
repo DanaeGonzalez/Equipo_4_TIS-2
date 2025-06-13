@@ -25,7 +25,7 @@ use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\SupplyController;
-
+use App\Http\Controllers\PDFTestController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -46,6 +46,7 @@ Route::view('/blog', 'tenant.blog.index')->name('blog');
 Route::view('/about-us', 'tenant.pages.about-us')->name('about');
 Route::view('/faq', 'tenant.pages.faq')->name('faq');
 
+
 // Autenticación
 Route::get('/register-form', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'registerUser'])->name('register.submit');
@@ -54,7 +55,7 @@ Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
 // Rutas protegidas
-Route::middleware(['check.permission'])->group(function () { //Necesita permisos para entrar a las rutas
+//Route::middleware(['check.permission'])->group(function () { //Necesita permisos para entrar a las rutas
 
     // Administración
     Route::resource('roles', RoleController::class);
@@ -127,4 +128,5 @@ Route::middleware(['check.permission'])->group(function () { //Necesita permisos
 
     Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
 
-});
+    Route::get('/test-pdf', [PDFTestController::class, 'testPDF']);
+//});
