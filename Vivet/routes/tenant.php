@@ -72,6 +72,10 @@ Route::middleware([
         // Servicios y productos
         Route::resource('services', ServiceController::class);
         Route::resource('products', ProductController::class);
+        Route::get('products/{product}/adjust-stock', [ProductController::class, 'showAdjustForm'])->name('products.adjustStockForm');
+        Route::post('products/{product}/adjust-stock', [ProductController::class, 'adjustStock'])->name('products.adjustStock');
+        Route::get('products/{product}/movements', [ProductController::class, 'movements'])->name('products.movements');
+
 
         // Clientes y mascotas
         Route::resource('clients', ClientController::class);
@@ -148,6 +152,4 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('tenant.dashboard.index');
     })->name('dashboard');
-    
 });
-

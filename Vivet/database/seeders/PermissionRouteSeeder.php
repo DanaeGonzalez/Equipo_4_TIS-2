@@ -16,6 +16,9 @@ class PermissionRouteSeeder extends Seeder
             'Editar Producto' => 'products.edit',
             'Eliminar Producto' => 'products.destroy',
             'Actualizar Producto' => 'products.update',
+            'Ajustar Stock de Producto' => 'products.adjustStock',
+            'Ver Movimientos de Producto' => 'products.movements',
+            'Formulario de Ajuste de Producto' => 'products.adjustStockForm',
 
             'Ver Servicios' => 'services.index',
             'Crear Servicios' => 'services.create',

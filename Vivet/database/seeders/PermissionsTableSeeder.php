@@ -23,6 +23,9 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Editar Producto', 'route_name' => 'products.edit'],
             ['name' => 'Actualizar Producto', 'route_name' => 'products.update'],
             ['name' => 'Eliminar Producto', 'route_name' => 'products.destroy'],
+            ['name' => 'Ajustar Stock de Producto', 'route_name' => 'products.adjustStock'],
+            ['name' => 'Ver Movimientos de Producto', 'route_name' => 'products.movements'],
+            ['name' => 'Formulario de Ajuste de Producto', 'route_name' => 'products.adjustStockForm'],
 
 
             // Servicios

@@ -71,32 +71,12 @@ class SyncPermissionsFromRoutes extends Command
             'Editar Historia Clínica' => 'clinical_records.edit',
             'Actualizar Historia Clínica' => 'clinical_records.update',
             'Eliminar Historia Clínica' => 'clinical_records.destroy',
-
-            // Recetas
-            /*'Crear Receta' => 'prescriptions.create',
-            'Guardar Receta' => 'prescriptions.store',
-            'Editar Receta' => 'prescriptions.edit',
-            'Actualizar Receta' => 'prescriptions.update',
-            'Eliminar Receta' => 'prescriptions.destroy',*/
-
-            // Medicamentos
-            /*'Ver Medicamentos' => 'medications.index',
-            'Crear Medicamento' => 'medications.create',
-            'Guardar Medicamento' => 'medications.store',
-            'Editar Medicamento' => 'medications.edit',
-            'Actualizar Medicamento' => 'medications.update',
-            'Eliminar Medicamento' => 'medications.destroy',*/
-
-            // Insumos
-            /*'Ver Insumos' => 'supplies.index',
-            'Crear Insumo' => 'supplies.create',
-            'Guardar Insumo' => 'supplies.store',
-            'Editar Insumo' => 'supplies.edit',
-            'Actualizar Insumo' => 'supplies.update',
-            'Eliminar Insumo' => 'supplies.destroy',*/
             'Ajustar Stock de Insumo' => 'supplies.adjustStock',
             'Ver Movimientos de Insumo' => 'supplies.movements',
             'Formulario de Ajuste de Insumo' => 'supplies.adjustStockForm',
+            'Ajustar Stock de Producto' => 'products.adjustStock',
+            'Ver Movimientos de Producto' => 'products.movements',
+            'Formulario de Ajuste de Producto' => 'products.adjustStockForm',
 
             // Otros posibles
             'Guardar Inventario para Producto' => 'inventory.storeForProduct',

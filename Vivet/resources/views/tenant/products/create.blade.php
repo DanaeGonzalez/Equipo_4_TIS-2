@@ -3,31 +3,31 @@
 @section('title', 'Crear Producto')
 
 @section('content')
-    <div class="max-w-lg mx-auto">
-        <h1 class="text-2xl font-bold mb-4">Nuevo Producto</h1>
-        @if ($errors->any())
-            <div class="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded">
-                <ul class="list-disc list-inside">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+<div class="max-w-lg mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Nuevo Producto</h1>
+    @if ($errors->any())
+    <div class="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded">
+        <ul class="list-disc list-inside">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
-        <form action="{{ route('products.store') }}" method="POST" class="space-y-4">
-            @csrf
+    <form action="{{ route('products.store') }}" method="POST" class="space-y-4">
+        @csrf
 
-            <div> {{-- Selector para elegir el tipo de categoría que tienen los productos (enum)--}}
-                <label class="block font-semibold">Tipo de Producto</label>
-                <select id="category" name="category" class="w-full border-gray-300 rounded">
-                    <option value="">-- Seleccionar Categoría --</option>
-                    <option value="Comida" {{ request('category') == 'Comida' ? 'selected' : '' }}>Comida</option>
-                    <option value="Vacunas" {{ request('category') == 'Vacunas' ? 'selected' : '' }}>Vacuna</option>
-                    <option value="Medicamentos" {{ request('category') == 'Medicamentos' ? 'selected' : '' }}>Medicamento</option>
-                    <option value="Accesorios" {{ request('category') == 'Accesorios' ? 'selected' : '' }}>Accesorio</option>
+        <div> {{-- Selector para elegir el tipo de categoría que tienen los productos (enum)--}}
+            <label class="block font-semibold">Tipo de Producto</label>
+            <select id="category" name="category" class="w-full border-gray-300 rounded">
+                <option value="">-- Seleccionar Categoría --</option>
+                <option value="Comida" {{ request('category') == 'Comida' ? 'selected' : '' }}>Comida</option>
+                <option value="Vacunas" {{ request('category') == 'Vacunas' ? 'selected' : '' }}>Vacuna</option>
+                <option value="Medicamentos" {{ request('category') == 'Medicamentos' ? 'selected' : '' }}>Medicamento</option>
+                <option value="Accesorios" {{ request('category') == 'Accesorios' ? 'selected' : '' }}>Accesorio</option>
 
-                </select>
+            </select>
 
             <div>
                 <label for="name" class="block font-medium">Nombre</label>
@@ -70,7 +70,7 @@
                     <input type="hidden" name="is_vaccine" value="0">
                     <input type="checkbox" name="is_vaccine" id="is_vaccine" class="mr-2" value="1" {{ old('is_vaccine')
                         ? 'checked' : '' }}>
-                    ¿Es una vacuna?
+                ¿Es una vacuna?
                 </label>--}}
             </div>
 
@@ -104,25 +104,33 @@
                     class="bg-indigo-600 text-white px-4 py-2 rounded">Guardar</button>
             </div>
 
-        </form>
+    </form>
 
-    </div>
-    <script>
-        //Cambiar funcion para reconocer la selección actual
-        document.addEventListener('DOMContentLoaded', function () {
-            const isVaccineCheckbox = document.getElementById('category');
-            const vaccineInfoSection = document.getElementById('vaccineinfo');
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categorySelect = document.getElementById('category');
+        const vaccineInfoSection = document.getElementById('vaccineinfo');
+        const medicationInfoSection = document.getElementById('medicationinfo');
 
-            function toggleVaccineFields() {
-                if (isVaccineCheckbox.checked) {
-                    vaccineInfoSection.classList.remove('hidden');
-                } else {
-                    vaccineInfoSection.classList.add('hidden');
-                }
+        function toggleCategoryFields() {
+            const selectedCategory = categorySelect.value;
+
+            if (selectedCategory === 'Vacunas') {
+                vaccineInfoSection.classList.remove('hidden');
+                medicationInfoSection.classList.add('hidden');
+            } else if (selectedCategory === 'Medicamentos') {
+                vaccineInfoSection.classList.add('hidden');
+                medicationInfoSection.classList.remove('hidden');
+            } else {
+                vaccineInfoSection.classList.add('hidden');
+                medicationInfoSection.classList.add('hidden');
             }
+        }
 
-            isVaccineCheckbox.addEventListener('change', toggleVaccineFields);
-            toggleVaccineFields(); // para el estado inicial
-        });
-    </script>
+        categorySelect.addEventListener('change', toggleCategoryFields);
+        toggleCategoryFields();
+    });
+</script>
+
 @endsection

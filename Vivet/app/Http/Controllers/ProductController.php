@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use App\Models\Product;
 use App\Models\InventoryMovement;
+use App\Models\Medication;
 use App\Models\Vaccine;
 use Illuminate\Http\Request;
 use App\Models\Role;
@@ -35,8 +36,9 @@ class ProductController extends Controller
             'is_active' => 'nullable|boolean',
             'category' => 'required|string|in:Comida,Vacunas,Medicamentos,Accesorios,Suplementos',
             //'is_vaccine' => 'nullable|boolean',
-            /*'vaccine_species' => 'nullable|string|required_if:category===Comida',
-            'validity_period' => 'nullable|integer|required_if:is_vaccine,1',*/
+            'vaccine_species' => 'nullable|string|required_if:category,Vacunas',
+            'validity_period' => 'nullable|integer|required_if:category,Vacunas',
+            'dosage_instructions' => 'nullable|string|required_if:category,Medicamentos',
         ]);
 
         $product = Product::create([
@@ -44,7 +46,7 @@ class ProductController extends Controller
             'description' => $validated['description'] ?? null,
             'price' => $validated['price'],
             'stock' => $validated['stock'],
-            'is_active' => $validated['is_active'],
+            'is_active' => $request->boolean('is_active'),
             'category' => $validated['category'],
             //'is_vaccine' => $request->input('is_vaccine') == '1',
         ]);
@@ -60,8 +62,8 @@ class ProductController extends Controller
                 'user_id' => auth()->id(),
             ]);
         }
-        /* cambiar
-        if ($request->input('is_vaccine') == '1') {
+
+        if ($request->input('category') == 'Vacunas') {
             Vaccine::create([
                 'product_id' => $product->id,
                 'name' => $product->name,
@@ -69,7 +71,17 @@ class ProductController extends Controller
                 'species' => $validated['vaccine_species'],
                 'validity_period' => $validated['validity_period'],
             ]);
-        }*/
+        }
+
+        if ($request->input('category') == 'Medicamentos') {
+            Medication::create([
+                'product_id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'dosage_instructions' => $validated['dosage_instructions'],
+
+            ]);
+        }
 
         return redirect()->route('products.index')->with('success', 'Producto creado correctamente.');
         /* return redirect()->route('products.index')->with([
@@ -91,14 +103,16 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
-            'category' => 'required|string|in:Comida,Vacunas,Medicamentos, Accesorios, Suplementos',
+            'category' => 'required|string|in:Comida,Vacunas,Medicamentos,Accesorios,Suplementos',
             //'is_vaccine' => 'nullable|boolean',
-            /*'vaccine_species' => 'nullable|string|required_if:is_vaccine,1',
-            'validity_period' => 'nullable|integer|required_if:is_vaccine,1',*/
+            'vaccine_species' => 'nullable|string|required_if:category,Vacunas',
+            'validity_period' => 'nullable|integer|required_if:category,Vacunas',
+            'dosage_instructions' => 'nullable|string|required_if:category,Medicamentos',
         ]);
 
-        /*$isVaccine = $request->boolean('is_vaccine');
-        $isVaccine = $validated->category==='Vacuna'*/
+        /*$isVaccine = $request->boolean('is_vaccine');*/
+        $isVaccine = $request->input('category') == 'Vacunas';
+        $isMedication = $request->input('category') == 'Medicamentos';
 
         $product->update([
             'name' => $validated['name'],
@@ -111,6 +125,31 @@ class ProductController extends Controller
 
         ]);
 
+        if ($isVaccine) {
+            Vaccine::updateOrCreate(
+                ['product_id' => $product->id],
+                [
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'species' => $validated['vaccine_species'] ?? null,,
+                    'validity_period' => $validated['validity_period'] ?? null,,
+                ]
+            );
+        } else {
+            Vaccine::where('product_id', $product->id)->delete();
+        }
+
+        if ($isMedication) {
+            Medication::updateOrCreate([
+                'product_id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'dosage_instructions' => $validated['dosage_instructions'] ?? null,,
+
+            ]);
+        } else {
+            Medication::where('product_id', $product->id)->delete();
+        }
 
         /*if ($isVaccine) {
             Vaccine::updateOrCreate(
