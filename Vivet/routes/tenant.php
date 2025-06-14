@@ -75,7 +75,7 @@ Route::middleware([
         Route::get('products/{product}/adjust-stock', [ProductController::class, 'showAdjustForm'])->name('products.adjustStockForm');
         Route::post('products/{product}/adjust-stock', [ProductController::class, 'adjustStock'])->name('products.adjustStock');
         Route::get('products/{product}/movements', [ProductController::class, 'movements'])->name('products.movements');
-
+        Route::post('/suppliers/store-from-product', [SupplierController::class, 'storeFromProduct'])->name('suppliers.store.from.product');
 
         // Clientes y mascotas
         Route::resource('clients', ClientController::class);
@@ -142,6 +142,7 @@ Route::middleware([
         Route::post('/supplies/{supply}/adjust', [SupplyController::class, 'adjustStock'])->name('supplies.adjustStock');
         Route::get('/supplies/{supply}/adjust', [SupplyController::class, 'showAdjustForm'])->name('supplies.adjustStockForm');
         Route::get('supplies/{supply}/movements', [SupplyController::class, 'movements'])->name('supplies.movements');
+        Route::post('/suppliers/store-from-supplies', [SupplierController::class, 'storeFromSupply'])->name('suppliers.store.from.supply');
 
         //clinicalhistory
 

@@ -20,7 +20,7 @@
 
         <div> {{-- Selector para elegir el tipo de categoría que tienen los productos (enum)--}}
             <label class="block font-semibold">Tipo de Producto</label>
-            <select id="category" name="category" class="w-full border-gray-300 rounded">
+            <select id="category" name="category" class="w-full border p-2 rounded">
                 <option value="">-- Seleccionar Categoría --</option>
                 <option value="Comida" {{ request('category') == 'Comida' ? 'selected' : '' }}>Comida</option>
                 <option value="Vacunas" {{ request('category') == 'Vacunas' ? 'selected' : '' }}>Vacuna</option>
@@ -43,7 +43,7 @@
 
             <div>
                 <label for="price" class="block font-medium">Precio</label>
-                <input type="number" name="price" id="price" step="0.01" value="{{ old('price') }}"
+                <input type="number" name="price" id="price" step="1" min="0" value="{{ old('price') }}"
                     class="w-full border p-2 rounded" required>
             </div>
 
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div id="toggleVaccines" class="flex items-center gap-2">
+            <div class="flex items-center gap-4">
                 <label for="is_active" class="inline-flex items-center mx-4">
                     <input type="hidden" name="is_active" value="0">
                     <input type="checkbox" name="is_active" id="is_active" class="mr-2" value="1" {{ old('is_active') ? 'checked' : '' }}>
@@ -97,14 +97,57 @@
 
             </div>
 
+            <div>
+                <label for="supplier_id" class="block font-medium">Proveedor</label>
+                <select name="supplier_id" id="supplier_id" class="w-full border p-2 rounded" required>
+                    <option value="">-- Selecciona un proveedor --</option>
+                    @foreach ($suppliers as $supplier)
+                    <option value="{{ $supplier->id }}" {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
+                        {{ $supplier->name }}
+                    </option>
+                    @endforeach
+                </select>
+                <button style="background-color: var(--color-button-secondary);" type="button" onclick="openSupplierModal()"
+                    class="mt-2 bg-green-500 text-white px-3 rounded">Agregar Proveedor</button>
+            </div>
+
+            <div>
+                <label for="unit_cost" class="block font-medium">Costo Unitario</label>
+                <input type="number" name="unit_cost" id="unit_cost" value="{{ old('unit_cost') }}" step="1" min="0"
+                    class="w-full border p-2 rounded" required>
+            </div>
+
+
             <input type="hidden" name="stock_reason" id="stock_reason_input" value="Stock inicial">
             <input type="hidden" name="movement_type" id="movement_type_input" value="Entrada">
             <div>
                 <button style="background-color: var(--color-button-secondary);" type="submit"
-                    class="bg-indigo-600 text-white px-4 py-2 rounded">Guardar</button>
+                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Guardar</button>
             </div>
 
     </form>
+
+    <div id="SupplierModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50">
+        <div class="bg-white rounded p-6 w-full max-w-md space-y-4">
+            <h3 class="text-xl font-bold">Nuevo Proveedor</h3>
+            <form action="{{ route('suppliers.store.from.supply') }}" method="POST">
+                @csrf
+                <input type="text" name="name" placeholder="Nombre de la Empresa" required class="w-full border rounded p-2 my-2">
+                <input type="text" name="contact_name" placeholder="Nombre del Vendedor" class="w-full border rounded p-2 my-2">
+                <input type="email" name="email" placeholder="Correo" class="w-full border rounded p-2 my-2">
+                <input type="text" name="phone" placeholder="Teléfono" class="w-full border rounded p-2 my-2">
+                <input type="text" name="address" placeholder="Dirección" class="w-full border rounded p-2 my-2">
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeSupplierModal()"
+                        class="bg-gray-400 px-3 py-1 rounded text-white">Cancelar</button>
+                    <button style="background-color: var(--color-button-secondary);" type="submit"
+                        class="px-3 py-1 rounded text-white">Guardar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 
 </div>
 <script>
@@ -131,6 +174,16 @@
         categorySelect.addEventListener('change', toggleCategoryFields);
         toggleCategoryFields();
     });
+
+    function openSupplierModal() {
+        document.getElementById('SupplierModal').classList.remove('hidden');
+    }
+
+    function closeSupplierModal() {
+        document.getElementById('SupplierModal').classList.add('hidden');
+    }
+
+    
 </script>
 
 @endsection

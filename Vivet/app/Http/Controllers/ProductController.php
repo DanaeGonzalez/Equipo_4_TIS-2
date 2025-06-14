@@ -38,12 +38,13 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
             'category' => 'required|string|in:Comida,Vacunas,Medicamentos,Accesorios,Suplementos',
-            //'is_vaccine' => 'nullable|boolean',
             'vaccine_species' => 'nullable|string|required_if:category,Vacunas',
             'validity_period' => 'nullable|integer|required_if:category,Vacunas',
             'dosage_instructions' => 'nullable|string|required_if:category,Medicamentos',
             'supplier_id' => 'required_if:stock,>0|exists:suppliers,id',
             'unit_cost' => 'required_if:stock,>0|numeric|min:0',
+            'invoice_number' => 'nullable|string',
+            'purchase_date' => 'required|date',
         ]);
 
         $product = Product::create([
@@ -53,7 +54,6 @@ class ProductController extends Controller
             'stock' => $validated['stock'],
             'is_active' => $request->boolean('is_active'),
             'category' => $validated['category'],
-            //'is_vaccine' => $request->input('is_vaccine') == '1',
         ]);
         //dd($request->all());
 
@@ -70,8 +70,11 @@ class ProductController extends Controller
             PurchaseDetail::create([
                 'inventory_movement_id' => $movement->id,
                 'supplier_id' => $validated['supplier_id'],
+                'quantity' => $validated['stock'],
                 'unit_cost' => $validated['unit_cost'],
+                'total_cost' => $validated['unit_cost'] * $validated['stock'],
                 'purchase_date' => now(),
+                'invoice_number' => $request->invoice_number,
             ]);
         }
 
@@ -97,10 +100,6 @@ class ProductController extends Controller
         }
 
         return redirect()->route('products.index')->with('success', 'Producto creado correctamente.');
-        /* return redirect()->route('products.index')->with([
-            'new_product_id' => $product->id,
-            'open_stock_modal' => true,
-        ]); */
     }
     public function edit(Product $product)
     {
@@ -113,7 +112,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:0',
             'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
             'category' => 'required|string|in:Comida,Vacunas,Medicamentos,Accesorios,Suplementos',
@@ -157,7 +156,7 @@ class ProductController extends Controller
                 'product_id' => $product->id,
                 'name' => $product->name,
                 'description' => $product->description,
-                'dosage_instructions' => $validated['dosage_instructions'] ?? null,,
+                'dosage_instructions' => $validated['dosage_instructions'] ?? null,
 
             ]);
         } else {
