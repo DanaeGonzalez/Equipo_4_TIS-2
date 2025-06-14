@@ -144,10 +144,8 @@ Route::middleware([
         Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
     });
 
-    // Panel Dashboard principal
-    Route::get('/dashboard', function () {
-        return view('tenant.dashboard.index');
-    })->name('dashboard');
-    
-});
 
+    Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+        Route::view('/', 'tenant.dashboard.index')->name('dashboard.index');
+    });
+});

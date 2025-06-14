@@ -3,6 +3,7 @@
 const flowbitePlugin = require('flowbite/plugin');
 
 module.exports = {
+  darkMode: 'class',
   content: [
     "./resources/**/*.blade.php", // Archivos Blade
     './node_modules/flowbite/**/*.js',
