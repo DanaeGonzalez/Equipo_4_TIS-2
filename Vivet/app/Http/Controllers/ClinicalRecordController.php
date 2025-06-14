@@ -13,13 +13,13 @@ class ClinicalRecordController extends Controller
     public function index()
     {
         $records = ClinicalRecord::with(['pet', 'vet'])->orderBy('date', 'desc')->get();
-        return view('tenant.clinical_records.index', compact('records'));
+        return view('tenant.dashboard.modules.clinical_records.index', compact('records'));
     }
 
     public function create()
     {
         $pets = Pet::all();
-        return view('tenant.clinical_records.create', compact('pets'));
+        return view('tenant.dashboard.modules.clinical_records.create', compact('pets'));
     }
 
     public function store(Request $request)
@@ -58,7 +58,7 @@ class ClinicalRecordController extends Controller
     public function edit(ClinicalRecord $clinicalRecord)
     {
         $pets = Pet::all();
-        return view('tenant.clinical_records.edit', compact('clinicalRecord', 'pets'));
+        return view('tenant.dashboard.modules.clinical_records.edit', compact('clinicalRecord', 'pets'));
     }
 
     public function update(Request $request, ClinicalRecord $clinicalRecord)
@@ -89,6 +89,6 @@ class ClinicalRecordController extends Controller
     {
         // Carga relaciones necesarias para la vista
         $clinicalRecord->load(['pet.client', 'vet']);
-        return view('tenant.clinical_records.show', compact('clinicalRecord'));
+        return view('tenant.dashboard.modules.clinical_records.show', compact('clinicalRecord'));
     }
 }

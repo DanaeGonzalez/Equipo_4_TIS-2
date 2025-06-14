@@ -3,5 +3,5 @@
 @section('title', 'Panel principal')
 
 @section('content')
-    
+
 @endsection

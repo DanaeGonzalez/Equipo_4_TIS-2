@@ -106,7 +106,7 @@ Route::middleware([
         Route::resource('notes', NoteController::class);
 
         // Registros clínicos
-        Route::resource('clinical_records', ClinicalRecordController::class);
+        Route::resource('dashboard/modules/clinical_records', ClinicalRecordController::class);
 
         // Prescripciones
         Route::get('/prescriptions', [PrescriptionController::class, 'index'])->name('prescriptions.index');
