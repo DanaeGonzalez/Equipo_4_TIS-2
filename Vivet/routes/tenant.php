@@ -61,6 +61,13 @@ Route::middleware([
     Route::post('/login', [LoginController::class, 'loginUser'])->name('login.submit');
     Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
+    // Reestablecimiento de contraseñas
+    Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset.form');
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
+
     // Rutas protegidas
     Route::middleware(['check.permission'])->group(function () { //Necesita permisos para entrar a las rutas
 
@@ -71,15 +78,6 @@ Route::middleware([
         Route::get('/roles/{role}/permissions/edit', [PermissionController::class, 'editPermissions'])->name('roles.permissions.edit');
         Route::put('/roles/{role}/permissions', [PermissionController::class, 'updatePermissions'])->name('roles.permissions.update');
 
-// Reestablecimiento de contraseñas
-Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset.form');
-Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
-
-// Rutas protegidas
-Route::middleware(['auth', 'is_active'])->group(function () {
         // Servicios y productos
         Route::resource('services', ServiceController::class);
         Route::resource('products', ProductController::class);
