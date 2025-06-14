@@ -32,13 +32,13 @@ class Pet extends Model
         return $this->hasMany(Appointment::class);
     }
 
-    /* Descomentar cuando esten los modelos
+    /* Descomentar cuando esten los modelos*/
     public function clinicalRecords()
     {
         return $this->hasMany(ClinicalRecord::class);
     }
 
-    public function vaccinations()
+    /*public function vaccinations()
     {
         return $this->hasMany(PetVaccination::class);
     }

@@ -7,6 +7,7 @@
 
 @include('tenant.partials.colors')
 
+
 <!-- CAROUSEL -->
 
 <div id="default-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="7000">
@@ -15,8 +16,8 @@
         <!-- Item 1 -->
         <div class="hidden duration-700 ease-in-out relative h-full" data-carousel-item>
             <!-- Imagen de fondo -->
-            <img src="{{ asset('images/clients/client1/carousel-1.jpeg') }}"
-                class="w-full h-full object-cover" alt="...">
+            <img src="{{ tenant_image('images.carousel1', 'images/demo/carousel1.jpg') }}" alt="Imagen carrusel 1">
+            class="w-full h-full object-cover" alt="...">
 
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
@@ -29,18 +30,19 @@
 
                 <a href="{{route('appointments.index')}}"
                     class="hover:opacity-90 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transition text-sm sm:text-base"
-                    style="background-color: var(--color-button-secondary);">
+                    style="background-color: {{ tenant_setting('colors.btn_primary.bg') }};">
                     Reserva una cita
                 </a>
 
 
-                
+
+
             </div>
         </div>
 
         <!-- Item 2 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-2.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ tenant_image('images.carousel2', 'images/demo/carousel2.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Imagen carrusel 2">
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
                 <h2 class="text-white text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
@@ -52,7 +54,7 @@
 
                 <a href="{{route('appointments.index')}}"
                     class="hover:opacity-90 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transition text-sm sm:text-base"
-                    style="background-color: var(--color-button-secondary);">
+                    style="background-color: {{ tenant_setting('colors.btn_primary.bg') }};">
                     Reserva una cita
                 </a>
 
@@ -62,7 +64,7 @@
         </div>
         <!-- Item 3 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-3.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ tenant_image('images.carousel3', 'images/demo/carousel3.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
                 <h2 class="text-white text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
@@ -74,7 +76,7 @@
 
                 <a href="{{route('appointments.index')}}"
                     class="hover:opacity-90 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transition text-sm sm:text-base"
-                    style="background-color: var(--color-button-secondary);">
+                    style="background-color: {{ tenant_setting('colors.btn_primary.bg') }};">
                     Reserva una cita
                 </a>
 
@@ -84,7 +86,7 @@
         </div>
         <!-- Item 4 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-4.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ tenant_image('images.carousel4', 'images/demo/carousel4.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
                 <h2 class="text-white text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
@@ -96,7 +98,7 @@
 
                 <a href="{{route('appointments.index')}}"
                     class="hover:opacity-90 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transition text-sm sm:text-base"
-                    style="background-color: var(--color-button-secondary);">
+                    style="background-color: {{ tenant_setting('colors.btn_primary.bg') }};">
                     Reserva una cita
                 </a>
 
@@ -106,7 +108,7 @@
         </div>
         <!-- Item 5 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{{ asset('images/clients/client1/carousel-5.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <img src="{{ tenant_image('images.carousel5', 'images/demo/carousel5.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             <!-- Capa de superposición con texto y botón -->
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-center z-10 p-4 sm:p-6 gap-2 sm:gap-4">
                 <h2 class="text-white text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
@@ -118,7 +120,7 @@
 
                 <a href="{{route('appointments.index')}}"
                     class="hover:opacity-90 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transition text-sm sm:text-base"
-                    style="background-color: var(--color-button-secondary);">
+                    style="background-color: {{ tenant_setting('colors.btn_primary.bg') }};">
                     Reserva una cita
                 </a>
 
@@ -161,19 +163,19 @@
         <div class="grid grid-cols-1 gap-4 md:grid-cols-4 md:items-center md:gap-8">
             <div class="md:col-span-3">
                 <img
-                    src="{{ asset('images/clients/client1/content.jpeg') }}"
+                    src="{{ tenant_image('images.content', 'images/demo/content.jpg') }}"
                     class="rounded"
-                    alt="" />
+                    alt="Imagen de contenido principal" />
             </div>
 
             <div class="md:col-span-1">
                 <div class="max-w-lg md:max-w-none">
-                    <h2 class="text-2xl font-semibold sm:text-3xl" style="color: var(--color-title);">
+                    <h2 class="text-2xl font-semibold sm:text-3xl" style="color: {{ tenant_setting('colors.text_heading') }};">
                         Profesionales que cuidan con el corazón
                     </h2>
 
 
-                    <p class="mt-4" style="color: var(--color-text);">
+                    <p class="mt-4" style="color: {{ tenant_setting('colors.text_primary') }};">
                         Nuestro equipo combina experiencia médica con vocación y cercanía. Cada atención está pensada para que tú y tu mascota se sientan acompañados y seguros durante todo el proceso.
                     </p>
                 </div>
@@ -184,19 +186,22 @@
 
 <!-- SECCION DE SERVICIOS -->
 
-<section class="body-font" style="color: var(--color-text); background-color: var(--color-bg-main);">
+<section class="body-font"
+    style="color: {{ tenant_setting('colors.text_primary') }};
+           background-color: {{ tenant_setting('colors.bg_base') }};">
     <div class="container px-5 py-24 mx-auto">
         <div class="text-center mb-20">
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4"
-                style="color: var(--color-title);">
+                style="color: {{ tenant_setting('colors.text_heading') }};">
                 Nuestros Servicios
             </h1>
             <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto"
-                style="color: var(--color-text);">
+                style="color: {{ tenant_setting('colors.text_primary') }};">
                 Atención médica integral y especializada para el bienestar de tu mascota.
             </p>
             <div class="flex mt-6 justify-center">
-                <div class="w-16 h-1 rounded-full inline-flex" style="background-color: var(--color-accent-2);"></div>
+                <div class="w-16 h-1 rounded-full inline-flex"
+                    style="background-color: {{ tenant_setting('colors.highlight_2') }};"></div>
             </div>
         </div>
 
@@ -215,14 +220,14 @@
             ] as $item)
             <div class="p-4 md:w-1/3 flex flex-col text-center items-center">
                 <div class="w-20 h-20 flex items-center justify-center rounded-full mb-5 flex-shrink-0"
-                    style="background-color: {{ $iconBg }};">
+                    style="background-color: {{ tenant_setting('colors.icon_bg') }};">
                     <img src="{{ asset('images/clients/client1/services/' . $item['image']) }}"
                         alt="{{ $item['title'] }}"
                         class="w-10 h-10 object-contain" />
                 </div>
                 <div class="flex-grow">
-                    <h2 class="text-lg title-font font-medium mb-3" style="color: var(--color-title);">{{ $item['title'] }}</h2>
-                    <p class="leading-relaxed text-base" style="color: var(--color-text);">{{ $item['text'] }}</p>
+                    <h2 class="text-lg title-font font-medium mb-3" style="color: {{ tenant_setting('colors.text_heading') }};">{{ $item['title'] }}</h2>
+                    <p class="leading-relaxed text-base" style="color: {{ tenant_setting('colors.text_primary') }};">{{ $item['text'] }}</p>
                 </div>
             </div>
             @endforeach
@@ -282,7 +287,7 @@
                 <textarea id="message" name="message" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
             </div>
             <button
-                style="background-color: var(--color-button-secondary);"
+                style="background-color: {{ tenant_setting('colors.btn_primary.bg') }};"
                 class="text-white border-0 py-2 px-6 focus:outline-none hover:opacity-90 rounded text-lg">
                 Enviar
             </button>
