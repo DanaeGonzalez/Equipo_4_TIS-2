@@ -5,7 +5,7 @@
         <h2 class="text-2xl font-bold mb-6">Administrar los horarios</h2>
 
         {{-- Filtros --}}
-        <form method="GET" action="{{ route('schedules.manage') }}" class="mb-6 flex flex-wrap gap-4 items-end">
+        <form method="GET" action="{{ route('manageschedules.manage') }}" class="mb-6 flex flex-wrap gap-4 items-end">
             <div>
                 <label class="block text-sm font-semibold mb-1">Fecha</label>
                 <input type="date" name="date" value="{{ request('date') }}" class="border px-3 py-2 rounded w-48">
@@ -77,7 +77,7 @@
                             @endif
                         </td>
                         <td class="border px-3 py-2">
-                            <form method="POST" action="{{ route('schedules.toggle', $schedule->id) }}">
+                            <form method="POST" action="{{ route('manageschedules.toggle', $schedule->id) }}">
                                 @csrf
                                 <button type="submit" class="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
                                     {{ $schedule->is_active ? 'Desactivado' : 'Activado' }}

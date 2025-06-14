@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-
 // Controllers
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -27,7 +26,8 @@ use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\SupplyController;
-use App\Http\Controllers\PDFTestController;
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\ManageSchedulesController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -60,7 +60,7 @@ Route::middleware([
     Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
     // Rutas protegidas
-    Route::middleware(['check.permission'])->group(function () { //Necesita permisos para entrar a las rutas
+    //Route::middleware(['check.permission'])->group(function () { //Necesita permisos para entrar a las rutas
 
         // Administración
         Route::resource('roles', RoleController::class);
@@ -96,8 +96,6 @@ Route::middleware([
         // Horarios
         Route::resource('schedules', ScheduleController::class)->except(['show']);;
         Route::get('/generate-schedules', [ScheduleController::class, 'generateSchedules'])->name('schedules.generate');
-        Route::get('/schedules/manage', [ScheduleController::class, 'manage'])->name('schedules.manage');
-        Route::post('/schedules/{schedule}/toggle', [ScheduleController::class, 'toggle'])->name('schedules.toggle');
         Route::get('/schedules/calendar/events', [ScheduleController::class, 'getCalendarEvents'])->name('calendar.events');
         Route::post('/schedules/generate-weekly', [ScheduleController::class, 'generateWeekly'])->name('schedules.generate-weekly');
 
@@ -115,6 +113,7 @@ Route::middleware([
         Route::get('/prescriptions/{prescription}/edit', [PrescriptionController::class, 'edit'])->name('prescriptions.edit');
         Route::put('/prescriptions/{prescription}', [PrescriptionController::class, 'update'])->name('prescriptions.update');
         Route::delete('/prescriptions/{prescription}', [PrescriptionController::class, 'destroy'])->name('prescriptions.destroy');
+        Route::get('/clinical_records/{clinicalRecord}/download-pdf', [ClinicalRecordController::class, 'downloadPDF'])->name('clinical_records.download_pdf');
 
         // Medicamentos
         Route::resource('medications', MedicationController::class);
@@ -142,7 +141,15 @@ Route::middleware([
         //clinicalhistory
 
         Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
-    });
+
+        Route::get('/reports/appointments', [PDFController::class, 'appointmentsReport'])->name('reports.appointments');
+
+        // para administrar el horario
+        Route::get('/manageschedules/manage', [ManageSchedulesController::class, 'manage'])->name('manageschedules.manage');
+        Route::post('/manageschedules/toggle/{schedule}', [ManageSchedulesController::class, 'toggle'])->name('manageschedules.toggle');
+
+
+    //});
 
     // Panel Dashboard principal
     Route::get('/dashboard', function () {

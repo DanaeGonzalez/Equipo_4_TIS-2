@@ -91,4 +91,15 @@ class ClinicalRecordController extends Controller
         $clinicalRecord->load(['pet.client', 'vet']);
         return view('tenant.clinical_records.show', compact('clinicalRecord'));
     }
+    public function downloadPDF(ClinicalRecord $clinicalRecord)
+    {
+        // Cargamos las relaciones necesarias (igual que haces en show)
+        $clinicalRecord->load(['pet.client', 'vet']);
+
+        // Generamos el PDF usando el nuevo template profesional
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('tenant.pdf.clinical_records.show', compact('clinicalRecord'));
+
+        return $pdf->stream('ficha_clinica_' . $clinicalRecord->pet->pet_name . '.pdf');
+    }
+
 }

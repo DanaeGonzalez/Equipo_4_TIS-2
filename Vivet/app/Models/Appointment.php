@@ -29,12 +29,12 @@ class Appointment extends Model
 
     public function pet()
     {
-        return $this->belongsTo(Pet::class,'pet_id');
+        return $this->belongsTo(Pet::class, 'pet_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'vet_id' );
+        return $this->belongsTo(User::class, 'vet_id');
     }
 
     public function service()
@@ -51,4 +51,12 @@ class Appointment extends Model
     {
         return $this->hasOne(Billing::class);
     }
+    public function vet()
+    {
+        return $this->belongsTo(User::class, 'vet_id');
+    }
+    protected $casts = [
+        'appointment_date' => 'datetime',
+    ];
+
 }

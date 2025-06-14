@@ -89,7 +89,7 @@ class ScheduleController extends Controller
 
         return redirect()->route('schedules.index')->with('success', 'Horario eliminado correctamente.');
     }
-    public function manage(Request $request)
+   /* public function manage(Request $request)
     {
         $query = Schedule::with('user')->orderBy('event_date')->orderBy('event_time');
 
@@ -116,7 +116,7 @@ class ScheduleController extends Controller
         $schedule->save();
 
         return redirect()->route('schedules.manage')->with('success', 'Horario actualizado exitosamente..');
-    }
+    }*/
 
     public function getCalendarEvents()
     {
