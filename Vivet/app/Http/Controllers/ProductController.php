@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Supplier;
+use App\Models\PurchaseDetail;
 
 class ProductController extends Controller
 {
@@ -23,7 +25,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('tenant.products.create');
+        $suppliers = Supplier::all();
+        return view('tenant.products.create', compact('suppliers'));
     }
 
     public function store(Request $request)
@@ -31,7 +34,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:0',
             'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
             'category' => 'required|string|in:Comida,Vacunas,Medicamentos,Accesorios,Suplementos',
@@ -39,6 +42,8 @@ class ProductController extends Controller
             'vaccine_species' => 'nullable|string|required_if:category,Vacunas',
             'validity_period' => 'nullable|integer|required_if:category,Vacunas',
             'dosage_instructions' => 'nullable|string|required_if:category,Medicamentos',
+            'supplier_id' => 'required_if:stock,>0|exists:suppliers,id',
+            'unit_cost' => 'required_if:stock,>0|numeric|min:0',
         ]);
 
         $product = Product::create([
@@ -53,7 +58,7 @@ class ProductController extends Controller
         //dd($request->all());
 
         if ($validated['stock'] > 0) {
-            InventoryMovement::create([
+            $movement = InventoryMovement::create([
                 'item_type' => 'producto',
                 'item_id' => $product->id,
                 'movement_type' => 'entrada',
@@ -61,7 +66,15 @@ class ProductController extends Controller
                 'reason' => $request->input('stock_reason'),
                 'user_id' => auth()->id(),
             ]);
+
+            PurchaseDetail::create([
+                'inventory_movement_id' => $movement->id,
+                'supplier_id' => $validated['supplier_id'],
+                'unit_cost' => $validated['unit_cost'],
+                'purchase_date' => now(),
+            ]);
         }
+
 
         if ($request->input('category') == 'Vacunas') {
             Vaccine::create([
@@ -131,8 +144,8 @@ class ProductController extends Controller
                 [
                     'name' => $product->name,
                     'description' => $product->description,
-                    'species' => $validated['vaccine_species'] ?? null,,
-                    'validity_period' => $validated['validity_period'] ?? null,,
+                    'species' => $validated['vaccine_species'] ?? null,
+                    'validity_period' => $validated['validity_period'] ?? null,
                 ]
             );
         } else {
@@ -175,7 +188,8 @@ class ProductController extends Controller
 
     public function showAdjustForm(Product $product)
     {
-        return view('tenant.products.adjustStock', compact('product'));
+        $suppliers = Supplier::all();
+        return view('tenant.products.adjustStock', compact('product', 'suppliers'));
     }
 
     public function adjustStock(Request $request, Product $product)
@@ -184,6 +198,8 @@ class ProductController extends Controller
             'movement_type' => ['required', Rule::in(['entrada', 'salida'])],
             'quantity' => 'required|integer|min:1',
             'reason' => 'required|string|max:255',
+            'supplier_id' => 'required_if:movement_type,entrada|exists:suppliers,id',
+            'unit_cost' => 'required_if:movement_type,entrada|numeric|min:0',
         ]);
 
         $quantity = $request->quantity;
@@ -201,7 +217,7 @@ class ProductController extends Controller
         $product->stock = $newStock;
         $product->save();
 
-        InventoryMovement::create([
+        $movement = InventoryMovement::create([
             'item_type' => 'producto',
             'item_id' => $product->id,
             'movement_type' => $request->movement_type,
@@ -209,6 +225,15 @@ class ProductController extends Controller
             'reason' => $request->reason,
             'user_id' => auth()->id(),
         ]);
+
+        if ($request->movement_type === 'entrada') {
+            PurchaseDetail::create([
+                'inventory_movement_id' => $movement->id,
+                'supplier_id' => $request->supplier_id,
+                'unit_cost' => $request->unit_cost,
+                'purchase_date' => now(),
+            ]);
+        }
 
         return redirect()->route('products.index')->with('success', 'Movimiento de stock registrado.');
     }

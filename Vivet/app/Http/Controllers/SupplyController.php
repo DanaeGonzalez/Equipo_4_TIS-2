@@ -7,6 +7,8 @@ use App\Models\InventoryMovement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use App\Models\Supplier;
+use App\Models\PurchaseDetail;
 
 class SupplyController extends Controller
 {
@@ -28,7 +30,8 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        return view('tenant.supplies.create');
+        $suppliers = Supplier::all();
+        return view('tenant.supplies.create', compact('suppliers'));
     }
 
     /**
@@ -43,11 +46,13 @@ class SupplyController extends Controller
             'stock_reason' => 'nullable|string',
             'units_per_box' => 'nullable|integer|min:1', //si la unidad de medidas son cajas, lo necesita
             'unit_type' => ['required', Rule::in(['unidades', 'cajas'])],
+            'supplier_id' => 'required_if:stock,>0|exists:suppliers,id',
+            'unit_cost' => 'required_if:stock,>0|numeric|min:0',
         ]);
 
         $validated['unit_type'] = strtolower($validated['unit_type']);
         $totalStockUnits = $validated['stock'];
-        
+
         if ($validated['unit_type'] === 'cajas' && !empty($validated['units_per_box'])) {
             $totalStockUnits = $validated['stock'] * $validated['units_per_box'];
         }
@@ -55,13 +60,20 @@ class SupplyController extends Controller
 
         $supply = Supply::create(array_merge($validated, ['is_active' => true]));
         if ($validated['stock'] > 0) {
-            InventoryMovement::create([
+            $movement = InventoryMovement::create([
                 'item_type' => 'insumo',
                 'item_id' => $supply->id,
                 'movement_type' => 'entrada',
                 'quantity' => $totalStockUnits,
                 'reason' => $validated['stock_reason'] ?? 'Stock inicial',
                 'user_id' => auth()->id(),
+            ]);
+
+            PurchaseDetail::create([
+                'inventory_movement_id' => $movement->id,
+                'supplier_id' => $validated['supplier_id'],
+                'unit_cost' => $validated['unit_cost'],
+                'purchase_date' => now(),
             ]);
         }
 
@@ -125,6 +137,8 @@ class SupplyController extends Controller
             'quantity' => 'required|integer|min:1',
             'unit_type' => ['required', Rule::in(['unidades', 'cajas'])],
             'reason' => 'required|string|max:255',
+            'supplier_id' => 'required_if:movement_type,entrada|exists:suppliers,id',
+            'unit_cost' => 'required_if:movement_type,entrada|numeric|min:0',
         ]);
 
         $quantity = $request->quantity;
@@ -151,7 +165,7 @@ class SupplyController extends Controller
         $supply->is_active = $newStock > 0;
         $supply->save();
 
-        InventoryMovement::create([
+        $movement = InventoryMovement::create([
             'item_type' => 'insumo',
             'item_id' => $supply->id,
             'movement_type' => $request->movement_type,
@@ -159,6 +173,15 @@ class SupplyController extends Controller
             'reason' => $request->reason,
             'user_id' => auth()->id(),
         ]);
+
+        if ($request->movement_type === 'entrada') {
+            PurchaseDetail::create([
+                'inventory_movement_id' => $movement->id,
+                'supplier_id' => $request->supplier_id,
+                'unit_cost' => $request->unit_cost,
+                'purchase_date' => now(),
+            ]);
+        }
 
         return redirect()->route('supplies.index')->with('success', 'Movimiento de inventario registrado.');
     }
@@ -175,6 +198,7 @@ class SupplyController extends Controller
 
     public function showAdjustForm(Supply $supply)
     {
-        return view('tenant.supplies.adjustStock', compact('supply'));
+        $suppliers = Supplier::all();
+        return view('tenant.supplies.adjustStock', compact('supply','suppliers'));
     }
 }

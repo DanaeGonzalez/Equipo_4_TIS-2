@@ -23,12 +23,16 @@ class InventoryMovement extends Model
         if ($this->item_type === 'producto') {
             return $this->belongsTo(Product::class, 'item_id');
         }
-        //Si el tipo de item es un insumo, entonces tiene una relacióbn de uno a uno con el insumo
+        //Si el tipo de item es un insumo, entonces tiene una relación de uno a uno con el insumo
         return $this->belongsTo(Supply::class, 'item_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function purchaseDetail()
+    {
+        return $this->hasOne(PurchaseDetail::class);
     }
 }
