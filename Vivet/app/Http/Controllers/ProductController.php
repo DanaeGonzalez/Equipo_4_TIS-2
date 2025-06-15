@@ -114,7 +114,6 @@ class ProductController extends Controller
             'name' => 'required|string',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer',
             'is_active' => 'nullable|boolean',
             'category' => 'required|string|in:Comida,Vacunas,Medicamentos,Accesorios,Suplementos',
             //'is_vaccine' => 'nullable|boolean',
@@ -131,7 +130,6 @@ class ProductController extends Controller
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
             'price' => $validated['price'],
-            'stock' => $validated['stock'],
             'is_active' => $request->boolean('is_active'),
             'category' => $validated['category'],
             //'is_vaccine' => $request->boolean('is_vaccine'),
@@ -230,8 +228,11 @@ class ProductController extends Controller
             PurchaseDetail::create([
                 'inventory_movement_id' => $movement->id,
                 'supplier_id' => $request->supplier_id,
+                'quantity' => $request['quantity'],
                 'unit_cost' => $request->unit_cost,
+                'total_cost' => $request['unit_cost'] * $request['quantity'],
                 'purchase_date' => now(),
+                'invoice_number' => $request->invoice_number,
             ]);
         }
 

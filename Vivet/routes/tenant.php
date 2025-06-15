@@ -147,6 +147,10 @@ Route::middleware([
         //clinicalhistory
 
         Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
+        
+        //Detalles costos
+        Route::resource('purchase-details', \App\Http\Controllers\PurchaseDetailController::class)->only(['index', 'store']);
+
     });
 
     // Panel Dashboard principal

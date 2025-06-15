@@ -153,6 +153,6 @@ class InventoryController extends Controller
         $product->stock += $request->quantity;
         $product->save();
 
-        return redirect()->route('products.index')->with('success', 'Stock inicial registrado.');
+        return redirect()->route('products.index')->with('success', 'Stock registrado.');
     }
 }

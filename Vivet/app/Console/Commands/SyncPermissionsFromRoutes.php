@@ -73,15 +73,15 @@ class SyncPermissionsFromRoutes extends Command
             'Editar Historia Clínica' => 'clinical_records.edit',
             'Actualizar Historia Clínica' => 'clinical_records.update',
             'Eliminar Historia Clínica' => 'clinical_records.destroy',
+            // Otros posibles
             'Ajustar Stock de Insumo' => 'supplies.adjustStock',
             'Ver Movimientos de Insumo' => 'supplies.movements',
             'Formulario de Ajuste de Insumo' => 'supplies.adjustStockForm',
             'Ajustar Stock de Producto' => 'products.adjustStock',
             'Ver Movimientos de Producto' => 'products.movements',
             'Formulario de Ajuste de Producto' => 'products.adjustStockForm',
-
-            // Otros posibles
             'Guardar Inventario para Producto' => 'inventory.storeForProduct',
+            'Ver Gastos' => 'purchase-details.index',
         ];
         if (isset($customPermissions[$permissionName])) {
             return $customPermissions[$permissionName];
@@ -131,12 +131,12 @@ class SyncPermissionsFromRoutes extends Command
             'inventario' => 'inventory',
             'medicamento' => 'medications',
             'medicamentos' => 'medications',
-            'insumo'=> 'supplies',
-            'insumos'=> 'supplies',
+            'insumo' => 'supplies',
+            'insumos' => 'supplies',
             'receta' => 'prescriptions',
             'recetas' => 'prescriptions',
-            'proveedor'=> 'suppliers',
-            'proveedores'=> 'suppliers',
+            'proveedor' => 'suppliers',
+            'proveedores' => 'suppliers',
         ];
 
         $permissionName = strtolower($permissionName);
