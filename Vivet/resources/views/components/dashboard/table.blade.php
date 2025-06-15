@@ -3,6 +3,7 @@
 'rows' => [],
 'actions' => ['edit', 'delete', 'view'],
 'pagination' => null,
+'addLabel' => 'Añadir nuevo',
 ])
 
 
@@ -30,7 +31,7 @@
                     <path clip-rule="evenodd" fill-rule="evenodd"
                         d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                 </svg>
-                Añadir ejemplo
+                {{ $addLabel }}
             </button>
 
             <div class="flex items-center space-x-3 w-full md:w-auto">
@@ -165,7 +166,7 @@
                                 </svg>
                             </a>
                             <div id="tooltip-view" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                Ver
+                                Ver más
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
                             @endif

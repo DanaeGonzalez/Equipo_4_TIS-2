@@ -10,19 +10,18 @@
         <div class="flex flex-col lg:flex-row items-start md:items-center justify-between gap-2 mb-4">
             {{-- Título a la izquierda --}}
             <h1 class="text-xl font-semibold text-gray-800 dark:text-white">
-                Tabla de Ejemplo
+                Ver todos los Pacientes
             </h1>
 
             {{-- Breadcrumb a la derecha --}}
             @include('tenant.partials.dashboard.breadcrumbs', [
             'items' => [
-            ['name' => 'Ayuda', 'url' => '#'],
-            ['name' => 'Ejemplo'],
+            ['name' => 'Pacientes'],
             ]
             ])
         </div>
-        
-        <x-dashboard.table :headers="$columns" :rows="$rows" :pagination="$pagination" />
+
+        <x-dashboard.table :headers="$columns" :rows="$rows" :pagination="$pagination" add-label="Registrar Paciente"/>
 
     </div>
 </section>
