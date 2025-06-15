@@ -35,7 +35,7 @@ class ClinicalHistoryController extends Controller
 
         $records = $query->orderBy('date', 'desc')->paginate(20);
 
-        return view('tenant.clinical_history.index', compact('records'));
+        return view('tenant.dashboard.modules.clinical_history.index', compact('records'));
     }
 
 }

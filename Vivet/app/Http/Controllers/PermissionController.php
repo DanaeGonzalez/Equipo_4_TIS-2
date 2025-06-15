@@ -45,7 +45,7 @@ class PermissionController extends Controller
         // Acciones base (para filtro)
         $actions = ['ver', 'crear', 'editar', 'eliminar', 'actualizar', 'asignar', 'guardar', 'descargar', 'cancelar', 'generar'];
 
-        return view('tenant.permissions.index', [
+        return view('tenant.dashboard.modules.permissions.index', [
             'groupedPermissions' => $grouped,
             'entities' => $entities,
             'actions' => $actions
@@ -67,7 +67,7 @@ class PermissionController extends Controller
 
     public function create()
     {
-        return view('tenant.permissions.create');
+        return view('tenant.dashboard.modules.permissions.create');
     }
 
     public function store(Request $request)
@@ -103,7 +103,7 @@ class PermissionController extends Controller
 
         ksort($grouped); // Ordena alfabéticamente por grupo
 
-        return view('tenant.roles.edit-permissions', compact('role', 'grouped'));
+        return view('tenant.dashboard.modules.roles.edit-permissions', compact('role', 'grouped'));
     }
 
     public function updatePermissions(Request $request, Role $role)
@@ -114,7 +114,7 @@ class PermissionController extends Controller
 
     public function edit(Permission $permission)
     {
-        return view('tenant.permissions.edit', compact('permission'));
+        return view('tenant.dashboard.modules.permissions.edit', compact('permission'));
     }
 
     public function update(Request $request, Permission $permission)

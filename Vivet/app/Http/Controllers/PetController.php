@@ -11,13 +11,13 @@ class PetController extends Controller
     public function index()
     {
         $pets = Pet::with('client')->paginate(10);
-        return view('tenant.pets.index', compact('pets'));
+        return view('tenant.dashboard.modules.pets.index', compact('pets'));
     }
 
     public function create()
     {
         $clients = Client::all();
-        return view('tenant.pets.create', compact('clients'));
+        return view('tenant.dashboard.modules.pets.create', compact('clients'));
     }
 
     public function store(Request $request)
@@ -37,13 +37,13 @@ class PetController extends Controller
 
     public function show(Pet $pet)
     {
-        return view('tenant.pets.show', compact('pet'));
+        return view('tenant.dashboard.modules.pets.show', compact('pet'));
     }
 
     public function edit(Pet $pet)
     {
         $clients = Client::all();
-        return view('tenant.pets.edit', compact('pet', 'clients'));
+        return view('tenant.dashboard.modules.pets.edit', compact('pet', 'clients'));
     }
 
     public function update(Request $request, Pet $pet)

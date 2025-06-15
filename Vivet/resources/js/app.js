@@ -1,5 +1,6 @@
 import './bootstrap';
 import 'flowbite'; // Esto activa la auto-inicialización del carrusel
+import { createIcons } from 'lucide';
 
 var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
 var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -40,4 +41,8 @@ themeToggleBtn.addEventListener('click', function() {
         }
     }
     
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  createIcons(); // Esto buscará todos los <i data-lucide="..."> y los renderizará
 });

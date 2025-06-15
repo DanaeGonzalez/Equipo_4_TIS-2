@@ -10,13 +10,13 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::latest()->paginate(10);
-        return view('tenant.clients.index', compact('clients'));
+        return view('tenant.dashboard.modules.clients.index', compact('clients'));
     }
 
     public function create()
     {
         //$this->authorize('create', Client::class);
-        return view('tenant.clients.create');
+        return view('tenant.dashboard.modules.clients.create');
     }
 
     public function store(Request $request)
@@ -53,7 +53,7 @@ class ClientController extends Controller
 
     public function edit(Client $client)
     {
-        return view('tenant.clients.edit', compact('client'));
+        return view('tenant.dashboard.modules.clients.edit', compact('client'));
     }
 
     public function update(Request $request, Client $client)

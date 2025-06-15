@@ -10,12 +10,12 @@ class MedicationController extends Controller
     public function index()
     {
         $medications = Medication::all();
-        return view('tenant.medications.index', compact('medications'));
+        return view('tenant.dashboard.modules.medications.index', compact('medications'));
     }
 
     public function create()
     {
-        return view('tenant.medications.create');
+        return view('tenant.dashboard.modules.medications.create');
     }
 
     public function store(Request $request)
@@ -33,7 +33,7 @@ class MedicationController extends Controller
 
     public function edit(Medication $medication)
     {
-        return view('tenant.medications.edit', compact('medication'));
+        return view('tenant.dashboard.modules.medications.edit', compact('medication'));
     }
 
     public function update(Request $request, Medication $medication)

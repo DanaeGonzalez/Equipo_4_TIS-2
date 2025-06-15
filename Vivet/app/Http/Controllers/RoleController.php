@@ -10,12 +10,12 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('tenant.roles.index', compact('roles'));
+        return view('tenant.dashboard.modules.roles.index', compact('roles'));
     }
 
     public function create()
     {
-        return view('tenant.roles.create');
+        return view('tenant.dashboard.modules.roles.create');
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        return view('tenant.roles.edit', compact('role'));
+        return view('tenant.dashboard.modules.roles.edit', compact('role'));
     }
 
     public function update(Request $request, Role $role)

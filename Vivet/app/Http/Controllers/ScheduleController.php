@@ -40,14 +40,14 @@ class ScheduleController extends Controller
                 return $day->sortBy('event_time');
             });
 
-        return view('tenant.schedules.index', compact('schedules'));
+        return view('tenant.dashboard.modules.schedules.index', compact('schedules'));
     }
 
 
 
     public function create()
     {
-        return view('tenant.schedules.create');
+        return view('tenant.dashboard.modules.schedules.create');
     }
 
     public function store(Request $request)
@@ -68,7 +68,7 @@ class ScheduleController extends Controller
 
     public function edit(Schedule $schedule)
     {
-        return view('tenant.schedules.edit', compact('schedule'));
+        return view('tenant.dashboard.modules.schedules.edit', compact('schedule'));
     }
 
     public function update(Request $request, Schedule $schedule)
@@ -108,7 +108,7 @@ class ScheduleController extends Controller
         $schedules = $query->paginate(20);
         $veterinarians = User::whereHas('role', fn($q) => $q->where('name', 'Veterinario'))->get();
 
-        return view('tenant.schedules.manage', compact('schedules', 'veterinarians'));
+        return view('tenant.dashboard.modules.schedules.manage', compact('schedules', 'veterinarians'));
     }
     public function toggle(Schedule $schedule)
     {
