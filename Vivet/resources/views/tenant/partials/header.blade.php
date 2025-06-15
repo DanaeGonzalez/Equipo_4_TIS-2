@@ -47,7 +47,7 @@
         @if(Auth::user()->user_type == 'Administrador')
         <div>
           <!-- Sidebar toggle button -->
-          <button data-drawer-target="admin-sidebar" data-drawer-toggle="admin-sidebar" aria-controls="admin-sidebar" type="button"
+          <button id="admin-sidebar-toggle" type="button"
             class="inline-flex items-center gap-2 p-2 text-sm font-medium text-blue-800 bg-blue-100 rounded-lg hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
             <!-- Admin/Dashboard Icon -->
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -57,13 +57,16 @@
             <span>Panel Admin</span>
           </button>
 
+          <!-- Backdrop overlay -->
+          <div id="admin-sidebar-backdrop" class="fixed inset-0 z-30 bg-gray-900 bg-opacity-50 hidden"></div>
+
           <!-- Admin Sidebar -->
           <aside id="admin-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full" aria-label="Admin Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-blue-50 border-r border-blue-200">
               <!-- Sidebar Header -->
               <div class="flex items-center justify-between mb-6 pb-3 border-b border-blue-200">
                 <h2 class="text-xl font-semibold text-brown-700">Panel Admin</h2>
-                <button type="button" data-drawer-hide="admin-sidebar" aria-controls="admin-sidebar" class="text-blue-800 bg-transparent hover:bg-blue-100 hover:text-blue-900 rounded-lg text-sm p-1.5">
+                <button type="button" id="admin-sidebar-close" class="text-blue-800 bg-transparent hover:bg-blue-100 hover:text-blue-900 rounded-lg text-sm p-1.5">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                   </svg>
@@ -71,20 +74,75 @@
                 </button>
               </div>
 
-              <!-- Sidebar Content -->
+              <!-- Sidebar Content - Alphabetically Ordered -->
               <ul class="space-y-2 font-medium">
                 <li>
-                  <a href="{{ route('products.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Product/Box Icon -->
+                  <a href="{{ route('schedules.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Schedules/Clock Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Agendas</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('appointments.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Appointments/Calendar Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Citas</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('clients.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Clients/People Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                      <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Clientes</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('exams.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Exams Icon -->
                     <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
                     </svg>
-                    <span class="ml-3">Productos</span>
+                    <span class="ml-3">Examenes Médicos</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('billing.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Billing/Receipt Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M17.222 0H2.778A2.778 2.778 0 0 0 0 2.778v14.444A2.778 2.778 0 0 0 2.778 20h14.444A2.778 2.778 0 0 0 20 17.222V2.778A2.778 2.778 0 0 0 17.222 0ZM5.5 15.556a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9.5 9h-6a1 1 0 0 1 0-2h6a1 1 0 0 1 0 2Zm0-4.5h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Zm0-4.5h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Facturación</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('clinical_records.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Clinical Records Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" fill="currentColor"
+                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.414A2 2 0 0 0 17.414 6L14 2.586A2 2 0 0 0 12.586 2H4zm5 4a1 1 0 0 1 2 0h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0V8H8a1 1 0 1 1 0-2h1zm-3 5h8a1 1 0 1 1 0 2H6a1 1 0 1 1 0-2zm0 3h5a1 1 0 1 1 0 2H6a1 1 0 1 1 0-2z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Ficha Clínica</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('supplies.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Supplies Icon -->
+                    <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
+                    </svg>
+                    <span class="ml-3">Insumos</span>
                   </a>
                 </li>
                 <li>
                   <a href="{{ route('inventory.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Product/Box Icon -->
+                    <!-- Inventory Icon -->
                     <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
                     </svg>
@@ -92,22 +150,49 @@
                   </a>
                 </li>
                 <li>
-                  <a href="{{ route('services.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Services/Tools Icon -->
+                  <a href="{{ route('pets.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Pets Icon - Dog Silhouette -->
                     <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M19.728 10.686c-2.38 2.256-6.153 3.381-9.875 3.381-3.722 0-7.4-1.126-9.571-3.371L0 10.437V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-7.6l-.272.286Z" />
-                      <path d="m.135 7.847 1.542 1.417c3.6 3.712 12.747 3.7 16.635.01L19.605 7.9A.98.98 0 0 1 20 7.652V6a2 2 0 0 0-2-2h-3V3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v1H2a2 2 0 0 0-2 2v1.765c.047.024.092.051.135.082ZM10 10.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM7 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H7V3Z" />
+                      <path d="M15.92 1.01c-.195 0-.392.02-.584.062l-2.712.602a.517.517 0 0 0-.409.506v2.911c0 .586.475 1.06 1.06 1.06h3.232c.586 0 1.06-.474 1.06-1.06V2.13a1.12 1.12 0 0 0-1.12-1.12h-.527ZM7.37 3.839a.517.517 0 0 0-.41-.506L4.25 2.73a2.668 2.668 0 0 0-.585-.062h-.527A1.12 1.12 0 0 0 2.02 3.79v1.302c0 .586.474 1.06 1.06 1.06h3.232c.585 0 1.06-.474 1.06-1.06V3.839ZM17.5 7.721h-1.556a.517.517 0 0 0-.434.235l-.909 1.375c-.109.165-.293.264-.49.264h-.001c-.323 0-.585-.262-.585-.585V7.721H6.06v1.289c0 .323-.262.585-.585.585h-.001a.585.585 0 0 1-.49-.264l-.909-1.375a.517.517 0 0 0-.434-.235H2.086c-.586 0-1.06.474-1.06 1.06v1.556c0 .293.237.53.53.53h.53v7.574c0 .586.474 1.06 1.06 1.06h12.78c.585 0 1.06-.474 1.06-1.06V10.867h.53a.53.53 0 0 0 .53-.53V8.781c0-.586-.474-1.06-1.06-1.06h.014Z" />
+                      <path d="M7.37 14.662a1.06 1.06 0 1 0 2.12 0 1.06 1.06 0 0 0-2.12 0Zm3.232 0a1.06 1.06 0 1 0 2.12 0 1.06 1.06 0 0 0-2.12 0Z" />
                     </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Servicios</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Mascotas</span>
                   </a>
                 </li>
                 <li>
-                  <a href="{{ route('exams.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Product/Box Icon -->
+                  <a href="{{ route('medications.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Medications Icon -->
                     <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
                     </svg>
-                    <span class="ml-3">Examenes Médicos</span>
+                    <span class="ml-3">Medicamentos</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('notes.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Notes Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M6 2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H6Zm9 3H7v1h8V5Zm0 3H7v1h8V8Zm0 3H7v1h8v-1Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Notas</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('permissions.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Permissions/Lock Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002V12h1.283V9.164h1.84c1.896 0 2.877-1.043 2.877-2.915 0-1.895-.993-2.247-3.032-2.247H5.5Zm1.283.976h1.692c.876 0 1.835.22 1.835 1.388 0 1.337-.944 1.815-1.866 1.815h-1.66V4.978Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Permisos</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('products.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Products Icon -->
+                    <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
+                    </svg>
+                    <span class="ml-3">Productos</span>
                   </a>
                 </li>
                 <li>
@@ -124,104 +209,22 @@
                   </a>
                 </li>
                 <li>
+                  <a href="{{ route('services.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
+                    <!-- Services/Tools Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M19.728 10.686c-2.38 2.256-6.153 3.381-9.875 3.381-3.722 0-7.4-1.126-9.571-3.371L0 10.437V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-7.6l-.272.286Z" />
+                      <path d="m.135 7.847 1.542 1.417c3.6 3.712 12.747 3.7 16.635.01L19.605 7.9A.98.98 0 0 1 20 7.652V6a2 2 0 0 0-2-2h-3V3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v1H2a2 2 0 0 0-2 2v1.765c.047.024.092.051.135.082ZM10 10.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM7 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H7V3Z" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Servicios</span>
+                  </a>
+                </li>
+                <li>
                   <a href="{{ route('users.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
                     <!--Users Icon -->
                     <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                       <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                     </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Usuarios</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('permissions.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Permissions/Lock Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM5.5 4.002V12h1.283V9.164h1.84c1.896 0 2.877-1.043 2.877-2.915 0-1.895-.993-2.247-3.032-2.247H5.5Zm1.283.976h1.692c.876 0 1.835.22 1.835 1.388 0 1.337-.944 1.815-1.866 1.815h-1.66V4.978Z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Permisos</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('appointments.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Appointments/Calendar Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Citas</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('schedules.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Schedules/Clock Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Agendas</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('pets.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- New Pets Icon - Dog Silhouette -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M15.92 1.01c-.195 0-.392.02-.584.062l-2.712.602a.517.517 0 0 0-.409.506v2.911c0 .586.475 1.06 1.06 1.06h3.232c.586 0 1.06-.474 1.06-1.06V2.13a1.12 1.12 0 0 0-1.12-1.12h-.527ZM7.37 3.839a.517.517 0 0 0-.41-.506L4.25 2.73a2.668 2.668 0 0 0-.585-.062h-.527A1.12 1.12 0 0 0 2.02 3.79v1.302c0 .586.474 1.06 1.06 1.06h3.232c.585 0 1.06-.474 1.06-1.06V3.839ZM17.5 7.721h-1.556a.517.517 0 0 0-.434.235l-.909 1.375c-.109.165-.293.264-.49.264h-.001c-.323 0-.585-.262-.585-.585V7.721H6.06v1.289c0 .323-.262.585-.585.585h-.001a.585.585 0 0 1-.49-.264l-.909-1.375a.517.517 0 0 0-.434-.235H2.086c-.586 0-1.06.474-1.06 1.06v1.556c0 .293.237.53.53.53h.53v7.574c0 .586.474 1.06 1.06 1.06h12.78c.585 0 1.06-.474 1.06-1.06V10.867h.53a.53.53 0 0 0 .53-.53V8.781c0-.586-.474-1.06-1.06-1.06h.014Z" />
-                      <path d="M7.37 14.662a1.06 1.06 0 1 0 2.12 0 1.06 1.06 0 0 0-2.12 0Zm3.232 0a1.06 1.06 0 1 0 2.12 0 1.06 1.06 0 0 0-2.12 0Z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Mascotas</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('clients.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Clients/People Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                      <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Clientes</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('billing.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Billing/Receipt Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M17.222 0H2.778A2.778 2.778 0 0 0 0 2.778v14.444A2.778 2.778 0 0 0 2.778 20h14.444A2.778 2.778 0 0 0 20 17.222V2.778A2.778 2.778 0 0 0 17.222 0ZM5.5 15.556a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm9.5 9h-6a1 1 0 0 1 0-2h6a1 1 0 0 1 0 2Zm0-4.5h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Zm0-4.5h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Facturación</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('clinical_records.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Billing/Receipt Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" fill="currentColor"
-                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.414A2 2 0 0 0 17.414 6L14 2.586A2 2 0 0 0 12.586 2H4zm5 4a1 1 0 0 1 2 0h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0V8H8a1 1 0 1 1 0-2h1zm-3 5h8a1 1 0 1 1 0 2H6a1 1 0 1 1 0-2zm0 3h5a1 1 0 1 1 0 2H6a1 1 0 1 1 0-2z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Ficha Clínica</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('notes.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- notes/Receipt Icon -->
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                      <path d="M6 2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H6Zm9 3H7v1h8V5Zm0 3H7v1h8V8Zm0 3H7v1h8v-1Z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Notas</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('supplies.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Product/Box Icon -->
-                    <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
-                    </svg>
-                    <span class="ml-3">Suministros</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('medications.index') }}" class="flex items-center p-2 text-brown-800 rounded-lg hover:bg-blue-100 group">
-                    <!-- Product/Box Icon -->
-                    <svg class="w-5 h-5 text-blue-700 transition duration-75 group-hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M17.876.517A1 1 0 0 0 17 0H3a1 1 0 0 0-.871.508A1 1 0 0 0 2 1v18a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V1a.997.997 0 0 0-.124-.483zM10 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5 12H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4H5a1 1 0 0 1 0-2h10a1 1 0 0 1 0 2zm0-4h-4a1 1 0 0 1 0-2h4a1 1 0 1 1 0 2z" />
-                    </svg>
-                    <span class="ml-3">Medicamentos</span>
                   </a>
                 </li>
               </ul>
@@ -316,3 +319,57 @@
     </header>
   </div>
 </div>
+
+
+<!-- JavaScript to handle the sidebar -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('admin-sidebar');
+    const backdrop = document.getElementById('admin-sidebar-backdrop');
+    const toggleButton = document.getElementById('admin-sidebar-toggle');
+    const closeButton = document.getElementById('admin-sidebar-close');
+
+    function openSidebar() {
+      sidebar.classList.remove('-translate-x-full');
+      backdrop.classList.remove('hidden');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.add('-translate-x-full');
+      backdrop.classList.add('hidden');
+    }
+
+    // Toggle button click
+    toggleButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openSidebar();
+    });
+
+    // Close button click
+    closeButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeSidebar();
+    });
+
+    // Backdrop click to close
+    backdrop.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeSidebar();
+    });
+
+    // Escape key to close
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !sidebar.classList.contains('-translate-x-full')) {
+        closeSidebar();
+      }
+    });
+
+    // Prevent sidebar content clicks from closing the sidebar
+    sidebar.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  });
+</script>
