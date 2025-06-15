@@ -44,16 +44,20 @@ class SupplyController extends Controller
             'description' => 'nullable|string',
             'stock' => 'required|integer|min:0',
             'stock_reason' => 'nullable|string',
-            'units_per_box' => 'nullable|integer|min:1', //si la unidad de medidas son cajas, lo necesita
+            'units_per_box' => 'required_if:unit_type,cajas|nullable|integer|min:1', //si la unidad de medidas son cajas, lo necesita
             'unit_type' => ['required', Rule::in(['unidades', 'cajas'])],
             'supplier_id' => 'required_if:stock,>0|exists:suppliers,id',
             'unit_cost' => 'required_if:stock,>0|numeric|min:0',
+            'total_cost' => 'required|integer',
         ]);
 
         $validated['unit_type'] = strtolower($validated['unit_type']);
         $totalStockUnits = $validated['stock'];
 
         if ($validated['unit_type'] === 'cajas' && !empty($validated['units_per_box'])) {
+            if (empty($validated['units_per_box'])) {
+                return back()->withErrors(['units_per_box' => 'Este insumo no tiene unidades por caja definidas.']);
+            }
             $totalStockUnits = $validated['stock'] * $validated['units_per_box'];
         }
         $validated['stock'] = $totalStockUnits;
@@ -72,8 +76,11 @@ class SupplyController extends Controller
             PurchaseDetail::create([
                 'inventory_movement_id' => $movement->id,
                 'supplier_id' => $validated['supplier_id'],
+                'quantity' => $validated['stock'],
                 'unit_cost' => $validated['unit_cost'],
+                'total_cost' => $validated['unit_cost'] * $validated['stock'],
                 'purchase_date' => now(),
+                'invoice_number' => $request->invoice_number,
             ]);
         }
 
@@ -178,8 +185,12 @@ class SupplyController extends Controller
             PurchaseDetail::create([
                 'inventory_movement_id' => $movement->id,
                 'supplier_id' => $request->supplier_id,
+                'quantity' => $request['quantity'],
                 'unit_cost' => $request->unit_cost,
+                'total_cost' => $request['unit_cost'] * $request['quantity'],
                 'purchase_date' => now(),
+                'invoice_number' => $request->invoice_number,
+
             ]);
         }
 
@@ -199,6 +210,6 @@ class SupplyController extends Controller
     public function showAdjustForm(Supply $supply)
     {
         $suppliers = Supplier::all();
-        return view('tenant.supplies.adjustStock', compact('supply','suppliers'));
+        return view('tenant.supplies.adjustStock', compact('supply', 'suppliers'));
     }
 }

@@ -63,7 +63,8 @@
     <select name="supplier_id" id="supplier_id" class="w-full border p-2 rounded" required>
         <option value="">-- Selecciona un proveedor --</option>
         @foreach ($suppliers as $supplier)
-        <option value="{{ $supplier->id }}" {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
+        <option value="{{ $supplier->id }}"
+            @if (old('supplier_id')==$supplier->id || session('new_supplier_id') == $supplier->id) selected @endif>
             {{ $supplier->name }}
         </option>
         @endforeach
@@ -76,6 +77,11 @@
     <label for="unit_cost" class="block font-medium">Costo Unitario</label>
     <input type="number" name="unit_cost" id="unit_cost" value="{{ old('unit_cost') }}" step="1" min="0"
         class="w-full border p-2 rounded" required>
+</div>
+
+<div>
+    <label for="total_cost" class="block font-medium">Costo Total</label>
+    <input type="number" id="total_cost_display" name="total_cost" class="w-full border p-2 rounded" readonly>
 </div>
 
 
@@ -122,19 +128,77 @@
             unitsPerBoxField.classList.remove('hidden');
         } else {
             unitsPerBoxField.classList.add('hidden');
+            document.getElementById('units_per_box').value = '';
         }
     }
 
-    // Ejecutar al cargar
-    document.addEventListener('DOMContentLoaded', toggleUnitsPerBox);
+    function updateTotalCost() {
+        const stockInput = document.getElementById('stock');
+        const unitCostInput = document.getElementById('unit_cost');
+        const totalCostDisplay = document.getElementById('total_cost_display');
+
+        const stock = parseFloat(stockInput.value) || 0;
+        const unitCost = parseFloat(unitCostInput.value) || 0;
+
+        totalCostDisplay.value = stock * unitCost;
+    }
 
     function openSupplierModal() {
+        const supplyFormAction = "{{ route('supplies.store') }}";
+
+        const inputs = document.querySelectorAll(
+            `form[action="${supplyFormAction}"] input, 
+             form[action="${supplyFormAction}"] select, 
+             form[action="${supplyFormAction}"] textarea`
+        );
+
+        inputs.forEach(input => {
+            if (input.name) {
+                localStorage.setItem('supply_' + input.name, input.value);
+            }
+        });
+
         document.getElementById('SupplierModal').classList.remove('hidden');
     }
 
     function closeSupplierModal() {
         document.getElementById('SupplierModal').classList.add('hidden');
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleUnitsPerBox();
+        updateTotalCost();
+
+        const supplyFormAction = "{{ route('supplies.store') }}";
+
+        const inputs = document.querySelectorAll(
+            `form[action="${supplyFormAction}"] input, 
+             form[action="${supplyFormAction}"] select, 
+             form[action="${supplyFormAction}"] textarea`
+        );
+
+        inputs.forEach(input => {
+            const saved = localStorage.getItem('supply_' + input.name);
+            if (saved !== null && input.name !== 'stock_reason') {
+                input.value = saved;
+            }
+        });
+
+        document.getElementById('stock').addEventListener('input', updateTotalCost);
+        document.getElementById('unit_cost').addEventListener('input', updateTotalCost);
+        
+        @if(session('new_supplier_id'))
+        // Borrar el localStorage si venimos de crear proveedor
+        Object.keys(localStorage)
+            .filter(key => key.startsWith('supply_'))
+            .forEach(key => localStorage.removeItem(key));
+
+        // Seleccionar automáticamente el nuevo proveedor
+        document.getElementById('supplier_id').value = "{{ session('new_supplier_id') }}";
+        @endif
+
+    });
 </script>
+
 
 @endsection

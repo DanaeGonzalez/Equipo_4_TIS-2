@@ -11,7 +11,9 @@ class PurchaseDetail extends Model
     protected $fillable = [
         'inventory_movement_id',
         'supplier_id',
+        'quantity',
         'unit_cost',
+        'total_cost',
         'purchase_date',
     ];
 

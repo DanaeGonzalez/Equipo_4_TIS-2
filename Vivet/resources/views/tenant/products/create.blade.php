@@ -117,6 +117,10 @@
                     class="w-full border p-2 rounded" required>
             </div>
 
+            <div>
+                <label for="total_cost" class="block font-medium">Costo Total</label>
+                <input type="number" id="total_cost_display" name="total_cost" class="w-full border p-2 rounded" readonly>
+            </div>
 
             <input type="hidden" name="stock_reason" id="stock_reason_input" value="Stock inicial">
             <input type="hidden" name="movement_type" id="movement_type_input" value="Entrada">
@@ -130,7 +134,7 @@
     <div id="SupplierModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50">
         <div class="bg-white rounded p-6 w-full max-w-md space-y-4">
             <h3 class="text-xl font-bold">Nuevo Proveedor</h3>
-            <form action="{{ route('suppliers.store.from.supply') }}" method="POST">
+            <form action="{{ route('suppliers.store.from.product') }}" method="POST">
                 @csrf
                 <input type="text" name="name" placeholder="Nombre de la Empresa" required class="w-full border rounded p-2 my-2">
                 <input type="text" name="contact_name" placeholder="Nombre del Vendedor" class="w-full border rounded p-2 my-2">
@@ -173,6 +177,20 @@
 
         categorySelect.addEventListener('change', toggleCategoryFields);
         toggleCategoryFields();
+
+
+        const stockInput = document.getElementById('stock');
+        const unitCostInput = document.getElementById('unit_cost');
+        const totalCostDisplay = document.getElementById('total_cost_display');
+
+        function updateTotalCost() {
+            const stock = parseInt(stockInput.value) || 0;
+            const unitCost = parseInt(unitCostInput.value) || 0;
+            totalCostDisplay.value = stock * unitCost;
+        }
+
+        stockInput.addEventListener('input', updateTotalCost);
+        unitCostInput.addEventListener('input', updateTotalCost);
     });
 
     function openSupplierModal() {
@@ -182,8 +200,6 @@
     function closeSupplierModal() {
         document.getElementById('SupplierModal').classList.add('hidden');
     }
-
-    
 </script>
 
 @endsection

@@ -63,6 +63,8 @@ class SyncPermissionsFromRoutes extends Command
             'Crear Clientes Factura' => 'clients.store.from.billing',
             'Guardar Inventario' => 'inventory.storeForProduct',
             'Guardar Cliente desde Boleta' => 'clients.store.from.billing',
+            'Guardar Proveedor desde Productos' => 'suppliers.store.from.product',
+            'Guardar Proveedor desde Insumos' => 'suppliers.store.from.supply',
 
             // Historias clínicas
             'Ver Historias Clínicas' => 'clinical_records.index',
@@ -132,7 +134,9 @@ class SyncPermissionsFromRoutes extends Command
             'insumo'=> 'supplies',
             'insumos'=> 'supplies',
             'receta' => 'prescriptions',
-            'recetas' => 'prescriptions'
+            'recetas' => 'prescriptions',
+            'proveedor'=> 'suppliers',
+            'proveedores'=> 'suppliers',
         ];
 
         $permissionName = strtolower($permissionName);

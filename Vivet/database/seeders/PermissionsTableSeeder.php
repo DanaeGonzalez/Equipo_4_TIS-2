@@ -26,6 +26,7 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Ajustar Stock de Producto', 'route_name' => 'products.adjustStock'],
             ['name' => 'Ver Movimientos de Producto', 'route_name' => 'products.movements'],
             ['name' => 'Formulario de Ajuste de Producto', 'route_name' => 'products.adjustStockForm'],
+            ['name' => 'Guardar Proveedor desde Productos', 'route_name' => 'suppliers.store.from.product'],
 
 
             // Servicios
@@ -160,11 +161,21 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'Ajustar Stock de Insumo', 'route_name' => 'supplies.adjustStock'],
             ['name' => 'Ver Movimientos de Insumo', 'route_name' => 'supplies.movements'],
             ['name' => 'Formulario de Ajuste de Insumo', 'route_name' => 'supplies.adjustStockForm'],
+            ['name' => 'Guardar Proveedor desde Insumos', 'route_name' => 'suppliers.store.from.supply'],
 
             // Exámenes
             ['name' => 'Ver Examenes', 'route_name' => 'exams.index'],
             ['name' => 'Enviar Examenes', 'route_name' => 'exams.send'],
             ['name' => 'Ver Historial de Examenes', 'route_name' => 'exams.history'],
+
+            //Proveedores
+            ['name' => 'Ver Proveedor', 'route_name' => 'supplier.index'],
+            ['name' => 'Crear Proveedor', 'route_name' => 'supplier.create'],
+            ['name' => 'Guardar Proveedor', 'route_name' => 'supplier.store'],
+            ['name' => 'Editar Proveedor', 'route_name' => 'supplier.edit'],
+            ['name' => 'Actualizar Proveedor', 'route_name' => 'supplier.update'],
+            ['name' => 'Eliminar Proveedor', 'route_name' => 'supplier.destroy'],
+
         ];
 
         foreach ($permissions as $perm) {

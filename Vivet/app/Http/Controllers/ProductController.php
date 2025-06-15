@@ -44,7 +44,8 @@ class ProductController extends Controller
             'supplier_id' => 'required_if:stock,>0|exists:suppliers,id',
             'unit_cost' => 'required_if:stock,>0|numeric|min:0',
             'invoice_number' => 'nullable|string',
-            'purchase_date' => 'required|date',
+            //'purchase_date' => 'required|date',
+            'total_cost'=> 'required|integer',
         ]);
 
         $product = Product::create([

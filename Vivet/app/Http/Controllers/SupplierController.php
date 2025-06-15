@@ -27,7 +27,7 @@ class SupplierController extends Controller
 
         $supplier = Supplier::create($validated);
 
-        return redirect()->route('products.create' )->with('new_supplier_id', $supplier->id);
+        return redirect()->route('products.create' )->withInput()->with('new_supplier_id', $supplier->id);
     }
 
     public function storeFromSupply(Request $request)
@@ -42,6 +42,6 @@ class SupplierController extends Controller
 
         $supplier = Supplier::create($validated);
 
-        return redirect()->route('supplies.create' )->with('new_supplier_id', $supplier->id);
+        return redirect()->route('supplies.create' )->withInput()->with('new_supplier_id', $supplier->id);
     }
 }
