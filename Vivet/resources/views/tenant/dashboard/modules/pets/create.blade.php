@@ -1,4 +1,4 @@
-@extends('tenant.layouts.app')
+@extends('tenant.layouts.dashboard')
 
 @section('content')
 {{-- @can('pets.create')--}}

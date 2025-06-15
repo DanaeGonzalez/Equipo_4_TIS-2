@@ -16,12 +16,12 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $role = Auth::user()->user_type;
-        return view('tenant.products.index', compact('products', 'role'));
+        return view('tenant.dashboard.modules.products.index', compact('products', 'role'));
     }
 
     public function create()
     {
-        return view('tenant.products.create');
+        return view('tenant.dashboard.modules.products.create');
     }
 
     public function store(Request $request)
@@ -77,7 +77,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $vaccine = Vaccine::where('product_id', $product->id)->first();
-        return view('tenant.products.edit', compact('product', 'vaccine'));
+        return view('tenant.dashboard.modules.products.edit', compact('product', 'vaccine'));
     }
 
     public function update(Request $request, Product $product)

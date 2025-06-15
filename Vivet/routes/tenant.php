@@ -104,7 +104,7 @@ Route::middleware([
         Route::resource('notes', NoteController::class);
 
         // Registros clínicos
-        Route::resource('clinical_records', ClinicalRecordController::class);
+        Route::resource('dashboard/modules/clinical_records', ClinicalRecordController::class);
 
         // Prescripciones
         Route::get('/prescriptions', [PrescriptionController::class, 'index'])->name('prescriptions.index');
@@ -151,10 +151,10 @@ Route::middleware([
 
     //});
 
-    // Panel Dashboard principal
-    Route::get('/dashboard', function () {
-        return view('tenant.dashboard.index');
-    })->name('dashboard');
-    
-});
+    Route::view('/dashboard/examples', 'tenant.dashboard.modules.example.index')->name('examples.index');
 
+
+    Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+        Route::view('/', 'tenant.dashboard.index')->name('dashboard.index');
+    });
+});

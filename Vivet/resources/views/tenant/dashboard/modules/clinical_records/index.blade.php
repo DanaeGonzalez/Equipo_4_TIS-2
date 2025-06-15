@@ -1,4 +1,4 @@
-@extends('tenant.layouts.app')
+@extends('tenant.layouts.dashboard')
 @include('tenant.partials.colors')
 
 @section('title', 'Fichas Clínicas')

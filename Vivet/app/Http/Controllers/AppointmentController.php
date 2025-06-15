@@ -77,7 +77,7 @@ class AppointmentController extends Controller
             $pets = collect();
         }
 
-        return view('tenant.appointments.create', compact('schedules', 'services', 'veterinarians', 'pets'));
+        return view('tenant.dashboard.modules.appointments.create', compact('schedules', 'services', 'veterinarians', 'pets'));
     }
     //cambios
     public function index()
@@ -88,7 +88,7 @@ class AppointmentController extends Controller
             $client = Client::where('user_id', $user->id)->first();
 
             if (!$client) {
-                return view('tenant.appointments.index', ['appointments' => collect()]);
+                return view('tenant.dashboard.modules.appointments.index', ['appointments' => collect()]);
             }
 
             $appointments = Appointment::with(['pet', 'user', 'service', 'schedule'])
@@ -128,7 +128,7 @@ class AppointmentController extends Controller
 
         }
 
-        return view('tenant.appointments.index', compact('appointments'));
+        return view('tenant.dashboard.modules.appointments.index', compact('appointments'));
 
     }
 

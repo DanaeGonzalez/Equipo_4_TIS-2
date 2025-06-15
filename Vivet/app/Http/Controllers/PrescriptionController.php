@@ -15,7 +15,7 @@ class PrescriptionController extends Controller
         $clinicalRecord = ClinicalRecord::findOrFail($clinicalRecordId);
         $medications = Medication::all();
 
-        return view('tenant.prescriptions.create', compact('clinicalRecord', 'medications'));
+        return view('tenant.dashboard.modules.prescriptions.create', compact('clinicalRecord', 'medications'));
     }
 
     public function store(Request $request, $clinicalRecordId)
@@ -41,7 +41,7 @@ class PrescriptionController extends Controller
     public function edit(Prescription $prescription)
     {
         $medications = Medication::all();
-        return view('tenant.prescriptions.edit', compact('prescription', 'medications'));
+        return view('tenant.dashboard.modules.prescriptions.edit', compact('prescription', 'medications'));
     }
 
     public function update(Request $request, Prescription $prescription)

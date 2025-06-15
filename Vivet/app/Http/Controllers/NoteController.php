@@ -14,12 +14,12 @@ class NoteController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('tenant.notes.index', compact('notes'));
+        return view('tenant.dashboard.modules.notes.index', compact('notes'));
     }
 
     public function create()
     {
-        return view('tenant.notes.create');
+        return view('tenant.dashboard.modules.notes.create');
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class NoteController extends Controller
         if ($note->user_id !== auth()->id()) {
             abort(403);
         }
-        return view('tenant.notes.edit', compact('note'));
+        return view('tenant.dashboard.modules.notes.edit', compact('note'));
     }
 
     public function update(Request $request, Note $note)

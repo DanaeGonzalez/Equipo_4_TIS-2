@@ -20,7 +20,7 @@ class SupplyController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
         $supplies = $query->get();
-        return view('tenant.supplies.index', compact('supplies'));
+        return view('tenant.dashboard.modules.supplies.index', compact('supplies'));
     }
 
     /**
@@ -28,7 +28,7 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        return view('tenant.supplies.create');
+        return view('tenant.dashboard.modules.supplies.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class SupplyController extends Controller
      */
     public function edit(Supply $supply)
     {
-        return view('tenant.supplies.edit', compact('supply'));
+        return view('tenant.dashboard.modules.supplies.edit', compact('supply'));
     }
 
     /**
@@ -170,11 +170,11 @@ class SupplyController extends Controller
             ->latest()
             ->get();
 
-        return view('tenant.supplies.movements', compact('supply', 'movements'));
+        return view('tenant.dashboard.modules.supplies.movements', compact('supply', 'movements'));
     }
 
     public function showAdjustForm(Supply $supply)
     {
-        return view('tenant.supplies.adjustStock', compact('supply'));
+        return view('tenant.dashboard.modules.supplies.adjustStock', compact('supply'));
     }
 }
