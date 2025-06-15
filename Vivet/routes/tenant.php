@@ -27,6 +27,7 @@ use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\SupplyController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -145,9 +146,7 @@ Route::middleware([
     });
 
     Route::view('/dashboard/examples', 'tenant.dashboard.modules.example.index')->name('examples.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
-    Route::prefix('dashboard')->middleware(['auth'])->group(function () {
-        Route::view('/', 'tenant.dashboard.index')->name('dashboard.index');
-    });
 });

@@ -1,6 +1,7 @@
+@import "flowbite/src/themes/default";
+
+@plugin "daisyui";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@plugin "daisyui";
-@import "flowbite/src/themes/default";
