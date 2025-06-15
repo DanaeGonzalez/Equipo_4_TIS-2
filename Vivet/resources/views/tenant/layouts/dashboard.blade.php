@@ -25,7 +25,7 @@
 
 <body>
 
-    <body class="bg-gray-100 dark:bg-gray-900">
+    <body class="bg-gray-50 dark:bg-gray-900">
 
         {{-- Sidebar + Navbar --}}
         @include('tenant.partials.dashboard.sidebar') {{-- Este incluye TODO el bloque que ya pegaste --}}
