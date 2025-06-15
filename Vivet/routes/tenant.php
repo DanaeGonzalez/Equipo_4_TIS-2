@@ -144,6 +144,8 @@ Route::middleware([
         Route::get('/clinical_history', [ClinicalHistoryController::class, 'index'])->name('clinical_history.index');
     });
 
+    Route::view('/dashboard/examples', 'tenant.dashboard.modules.example.index')->name('examples.index');
+
 
     Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::view('/', 'tenant.dashboard.index')->name('dashboard.index');
