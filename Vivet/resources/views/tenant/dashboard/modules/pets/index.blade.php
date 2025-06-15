@@ -21,7 +21,8 @@
             ])
         </div>
 
-        <x-dashboard.table :headers="$columns" :rows="$rows" :pagination="$pagination" add-label="Registrar Paciente"/>
+        <x-dashboard.table :headers="$columns" :rows="$rows" :pagination="$pagination" add-label="Registrar Paciente" 
+        add-url="{{ route('pets.create') }}" />
 
     </div>
 </section>

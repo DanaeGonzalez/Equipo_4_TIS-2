@@ -12,9 +12,32 @@ class ClinicalRecordController extends Controller
 {
     public function index()
     {
-        $records = ClinicalRecord::with(['pet', 'vet'])->orderBy('date', 'desc')->get();
-        return view('tenant.dashboard.modules.clinical_records.index', compact('records'));
+        $records = ClinicalRecord::with(['pet.client', 'vet'])
+            ->orderBy('date', 'desc')
+            ->paginate(10); // Paginar para que funcione con $pagination
+
+        $columns = ['Fecha', 'Mascota', 'Peso', 'Cliente', 'Veterinario'];
+
+        $rows = collect($records->items())->map(function ($record) {
+            return [
+                'id' => $record->id,
+                'columns' => [
+                    $record->date->format('d-m-Y'),               // Fecha formateada
+                    $record->pet->pet_name ?? 'Sin nombre',       // Mascota
+                    $record->weight . ' kg',                      // Peso con unidad
+                    $record->pet->client->name ?? 'Sin cliente',  // Cliente
+                    $record->vet->name ?? 'Sin veterinario',      // Veterinario
+                ],
+            ];
+        });
+
+        return view('tenant.dashboard.modules.clinical_records.index', [
+            'columns' => $columns,
+            'rows' => $rows,
+            'pagination' => $records,
+        ]);
     }
+
 
     public function create()
     {

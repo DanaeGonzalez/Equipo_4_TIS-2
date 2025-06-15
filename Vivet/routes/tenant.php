@@ -146,7 +146,7 @@ Route::middleware([
     });
 
     Route::view('/dashboard/examples', 'tenant.dashboard.modules.example.index')->name('examples.index');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 
 });
