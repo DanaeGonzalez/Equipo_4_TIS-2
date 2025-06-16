@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,5 +45,20 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof NotFoundHttpException) {
+            if (function_exists('tenant') && tenant()) {
+                // Error 404 en subdominio tenant
+                return response()->view('errors.tenant.404', [], 404);
+            }
+
+            // Error 404 en dominio central
+            return response()->view('errors.central.404', [], 404);
+        }
+
+        return parent::render($request, $exception);
     }
 }
