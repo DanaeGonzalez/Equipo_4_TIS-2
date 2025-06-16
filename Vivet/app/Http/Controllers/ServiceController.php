@@ -11,9 +11,29 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $services = Service::all();
-        $role = Auth::user()->user_type;
-        return view('tenant.dashboard.modules.services.index', compact('services','role'));
+        $services = Service::select('id', 'name', 'price', 'description', 'estimated_duration')
+            ->paginate(10);
+
+        $columns = ['Nombre', 'Precio', 'Descripción', 'Duración'];
+
+        $rows = collect($services->items())->map(function ($service) {
+            return [
+                'id' => $service->id,
+                'columns' => [
+                    $service->name,
+                    '$' . number_format($service->price, 0, ',', '.'),
+                    $service->description,
+                    $service->duration . ' min',
+                ],
+            ];
+        });
+
+        return view('tenant.dashboard.modules.services.index', [
+            'columns' => $columns,
+            'rows' => $rows,
+            'pagination' => $services,
+            'role' => Auth::user()->user_type,
+        ]);
     }
 
     public function create()
