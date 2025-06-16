@@ -28,11 +28,11 @@
     <body class="bg-gray-50 dark:bg-gray-900">
 
         {{-- Sidebar + Navbar --}}
-        @include('tenant.partials.dashboard.sidebar') {{-- Este incluye TODO el bloque que ya pegaste --}}
+        @include('tenant.partials.dashboard.sidebar') 
 
         {{-- Contenido principal (Quitar el "border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700" es solo para desarrollo)--}}
-        <div class="p-4 sm:ml-64">
-            <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+        <div class="p-4 lg:ml-64">
+            <div class="p-4 mt-14">
                 @yield('content')
             </div>
         </div>

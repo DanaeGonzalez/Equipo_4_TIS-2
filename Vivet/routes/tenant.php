@@ -28,6 +28,8 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ManageSchedulesController;
+use App\Http\Controllers\DashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -152,9 +154,7 @@ Route::middleware([
     //});
 
     Route::view('/dashboard/examples', 'tenant.dashboard.modules.example.index')->name('examples.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 
-    Route::prefix('dashboard')->middleware(['auth'])->group(function () {
-        Route::view('/', 'tenant.dashboard.index')->name('dashboard.index');
-    });
 });

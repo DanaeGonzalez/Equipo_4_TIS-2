@@ -10,9 +10,31 @@ class PetController extends Controller
 {
     public function index()
     {
-        $pets = Pet::with('client')->paginate(10);
-        return view('tenant.dashboard.modules.pets.index', compact('pets'));
+        $pets = Pet::select('id', 'pet_name', 'species', 'color', 'sex', 'client_id')
+            ->with('client:id,name')
+            ->paginate(10);
+
+        $columns = ['Nombre', 'Especie', 'Color', 'Sexo', 'Cliente'];
+        $rows = collect($pets->items())->map(function ($pet) {
+            return [
+                'id' => $pet->id,
+                'columns' => [
+                    $pet->pet_name,
+                    $pet->species,
+                    $pet->color,
+                    $pet->sex,
+                    $pet->client?->name ?? 'Sin cliente',
+                ],
+            ];
+        });
+
+        return view('tenant.dashboard.modules.pets.index', [
+            'columns' => $columns,
+            'rows' => $rows,
+            'pagination' => $pets, // Para usar {{ $pagination->links() }}
+        ]);
     }
+
 
     public function create()
     {

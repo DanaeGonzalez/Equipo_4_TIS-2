@@ -1,5 +1,7 @@
 import './bootstrap';
 import 'flowbite'; // Esto activa la auto-inicialización del carrusel
+import ApexCharts from 'apexcharts';
+window.ApexCharts = ApexCharts;
 import { createIcons } from 'lucide';
 
 var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
@@ -43,6 +45,19 @@ themeToggleBtn.addEventListener('click', function() {
     
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  createIcons(); // Esto buscará todos los <i data-lucide="..."> y los renderizará
+document.querySelectorAll('[data-collapse-toggle]').forEach(button => {
+    button.addEventListener('click', () => {
+        const targetId = button.getAttribute('data-collapse-toggle');
+        const target = document.getElementById(targetId);
+
+        // Cierra todos los demás dropdowns
+        document.querySelectorAll('ul[id^="dropdown-"]').forEach(drop => {
+            if (drop !== target) {
+                drop.classList.add('hidden');
+            }
+        });
+
+        // Alterna el dropdown actual
+        target.classList.toggle('hidden');
+    });
 });
